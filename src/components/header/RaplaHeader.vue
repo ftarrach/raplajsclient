@@ -24,9 +24,7 @@ export default {
     SimpleItem,
     DropdownItem
   },
-  mounted() {
 
-  },
   data() {
     return {
       sidemenuOpen: false,
@@ -39,10 +37,16 @@ export default {
           label: 'Ressourcen',
           route: 'Resources'
         }
-      ],
-      login: 'fabian'
+      ]
     }
   },
+
+  computed: {
+    login() {
+      return this.$rapla.user.name()
+    }
+  },
+
   methods: {
     toggleBurgerMenu(event) {
       this.sidemenuOpen = !this.sidemenuOpen
@@ -61,7 +65,7 @@ export default {
   .login {
     color: red;
   }
-  
+
   .shadow {
     background-image: linear-gradient(rgba(0, 0, 0, 0.1), transparent);
     position: absolute;

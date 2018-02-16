@@ -1,6 +1,7 @@
 /* global rapla */
 
 import GwtLocale from './GwtLocale'
+import GwtUser from './GwtUser'
 
 require('./gwtEvents.js')
 
@@ -10,13 +11,10 @@ function setup(options) {
   window.rapla = {
     RaplaCallback: function() {
       this.gwtLoaded = (starter) => {
-        let errorFunction = new rapla.Catch((info) => console.log(info))
         let registerAction = () => {
           let loginToken = starter.getValidToken()
           if (loginToken != null) {
-            let accessToken = loginToken.getAccessToken()
-            console.log('AccessToken ' + accessToken)
-            starter.registerApi(accessToken).thenAccept(new rapla.Consumer((_api) => {
+            starter.registerApi(loginToken.getAccessToken()).thenAccept(new rapla.Consumer((_api) => {
               api = _api
               window.api = _api
               options.onLoad()
@@ -27,14 +25,15 @@ function setup(options) {
         }
         starter.initLocale('de_DE')
           .thenRun(new rapla.Action(registerAction))
-          .exceptionally(errorFunction)
+          .exceptionally(new rapla.Catch((info) => console.warn(info)))
       }
     }
   }
 }
 
 const Api = {
-  locale: GwtLocale.Api
+  locale: GwtLocale.Api,
+  user: GwtUser.Api
 }
 
 export default {
@@ -43,6 +42,7 @@ export default {
     setup({
       onLoad() {
         Vue.use(GwtLocale.Plugin, { getApi: () => api })
+        Vue.use(GwtUser.Plugin, { getApi: () => api })
         options.onLoad()
       }
     })

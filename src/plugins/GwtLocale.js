@@ -14,12 +14,12 @@ const Api = {
 
   format(key, parameters) {
     if (api) {
-      let result = api().getI18n(key, parameters)
+      let result = api().getI18n().format(key, ...parameters)
       if (result) {
         return result
       }
     }
-    return `»${key}«`
+    return `»${key}(${parameters.join()})«`
   }
 }
 
@@ -35,3 +35,5 @@ export default {
   Api,
   Plugin
 }
+
+window.l = Api.format
