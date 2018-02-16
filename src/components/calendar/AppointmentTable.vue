@@ -2,11 +2,11 @@
   table.table.is-hoverable.is-fullwidth
     thead
       tr
-        th {{ "name" | r-localize }}
-        th {{ "start_date" | r-localize }}
-        th.is-hidden-mobile {{ "end_date" | r-localize }}
-        th.is-hidden-mobile {{ "resources" | r-localize }}
-        th.is-hidden-mobile {{ "persons" | r-localize }}
+        th {{ "name" | gwt-localize }}
+        th {{ "start_date" | gwt-localize }}
+        th.is-hidden-mobile {{ "end_date" | gwt-localize }}
+        th.is-hidden-mobile {{ "resources" | gwt-localize }}
+        th.is-hidden-mobile {{ "persons" | gwt-localize }}
     tbody
       tr(v-for='appointment in appointments')
         td {{ appointment.name }}

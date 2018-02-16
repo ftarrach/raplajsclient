@@ -6,9 +6,9 @@ nav.navbar.is-fixed-top(ref='navbar')
     .navbar-menu(:class='{ "is-active": sidemenuOpen }')
       .navbar-start
         simple-item(route="Calendar")
-          | {{ "reservations" | r-localize }}
+          | {{ "reservations" | gwt-localize }}
         simple-item(route="Resources")
-          | {{ "resources" | r-localize }}
+          | {{ "resources" | gwt-localize }}
       .navbar-end
         .navbar-item.login {{ login }}
 </template>

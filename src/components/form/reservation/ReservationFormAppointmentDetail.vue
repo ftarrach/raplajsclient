@@ -10,10 +10,10 @@
     .columns.is-gapless
       .column
         button.button.is-size-7.is-fullwidth.is-outlined(:disabled="value.enddatetype === 'infinity'")
-          | {{ "appointment.convert" | r-localize }} 
+          | {{ "appointment.convert" | gwt-localize }} 
       .column
         button.button.is-size-7.is-fullwidth.is-danger(@click="exceptionClick")
-          | {{ "appointment.exceptions" | r-localize }} (0)
+          | {{ "appointment.exceptions" | gwt-localize }} (0)
     component(:is="repeatType" v-model="value")
 </template>
 

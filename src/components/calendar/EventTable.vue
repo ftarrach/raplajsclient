@@ -3,9 +3,9 @@
     table.table.is-hoverable.is-fullwidth
       thead
         tr
-          th {{ "name" | r-localize }}
-          th {{ "start_date" | r-localize }}
-          th.is-hidden-mobile {{ "last_changed" | r-localize }}
+          th {{ "name" | gwt-localize }}
+          th {{ "start_date" | gwt-localize }}
+          th.is-hidden-mobile {{ "last_changed" | gwt-localize }}
           th
       tbody
         tr(v-for='event in events' @dblclick="edit(event)")

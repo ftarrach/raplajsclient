@@ -52,7 +52,7 @@ const GwtSetup = {
     console.log('installing Vue RaplaGwtPlugin')
     setup(options)
 
-    Vue.filter('r-localize', function(value) {
+    Vue.filter('gwt-localize', function(value) {
       return localize(value)
     })
     Vue.mixin({ beforeCreate: init })

@@ -8,15 +8,15 @@
         .columns.is-multiline
           //- Name
           .column.is-half
-            label.label {{ "name" | r-localize }}
+            label.label {{ "name" | gwt-localize }}
             input.input(v-model="name")
           //- Reservation Type
           .column.is-half
-            label.label {{ "reservation_type" | r-localize }}
+            label.label {{ "reservation_type" | gwt-localize }}
             reservation-type-chooser(v-model="type")
           //- Appointments
           .column.is-half
-            label.label {{ "reservation.appointments" | r-localize }}
+            label.label {{ "reservation.appointments" | gwt-localize }}
             reservation-form-appointment-list(v-model="selectedAppointmentId" :appointments="appointments")
             .columns.is-size-7
           //- Appointment Edit
@@ -24,27 +24,27 @@
             label.label &nbsp;
             reservation-form-appointment-detail(v-model="selectedAppointment")
           .column.is-half
-            label.label {{ "reservation.used_resources" | r-localize }}
+            label.label {{ "reservation.used_resources" | gwt-localize }}
             reservation-form-resources-list(:resources="allResources" @click="addResourceToReservation")
               div(slot="buttons")
-                b-button(icon="fa-calendar-alt") {{ "calendar" | r-localize }}
-                b-button(icon="fa-filter" pull-right) {{ "filter" | r-localize }}
+                b-button(icon="fa-calendar-alt") {{ "calendar" | gwt-localize }}
+                b-button(icon="fa-filter" pull-right) {{ "filter" | gwt-localize }}
               div(slot="item-action" slot-scope="prop")
                 p.has-text-success(v-if="isAllFree(prop.resource)")
-                  | {{ "every_appointment" | r-localize }}
+                  | {{ "every_appointment" | gwt-localize }}
                 p(v-else-if="isSometimesFree(prop.resource)") 
                   | auswählbar an {{ prop.resource.free | list }}
           .column.is-half
-            label.label {{ "reservation.allocations" | r-localize }}
+            label.label {{ "reservation.allocations" | gwt-localize }}
             reservation-form-resources-list(:resources="resources"
                                             @click="removeResourceFromReservation")
               div(slot="buttons")
-                b-button(icon="fa-calendar-alt") {{ "calendar" | r-localize }}
+                b-button(icon="fa-calendar-alt") {{ "calendar" | gwt-localize }}
               div(slot="item-action" slot-scope="prop")
                .dropdown.is-pulled-right
                   .dropdown-trigger(@click.stop="")
                     button.button
-                      span.dropdown-text {{ "every_appointment" | r-localize }}
+                      span.dropdown-text {{ "every_appointment" | gwt-localize }}
                       span.icon.is-small
                         i.fa.fa-angle-down
                   .dropdown-menu(role='menu')

@@ -2,14 +2,14 @@
   div
     .columns
       .column.is-2
-        span {{ "repeating.interval.pre" | r-localize }}
+        span {{ "repeating.interval.pre" | gwt-localize }}
       .column.is-2
         input.input(type="text" v-model.number="value.repeat.interval")
       .column.is-8
         weekday-chooser(v-model="value.days")
     .columns
       .column.is-2
-        span {{ "start_time" | r-localize }}
+        span {{ "start_time" | gwt-localize }}
       .column.is-3
         input.input(type="text" v-model="startTime" :disabled="wholeDay")
       .column.is-two-fifths
@@ -17,7 +17,7 @@
           | #[input#whole-day(type="checkbox" v-model="wholeDay").styled] #[label(for="whole-day") ganztägig]
     .columns
       .column.is-2
-        span {{ "end_time" | r-localize }}
+        span {{ "end_time" | gwt-localize }}
       .column.is-3
         input.input(type="text" v-model="endTime" :disabled="wholeDay")
       .column.is-two-fifth
@@ -26,7 +26,7 @@
         input.input.is-fullwidth(v-show="endtimetype === 'x-day'" v-model="xDay")
     .columns
       .column.is-5
-        span {{ "weekly" | r-localize }} {{ "repeating.start_date" | r-localize }}
+        span {{ "weekly" | gwt-localize }} {{ "repeating.start_date" | gwt-localize }}
       .column
         b-datepicker(v-model="value.begin")
     .columns
