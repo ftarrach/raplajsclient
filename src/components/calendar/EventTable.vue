@@ -14,13 +14,11 @@
           td.is-hidden-mobile {{ event.lastChange | moment }}
           td
             b-dropdown(is-right)
-              b-dropdown-item(value="Neu" icon="fa-plus" @click="create")
-              b-dropdown-item(value="Besitzer ändern" icon="fa-user" @click="changeOwner")
-              b-dropdown-item(value="Bearbeiten" icon="fa-edit" @click="edit(event)")
-              b-dropdown-item(value="Löschen" icon="fa-trash-alt" @click="remove")
-              b-dropdown-item(value="Anzeigen" icon="fa-info-circle" @click="show(event)")
-              b-dropdown-item(value="Kopieren" icon="fa-clipboard" @click="copy")
-              b-dropdown-item(value="Ausschneiden" icon="fa-cut" @click="cut")
+              b-dropdown-item(v-for="item in dropdownitems" 
+                              :key="item.label" 
+                              :value="item.label" 
+                              :icon="item.icon" 
+                              @click="() => item.onClick(event)")
 </template>
 
 <script>
@@ -30,6 +28,41 @@ export default {
   computed: {
     events() {
       return this.$store.getters.eventsInPeriod
+    },
+
+    dropdownitems() {
+      return [
+        {
+          label: this.$rapla.locale.localize('new'),
+          icon: 'fa-user',
+          onClick: this.create
+        },
+        {
+          label: this.$rapla.locale.localize('edit'),
+          icon: 'fa-edit',
+          onClick: this.edit
+        },
+        {
+          label: this.$rapla.locale.localize('delete'),
+          icon: 'fa-trash-alt',
+          onClick: this.remove
+        },
+        {
+          label: this.$rapla.locale.localize('view'),
+          icon: 'fa-info-circle',
+          onClick: this.show
+        },
+        {
+          label: this.$rapla.locale.localize('copy'),
+          icon: 'fa-clipboard',
+          onClick: this.copy
+        },
+        {
+          label: this.$rapla.locale.localize('cut'),
+          icon: 'fa-cut',
+          onClick: this.cut
+        }
+      ]
     }
   },
 
@@ -51,6 +84,7 @@ export default {
                })
     },
     edit(event) {
+      console.log(event)
       this.$router.push({
         name: 'EditReservation',
         params: {
