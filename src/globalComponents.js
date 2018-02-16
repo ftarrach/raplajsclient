@@ -14,6 +14,7 @@ const components = {
 
 const plugin = {
   install(Vue) {
+    console.log('installing global Vue Components')
     for (const compName in components) {
       const comp = components[compName]
       if (comp.name) {
