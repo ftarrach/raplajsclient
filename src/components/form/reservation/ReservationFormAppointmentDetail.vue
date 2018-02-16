@@ -10,10 +10,10 @@
     .columns.is-gapless
       .column
         button.button.is-size-7.is-fullwidth.is-outlined(:disabled="value.enddatetype === 'infinity'")
-          | In Einzeltermine umwandeln
+          | {{ "appointment.convert" | r-localize }} 
       .column
         button.button.is-size-7.is-fullwidth.is-danger(@click="exceptionClick")
-          | Ausnahmen (0)
+          | {{ "appointment.exceptions" | r-localize }} (0)
     component(:is="repeatType" v-model="value")
 </template>
 
@@ -34,19 +34,16 @@ export default {
     }
   },
 
-  data() {
-    return {
-      repeatOptions: [
-        {value: 'single', label: 'Einzeltermin'},
-        {value: 'weekly', label: 'Wöchentlich'},
-        {value: 'daily', label: 'Täglich'},
-        {value: 'monthly', label: 'Monatlich'},
-        {value: 'yearly', label: 'Jährlich'}
-      ]
-    }
-  },
-
   computed: {
+    repeatOptions() {
+      return [
+        { value: 'single', label: this.$rapla.localize('no_repeating') },
+        { value: 'weekly', label: this.$rapla.localize('weekly') },
+        { value: 'daily', label: this.$rapla.localize('daily') },
+        { value: 'monthly', label: this.$rapla.localize('monthly') },
+        { value: 'yearly', label: this.$rapla.localize('yearly') }
+      ]
+    },
     repeatType() {
       if (this.value.repeat.type === 'weekly') {
         return ReservationFormAppointmentDetailWeek

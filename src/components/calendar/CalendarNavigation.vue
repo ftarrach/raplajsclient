@@ -12,50 +12,47 @@
 
 <script>
 export default {
-  data() {
-    return {
-      elements: [
+  computed: {
+    elements() {
+      return [
         {
           route: 'CalendarEvent',
-          label: 'Veranstaltungen'
+          label: this.$rapla.localize('reservations')
         },
         {
           route: 'CalendarAppointment',
-          label: 'Termine'
+          label: this.$rapla.localize('appointments')
         },
         {
           route: 'CalendarDay',
-          label: 'Tag'
+          label: this.$rapla.localize('day')
         },
         {
           route: 'CalendarDayResource',
-          label: 'Tag/Ressource'
+          label: this.$rapla.localize('day_resource')
         },
         {
           route: 'Calendar',
-          label: 'Woche'
+          label: this.$rapla.localize('week')
         },
         {
           route: 'CalendarWeekResource',
-          label: 'Woche/Ressource'
+          label: this.$rapla.localize('week_compact')
         },
         {
           route: 'CalendarWeekProgram',
-          label: 'Wochenprogramm'
+          label: this.$rapla.localize('week_timeslot')
         },
         {
           route: 'CalendarDayProgram',
-          label: 'Tagesprogramm'
+          label: this.$rapla.localize('day_timeslot')
         },
         {
           route: 'CalendarMonth',
-          label: 'Monat'
+          label: this.$rapla.localize('month')
         }
       ]
     }
   }
 }
 </script>
-
-<style scoped>
-</style>

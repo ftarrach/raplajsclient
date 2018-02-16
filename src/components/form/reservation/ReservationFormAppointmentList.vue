@@ -66,6 +66,7 @@ export default {
   },
 
   methods: {
+    // TODO: use gwt localization
     label(appointment) {
       let weekdays = appointment.days.map(m => moment().weekday(m).format('dd')).join(', ')
       let timespan = ''
@@ -85,6 +86,7 @@ export default {
         `ab dem ${appointment.begin.format('L')} ${until}`
       ]
     },
+
     localize(repeat) {
       if (repeat.interval === 1) {
         if (repeat.type === 'daily') {

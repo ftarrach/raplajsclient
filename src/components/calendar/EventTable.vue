@@ -3,9 +3,9 @@
     table.table.is-hoverable.is-fullwidth
       thead
         tr
-          th Name
-          th Beginn
-          th.is-hidden-mobile Letzte Änderung
+          th {{ "name" | r-localize }}
+          th {{ "start_date" | r-localize }}
+          th.is-hidden-mobile {{ "last_changed" | r-localize }}
           th
       tbody
         tr(v-for='event in events' @dblclick="edit(event)")
@@ -77,7 +77,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>

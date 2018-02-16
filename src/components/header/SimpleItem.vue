@@ -1,13 +1,13 @@
 <template lang="pug">
-  router-link.navbar-item(:to='{ name: item.route }'
+  router-link.navbar-item(:to='{ name: route }'
                           active-class="is-active")
-    | {{ item.label }}
+    slot
 </template>
 
 <script>
 export default {
   props: {
-    item: {
+    route: {
       required: true
     }
   },

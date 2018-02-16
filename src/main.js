@@ -14,24 +14,26 @@ import 'font-awesome/css/font-awesome.css'
 import 'cool-checkboxes-for-bulma.io/dist/css/bulma-radio-checkbox.min.css'
 import LayoutHelper from './globalComponents'
 // import Cookies from 'js-cookie';
-import RaplaGwt from './plugins/RaplaGwt'
+import { Api, GwtSetup } from './plugins/RaplaGwtPlugin'
 
 moment.locale('de')
 
-require('./gwtEvents.js')
-
-
 Vue.config.productionTip = false
 
+Vue.use(GwtSetup, {onLoad: startVue})
 Vue.use(LayoutHelper)
 
 // moment.locale(window.navigator.userLanguage || window.navigator.language)
 
 /* eslint-disable no-new */
-window.raplaVue = new Vue({
-  el: '#app',
-  router,
-  store,
-  template: '<App/>',
-  components: { App }
-})
+function startVue() {
+  console.log('starting vue')
+  window.raplaVue = new Vue({
+    el: '#app',
+    router,
+    store,
+    rapla: Api,
+    template: '<App/>',
+    components: { App }
+  })
+}

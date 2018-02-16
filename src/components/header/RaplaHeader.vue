@@ -5,11 +5,10 @@ nav.navbar.is-fixed-top(ref='navbar')
     header-base(@burgerClick='toggleBurgerMenu')
     .navbar-menu(:class='{ "is-active": sidemenuOpen }')
       .navbar-start
-        template(v-for='item in items')
-          dropdown-item(v-if='item.items'
-                        :item='item')
-          simple-item(v-else,
-                      :item='item')
+        simple-item(route="Calendar")
+          | {{ "reservations" | r-localize }}
+        simple-item(route="Resources")
+          | {{ "resources" | r-localize }}
       .navbar-end
         .navbar-item.login {{ login }}
 </template>

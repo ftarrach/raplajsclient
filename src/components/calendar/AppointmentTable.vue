@@ -2,11 +2,11 @@
   table.table.is-hoverable.is-fullwidth
     thead
       tr
-        th Name
-        th Beginn
-        th.is-hidden-mobile Ende
-        th.is-hidden-mobile Ressourcen
-        th.is-hidden-mobile Personen
+        th {{ "name" | r-localize }}
+        th {{ "start_date" | r-localize }}
+        th.is-hidden-mobile {{ "end_date" | r-localize }}
+        th.is-hidden-mobile {{ "resources" | r-localize }}
+        th.is-hidden-mobile {{ "persons" | r-localize }}
     tbody
       tr(v-for='appointment in appointments')
         td {{ appointment.name }}
@@ -39,7 +39,7 @@ export default {
     },
     listresources(value) {
       if (!value) return ''
-      return value.map(r => r['name'] || 'unbekannte Ressource').sort()
+      return value.map(r => r.name || 'unbekannte Ressource').sort()
     },
     listpersons(value) {
       if (!value) return ''
