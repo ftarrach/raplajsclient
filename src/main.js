@@ -10,17 +10,15 @@ import App from './App'
 import router from './routes'
 import store from './stores/store'
 import 'font-awesome/css/font-awesome.css'
-// import 'bulma/css/bulma.css'
 import 'cool-checkboxes-for-bulma.io/dist/css/bulma-radio-checkbox.min.css'
 import LayoutHelper from './globalComponents'
-// import Cookies from 'js-cookie';
-import { Api, GwtSetup } from './plugins/RaplaGwtPlugin'
+import RaplaGwtPlugin from './plugins/RaplaGwtPlugin'
 
 moment.locale('de')
 
 Vue.config.productionTip = false
 
-Vue.use(GwtSetup, {onLoad: startVue})
+Vue.use(RaplaGwtPlugin, {onLoad: startVue})
 Vue.use(LayoutHelper)
 
 // moment.locale(window.navigator.userLanguage || window.navigator.language)
@@ -32,7 +30,7 @@ function startVue() {
     el: '#app',
     router,
     store,
-    rapla: Api,
+    rapla: RaplaGwtPlugin,
     template: '<App/>',
     components: { App }
   })

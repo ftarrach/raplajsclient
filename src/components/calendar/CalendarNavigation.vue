@@ -17,39 +17,39 @@ export default {
       return [
         {
           route: 'CalendarEvent',
-          label: this.$rapla.localize('reservations')
+          label: this.$rapla.locale.localize('reservations')
         },
         {
           route: 'CalendarAppointment',
-          label: this.$rapla.localize('appointments')
+          label: this.$rapla.locale.localize('appointments')
         },
         {
           route: 'CalendarDay',
-          label: this.$rapla.localize('day')
+          label: this.$rapla.locale.localize('day')
         },
         {
           route: 'CalendarDayResource',
-          label: this.$rapla.localize('day_resource')
+          label: this.$rapla.locale.localize('day_resource')
         },
         {
           route: 'Calendar',
-          label: this.$rapla.localize('week')
+          label: this.$rapla.locale.localize('week')
         },
         {
           route: 'CalendarWeekResource',
-          label: this.$rapla.localize('week_compact')
+          label: this.$rapla.locale.localize('week_compact')
         },
         {
           route: 'CalendarWeekProgram',
-          label: this.$rapla.localize('week_timeslot')
+          label: this.$rapla.locale.localize('week_timeslot')
         },
         {
           route: 'CalendarDayProgram',
-          label: this.$rapla.localize('day_timeslot')
+          label: this.$rapla.locale.localize('day_timeslot')
         },
         {
           route: 'CalendarMonth',
-          label: this.$rapla.localize('month')
+          label: this.$rapla.locale.localize('month')
         }
       ]
     }

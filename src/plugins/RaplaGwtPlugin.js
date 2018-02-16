@@ -1,5 +1,7 @@
 /* global rapla */
 
+import GwtLocale from './GwtLocale'
+
 require('./gwtEvents.js')
 
 let api = null
@@ -31,41 +33,26 @@ function setup(options) {
   }
 }
 
-function localize(value) {
-  let result = api.getI18n().getString(value)
-  if (result) {
-    return result
-  } else {
-    console.warn(`WARN: no string for key ${value} found`)
-    return `»${value}«`
-  }
-}
-
 const Api = {
-  localize(value) {
-    return localize(value)
-  }
+  locale: GwtLocale.Api
 }
 
-const GwtSetup = {
-  install(Vue, options = {}) {
+export default {
+  install(Vue, options) {
     console.log('installing Vue RaplaGwtPlugin')
-    setup(options)
-
-    Vue.filter('gwt-localize', function(value) {
-      return localize(value)
+    setup({
+      onLoad() {
+        Vue.use(GwtLocale.Plugin, { getApi: () => api })
+        options.onLoad()
+      }
     })
-    Vue.mixin({ beforeCreate: init })
-
-    function init() {
+    Vue.mixin({ beforeCreate: function() {
       const options = this.$options
       if (options.rapla) {
-        this.$rapla = options.rapla
+        this.$rapla = Api
       } else if (options.parent && options.parent.$rapla) {
         this.$rapla = options.parent.$rapla
       }
-    }
+    }})
   }
 }
-
-export { Api, GwtSetup }
