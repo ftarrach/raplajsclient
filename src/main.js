@@ -18,7 +18,10 @@ moment.locale('de')
 
 Vue.config.productionTip = false
 
-Vue.use(RaplaGwtPlugin, {onLoad: startVue})
+Vue.use(RaplaGwtPlugin, {
+  onLoad: startVue,
+  standaloneMode: true
+})
 Vue.use(LayoutHelper)
 
 // moment.locale(window.navigator.userLanguage || window.navigator.language)

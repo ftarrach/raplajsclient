@@ -26,7 +26,7 @@ const Api = {
 const Plugin = {
   install(Vue, options) {
     console.log('installing Vue GwtLocale')
-    api = options.getApi
+    api = options.getApi()
     Vue.filter('gwt-localize', (value) => Api.localize(value))
   }
 }

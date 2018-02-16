@@ -7,7 +7,7 @@ require('./gwtEvents.js')
 
 let api = null
 
-function setup(options) {
+function setupGwtCallback(options) {
   window.rapla = {
     RaplaCallback: function() {
       this.gwtLoaded = (starter) => {
@@ -17,7 +17,7 @@ function setup(options) {
             starter.registerApi(loginToken.getAccessToken()).thenAccept(new rapla.Consumer((_api) => {
               api = _api
               window.api = _api
-              options.onLoad()
+              options.apiAvailable()
             }))
           } else {
             window.location = '../rapla/login?url=' + window.location
@@ -36,23 +36,34 @@ const Api = {
   user: GwtUser.Api
 }
 
+function installChildPlugins(Vue, options) {
+  let getApi = () => api
+  Vue.mixin({ beforeCreate: function() {
+    const options = this.$options
+    if (options.rapla) {
+      this.$rapla = Api
+    } else if (options.parent && options.parent.$rapla) {
+      this.$rapla = options.parent.$rapla
+    }
+  }})
+  Vue.use(GwtLocale.Plugin, { getApi })
+  Vue.use(GwtUser.Plugin, { getApi })
+  options.onLoad()
+}
+
 export default {
   install(Vue, options) {
-    console.log('installing Vue RaplaGwtPlugin')
-    setup({
-      onLoad() {
-        Vue.use(GwtLocale.Plugin, { getApi: () => api })
-        Vue.use(GwtUser.Plugin, { getApi: () => api })
-        options.onLoad()
-      }
-    })
-    Vue.mixin({ beforeCreate: function() {
-      const options = this.$options
-      if (options.rapla) {
-        this.$rapla = Api
-      } else if (options.parent && options.parent.$rapla) {
-        this.$rapla = options.parent.$rapla
-      }
-    }})
+    if (options.standaloneMode) {
+      console.log('starting Vue Client in Standalone Mode')
+      installChildPlugins(Vue, options)
+    } else {
+      console.log('starting Vue Client in GWT Mode')
+      console.log('installing Vue RaplaGwtPlugin')
+      setupGwtCallback({
+        apiAvailable() {
+          installChildPlugins(Vue, options)
+        }
+      })
+    }
   }
 }
