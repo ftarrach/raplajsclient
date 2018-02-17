@@ -44,7 +44,7 @@ export default {
     flex-grow: 1;
     text-align: left;
   }
-    
+
   .dropdown-content {
     max-height: 50vh;
     min-height: 2em;

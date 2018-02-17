@@ -1,3 +1,4 @@
+// TODO: remove all mixins, use Vue.extends instead
 export default {
 
   created() {

@@ -34,7 +34,7 @@
           .column.is-full(v-show="step === 'resource'")
             reservation-form-resource(v-model="resources")
           .column.is-full(v-show="step === 'permission'")
-            reservation-form-permission
+            reservation-form-permission(v-model="permissions")
       footer
         .card-footer
           a.card-footer-item(href="#") {{ "delete" | gwt-localize }}
@@ -51,7 +51,6 @@ import ReservationTypeChooser from '@/components/widgets/ReservationTypeChooser'
 import ReservationFormAppointment from './ReservationFormAppointment'
 import ReservationFormResource from './ReservationFormResource'
 import ReservationFormPermission from './ReservationFormPermission'
-import moment from 'moment'
 
 export default {
 
@@ -78,6 +77,7 @@ export default {
       name: '',
       appointments: [],
       resources: [],
+      permissions: [],
       step: 'appointment',
       stepNr: 0
     }
@@ -115,48 +115,13 @@ export default {
   },
 
   created() {
-    this.appointments = [
-      {
-        id: 10,
-        repeat: {
-          type: 'weekly',
-          interval: 1,
-          times: 1
-        },
-        begin: moment('2017-10-03'),
-        days: [0, 1],
-        time: {
-          from: '09:00',
-          to: '11:15',
-          endtype: 'same-day'
-        },
-        end: null,
-        enddatetype: 'infinity'
-      },
-      {
-        id: 11,
-        repeat: {
-          type: 'weekly',
-          interval: 1,
-          times: 1
-        },
-        begin: moment('2017-10-04'),
-        days: [2],
-        time: {
-          from: '09:15',
-          to: '11:30',
-          endtype: 'x-day',
-          xday: 1
-        },
-        end: moment('2017-12-20'),
-        enddatetype: 'until'
-      }
-    ]
     let id = this.$route.params.id
     let found = this.$store.getters.reservationById(id)
     if (found.length > 0) {
       let reservation = found[0]
       this.id = id
+      this.appointments = reservation.appointments
+      this.permissions = reservation.permissions
       this.resources = reservation.resources.slice(0)
       this.type = reservation.type
       this.name = reservation.name

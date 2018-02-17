@@ -42,7 +42,7 @@ export default {
 
   props: {
     value: {
-      type: Array // array of selected resources
+      type: Array // array of resources to display in the list
     }
   },
 

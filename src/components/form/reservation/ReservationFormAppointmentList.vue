@@ -18,19 +18,23 @@
     .columns
       .column.is-fullwidth
         .select.is-multiple.is-flex.is-size-7-mobile
-          select.r-fullwidth(multiple size="5" v-model="selected")
-            option(:value="appointment.id"
-                   v-for="appointment in appointments"
-                   :key="appointment.id")
-              p(v-for="line in label(appointment)")
-                | {{ line }}
+          include ../../widgets/SingleMultiSelect.pug
+            block option
+              option(:value="appointment.id"
+                     v-for="appointment in appointments"
+                     :key="appointment.id")
+                p(v-for="line in label(appointment)")
+                  | {{ line }}
 </template>
 
 <script>
 // THINK: externalize ReservationFormAppointmentlistItem
+import SingleMultiSelect from '@/components/widgets/SingleMultiSelect'
 import moment from 'moment'
 
 export default {
+
+  extends: SingleMultiSelect,
 
   props: {
     appointments: {
@@ -38,19 +42,8 @@ export default {
       required: true
     },
     value: {
-      type: Number,
-      default: () => 0
-    }
-  },
-
-  computed: {
-    selected: {
-      get() {
-        return [this.selectedItems[0].id]
-      },
-      set(newVal) {
-        this.$emit('input', newVal[0])
-      }
+      type: [String, Number], // id of selected appointment
+      required: true
     }
   },
 
