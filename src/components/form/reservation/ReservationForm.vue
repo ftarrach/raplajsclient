@@ -14,15 +14,8 @@
           .column.is-half
             label.label {{ "reservation_type" | gwt-localize }}
             reservation-type-chooser(v-model="type")
-          //- Appointments
-          .column.is-half
-            label.label {{ "reservation.appointments" | gwt-localize }}
-            reservation-form-appointment-list(v-model="selectedAppointmentId" :appointments="appointments")
-            .columns.is-size-7
-          //- Appointment Edit
-          .column.is-half
-            label.label &nbsp;
-            reservation-form-appointment-detail(v-model="selectedAppointment")
+          .column.is-full
+            component(:is="stepComponent" v-model="appointments")
           .column.is-half
             label.label {{ "reservation.used_resources" | gwt-localize }}
             reservation-form-resources-list(:resources="allResources" @click="addResourceToReservation")
@@ -32,7 +25,7 @@
               div(slot="item-action" slot-scope="prop")
                 p.has-text-success(v-if="isAllFree(prop.resource)")
                   | {{ "every_appointment" | gwt-localize }}
-                p(v-else-if="isSometimesFree(prop.resource)") 
+                p(v-else-if="isSometimesFree(prop.resource)")
                   | auswählbar an {{ prop.resource.free | list }}
           .column.is-half
             label.label {{ "reservation.allocations" | gwt-localize }}
@@ -59,9 +52,8 @@
 
 <script>
 
+import ReservationFormAppointment from './ReservationFormAppointment'
 import ReservationTypeChooser from '@/components/widgets/ReservationTypeChooser'
-import ReservationFormAppointmentList from './ReservationFormAppointmentList'
-import ReservationFormAppointmentDetail from './ReservationFormAppointmentDetail'
 import ReservationFormResourcesList from './ReservationFormResourcesList'
 import moment from 'moment'
 
@@ -69,8 +61,7 @@ export default {
 
   components: {
     ReservationTypeChooser,
-    ReservationFormAppointmentList,
-    ReservationFormAppointmentDetail,
+    ReservationFormAppointment,
     ReservationFormResourcesList
   },
 
@@ -88,22 +79,13 @@ export default {
       name: '',
       appointments: [],
       resources: [],
-      selectedAppointmentId: 0
+      stepComponent: null
     }
   },
 
   computed: {
     allResources() {
       return this.$store.getters.allResources
-    },
-
-    selectedAppointment: {
-      get() {
-        return this.appointments.filter(a => a.id === this.selectedAppointmentId)[0]
-      },
-      set(newVal) {
-        this.selectedAppointmentId = newVal.id
-      }
     }
   },
 
@@ -145,7 +127,6 @@ export default {
         enddatetype: 'until'
       }
     ]
-    this.selectedAppointmentId = this.appointments[0].id
     let id = this.$route.params.id
     let found = this.$store.getters.reservationById(id)
     if (found.length > 0) {
@@ -154,6 +135,7 @@ export default {
       this.resources = reservation.resources.slice(0)
       this.type = reservation.type
       this.name = reservation.name
+      this.stepComponent = ReservationFormAppointment
     } else {
       // TODO: if id is set, but not found in store, show an error to the user
       alert(`no reservation with id ${id} found`)

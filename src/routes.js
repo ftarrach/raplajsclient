@@ -17,8 +17,8 @@ import Resources from '@/pages/Resources'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
-  base: '/proxy',
+//  mode: 'history',
+//  base: '/proxy',
   routes: [
     {
       path: '/',

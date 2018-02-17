@@ -8,7 +8,6 @@ const Api = {
         return result
       }
     }
-    console.warn(`WARN: no string for key ${value} found`)
     return `»${value}«`
   },
 

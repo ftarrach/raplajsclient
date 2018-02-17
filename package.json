@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "bulma": "^0.6.2",
+    "bulma-steps-component": "^0.5.3",
     "cool-checkboxes-for-bulma.io": "^1.1.0",
     "flatpickr": "^4.2.3",
     "font-awesome": "^4.7.0",

@@ -52,7 +52,8 @@ export default {
   computed: {
     selected: {
       get() {
-        return this.selectedItems
+        console.log(`selected: ${this.selectedItems}`)
+        return this.selectedItems.map(a => a.id)
       },
       set(newVal) {
         this.selectedItems = newVal
@@ -62,7 +63,7 @@ export default {
   },
 
   created() {
-    this.selectedItems = this.appointments.map(a => a.id).filter(id => id === this.value)
+    this.selectedItems = this.appointments.filter(a => a.id === this.value)
   },
 
   methods: {
