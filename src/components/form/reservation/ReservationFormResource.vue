@@ -69,8 +69,10 @@ export default {
     },
 
     addResourceToReservation(resource) {
-      this.resources.push(resource)
-      this.resources.sort((a, b) => a.id - b.id) // sort by IDs
+      if (this.resources.filter(r => r.id === resource.id).length === 0) {
+        this.resources.push(resource)
+        this.resources.sort((a, b) => a.id - b.id) // sort by IDs
+      }
     },
     removeResourceFromReservation(resource) {
       const index = this.resources.indexOf(resource)

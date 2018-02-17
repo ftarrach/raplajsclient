@@ -13,8 +13,8 @@
         a.button.is-fullwidth.is-danger
           span.icon
             i.fas.fa-trash-alt
-      .column.is-6-mobile.is-4-tablet
-        a.button.is-fullwidth Freier Termin
+      .column.is-6
+        a.button.is-fullwidth {{ "appointment.search_free" | gwt-localize }}
     .columns
       .column.is-fullwidth
         .select.is-multiple.is-flex.is-size-7-mobile

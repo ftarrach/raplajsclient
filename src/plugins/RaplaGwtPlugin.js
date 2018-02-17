@@ -46,7 +46,6 @@ function installChildPlugins(Vue, options) {
     }
   }})
   Vue.use(GwtLocale.Plugin, { api })
-  console.log('meep')
   Vue.use(GwtUser.Plugin, { api })
   options.onLoad()
 }
