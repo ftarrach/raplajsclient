@@ -1,6 +1,6 @@
 <template lang="pug">
   .list-item(@click="sendClickEvent")
-    .columns.is-mobile
+    .columns
       .column.is-half
         span.icon.is-small.has-text-success(v-if="isFree")
           i.fas.fa-check-circle

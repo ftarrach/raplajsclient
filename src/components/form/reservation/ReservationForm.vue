@@ -18,7 +18,7 @@
           .column.is-full
             hr.line
           .column.is-three-quarters
-            ul.steps
+            ul.steps.is-medium.is-horizontal
               li.steps-segment(:class="{ 'is-active': step === 'appointment' }")
                 span.steps-marker(@click="switchStep('appointment')")
                   i.fas.fa-calendar-alt
