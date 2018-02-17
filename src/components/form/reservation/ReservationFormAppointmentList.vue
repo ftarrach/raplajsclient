@@ -43,20 +43,14 @@ export default {
     }
   },
 
-  data() {
-    return {
-      selectedItems: []
-    }
-  },
-
   computed: {
     selected: {
       get() {
-        console.log(`selected: ${this.selectedItems}`)
-        return this.selectedItems.map(a => a.id)
+        console.log(`get selected: ${this.selectedItems[0].id}`)
+        return [this.selectedItems[0].id]
       },
       set(newVal) {
-        this.selectedItems = newVal
+        console.log(`set selected: ${newVal}`)
         this.$emit('input', newVal[0])
       }
     }

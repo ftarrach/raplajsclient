@@ -84,7 +84,6 @@ export default {
                })
     },
     edit(event) {
-      console.log(event)
       this.$router.push({
         name: 'EditReservation',
         params: {

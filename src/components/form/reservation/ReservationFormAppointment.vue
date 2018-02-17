@@ -54,6 +54,7 @@ export default {
         let selected = this.appointments.filter(a => a.id === this.selectedAppointmentId)[0]
         if (!selected) {
           this.selectedAppointmentId = this.appointments[0].id
+          console.log(`nothing selected, selecting ${this.selectedAppointmentId}`)
           return this.appointments[0]
         }
         return selected
