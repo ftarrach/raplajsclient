@@ -37,7 +37,6 @@ const Api = {
 }
 
 function installChildPlugins(Vue, options) {
-  let getApi = () => api
   Vue.mixin({ beforeCreate: function() {
     const options = this.$options
     if (options.rapla) {
@@ -46,8 +45,9 @@ function installChildPlugins(Vue, options) {
       this.$rapla = options.parent.$rapla
     }
   }})
-  Vue.use(GwtLocale.Plugin, { getApi })
-  Vue.use(GwtUser.Plugin, { getApi })
+  Vue.use(GwtLocale.Plugin, { api })
+  console.log('meep')
+  Vue.use(GwtUser.Plugin, { api })
   options.onLoad()
 }
 

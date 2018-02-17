@@ -1,9 +1,9 @@
-let api = null
+let i18n = null
 
 const Api = {
   localize(value) {
-    if (api) {
-      let result = api().getI18n().getString(value)
+    if (i18n) {
+      let result = i18n.getString(value)
       if (result) {
         return result
       }
@@ -13,8 +13,8 @@ const Api = {
   },
 
   format(key, parameters) {
-    if (api) {
-      let result = api().getI18n().format(key, ...parameters)
+    if (i18n) {
+      let result = i18n.format(key, ...parameters)
       if (result) {
         return result
       }
@@ -27,7 +27,9 @@ const Api = {
 const Plugin = {
   install(Vue, options) {
     console.log('installing Vue GwtLocale')
-    api = options.getApi()
+    if (options.api) {
+      i18n = options.api.getI18n()
+    }
     Vue.filter('gwt-localize', (value) => Api.localize(value))
   }
 }
@@ -36,5 +38,3 @@ export default {
   Api,
   Plugin
 }
-
-window.l = Api.format

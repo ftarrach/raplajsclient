@@ -3,9 +3,8 @@ let user = null
 const Plugin = {
   install(Vue, options) {
     console.log('installing Vue GwtUser')
-    let api = options.getApi()
-    if (api) {
-      user = api.getUser()
+    if (options.api) {
+      user = options.api.getUser()
     }
   }
 }

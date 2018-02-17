@@ -16,9 +16,9 @@ import Resources from '@/pages/Resources'
 
 Vue.use(Router)
 
-export default new Router({
-//  mode: 'history',
-//  base: '/proxy',
+const config = {
+  mode: process.env.NODE_ENV === 'gwtdev' ? 'history' : 'hash',
+  base: process.env.NODE_ENV === 'gwtdev' ? '/proxy' : '/',
   routes: [
     {
       path: '/',
@@ -91,4 +91,6 @@ export default new Router({
       ]
     }
   ]
-})
+}
+
+export default new Router(config)

@@ -19,7 +19,7 @@ Vue.config.productionTip = false
 Vue.use(LayoutHelper)
 Vue.use(RaplaGwtPlugin, {
   onLoad: startVue,
-  standaloneMode: true
+  standaloneMode: process.env.NODE_ENV === 'development'
 })
 
 // moment.locale(window.navigator.userLanguage || window.navigator.language)
