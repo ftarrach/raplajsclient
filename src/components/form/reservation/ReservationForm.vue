@@ -25,11 +25,16 @@
               li.steps-segment(:class="{ 'is-active': step === 'resource' }")
                 span.steps-marker(@click="switchStep('resource')")
                   i.fas.fa-archive
-          //- Dynamic Components, Appointments and Resources
+              li.steps-segment(:class="{ 'is-active': step === 'resource' }")
+                span.steps-marker(@click="switchStep('permission')")
+                  i.fas.fa-lock
+          //- step components
           .column.is-full(v-show="step === 'appointment'")
             reservation-form-appointment(v-model="appointments")
           .column.is-full(v-show="step === 'resource'")
             reservation-form-resource(v-model="resources")
+          .column.is-full(v-show="step === 'permission'")
+            reservation-form-permission
       footer
         .card-footer
           a.card-footer-item(href="#") {{ "delete" | gwt-localize }}
@@ -42,9 +47,10 @@
 
 <script>
 
+import ReservationTypeChooser from '@/components/widgets/ReservationTypeChooser'
 import ReservationFormAppointment from './ReservationFormAppointment'
 import ReservationFormResource from './ReservationFormResource'
-import ReservationTypeChooser from '@/components/widgets/ReservationTypeChooser'
+import ReservationFormPermission from './ReservationFormPermission'
 import moment from 'moment'
 
 export default {
@@ -52,7 +58,8 @@ export default {
   components: {
     ReservationTypeChooser,
     ReservationFormAppointment,
-    ReservationFormResource
+    ReservationFormResource,
+    ReservationFormPermission
   },
 
   props: {
@@ -62,7 +69,7 @@ export default {
     }
   },
 
-  steps: ['appointment', 'resource'],
+  steps: ['appointment', 'resource', 'permission'],
 
   data() {
     return {
