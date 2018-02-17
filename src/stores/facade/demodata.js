@@ -17,6 +17,48 @@ const resourcetypes = [
   { id: 3, name: 'Person' }
 ]
 
+const appointments = [
+  {
+    id: 10,
+    repeat: { type: 'weekly', interval: 1, times: 1 },
+    begin: moment('2017-10-03'),
+    days: [0, 1],
+    time: { from: '09:00', to: '11:15', endtype: 'same-day' },
+    end: null,
+    enddatetype: 'infinity'
+  },
+  {
+    id: 11,
+    repeat: { type: 'weekly', interval: 1, times: 1 },
+    begin: moment('2017-10-04'),
+    days: [2],
+    time: { from: '09:15', to: '11:30', endtype: 'x-day', xday: 1 },
+    end: moment('2017-12-20'),
+    enddatetype: 'until'
+  }
+]
+const categories = [
+  {
+    id: 1,
+    name: 'Die Veranstaltungen anderer sehen'
+  }
+]
+const permissions = [
+  {
+    id: 21,
+    type: 'all', // [ all, user, group ]
+    value: null, // null on all, user on user group on group
+    access: 'read' // [ denied, read, edit, admin ]
+  },
+  // this is the default permission every reservation has
+  {
+    id: 22,
+    type: 'group',
+    value : categories[0],
+    access: 'read'
+  }
+]
+
 /* eslint-disable camelcase */
 let rt_kurs = resourcetypes[0]
 let rt_raum = resourcetypes[1]
@@ -165,324 +207,213 @@ let person_16 = resources[27]
 let person_17 = resources[28]
 let person_18 = resources[29]
 
+class Reservation {
+  constructor(id, name, begin, end, lastChange, column, type, persons, resources) {
+    this.id = id
+    this.name = name
+    this.begin = begin
+    this.end = end
+    this.lastChange = lastChange
+    this.column = column
+    this.type = type
+    this.persons = persons
+    this.resources = resources
+    this.appointments = appointments
+  }
+}
+
 const reservations = [
   // Dienstag
-  {
-    id: '1',
-    name: faker.commerce.productName(),
-    begin: beginWeek.clone().add(1, 'day').hour(8).minute(30),
-    end: beginWeek.clone().add(1, 'day').hour(10).minute(30),
-    lastChange: lastChange,
-    type: reservationtypes[0],
-    persons: [person_3, person_14],
-    resources: [
-      room_7,
-      r_5,
-      person_3,
-      person_14
-    ]
-  },
-  {
-    id: '2',
-    name: faker.commerce.productName(),
-    begin: beginWeek.clone().add(1, 'day').hour(12).minute(30),
-    end: beginWeek.clone().add(1, 'day').hour(15).minute(45),
-    lastChange: lastChange,
-    type: reservationtypes[0],
-    persons: [
-      person_9
-    ],
-    resources: [
-      r_5,
-      room_1,
-      r_3
-    ]
-  },
+  new Reservation(
+    '1',
+    faker.commerce.productName(),
+    beginWeek.clone().add(1, 'day').hour(8).minute(30),
+    beginWeek.clone().add(1, 'day').hour(10).minute(30),
+    lastChange,
+    1,
+    reservationtypes[0],
+    [person_3, person_14],
+    [room_7, r_5, person_3, person_14]
+  ),
+  new Reservation(
+    '2',
+    faker.commerce.productName(),
+    beginWeek.clone().add(1, 'day').hour(12).minute(30),
+    beginWeek.clone().add(1, 'day').hour(15).minute(45),
+    lastChange,
+    1,
+    reservationtypes[0],
+    [person_9],
+    [r_5, room_1, r_3]
+  ),
   // Mittwoch
-  {
-    id: '3',
-    name: faker.commerce.productName(),
-    begin: beginWeek.clone().add(2, 'day').hour(8).minute(30),
-    end: beginWeek.clone().add(2, 'day').hour(11).minute(15),
-    lastChange: lastChange,
-    column: 1,
-    type: reservationtypes[0],
-    persons: [
-      person_11
-    ],
-    resources: [
-      room_7,
-      r_2,
-      r_5,
-      r_1,
-      r_4
-    ]
-  },
-  {
-    id: '4',
-    name: faker.commerce.productName(),
-    begin: beginWeek.clone().add(2, 'day').hour(8).minute(30),
-    end: beginWeek.clone().add(2, 'day').hour(11).minute(45),
-    lastChange: lastChange,
-    column: 2,
-    type: reservationtypes[0],
-    persons: [
-      person_7,
-      person_16
-    ],
-    resources: [
-      r_2,
-      r_5,
-      r_1,
-      r_4,
-      room_3
-    ]
-  },
-  {
-    id: '5',
-    name: faker.commerce.productName(),
-    begin: beginWeek.clone().add(2, 'day').hour(9).minute(30),
-    end: beginWeek.clone().add(2, 'day').hour(12).minute(45),
-    lastChange: lastChange,
-    column: 3,
-    type: reservationtypes[0],
-    persons: [
-      person_10
-    ],
-    resources: [
-      r_2,
-      r_5,
-      r_1,
-      r_4,
-      room_2
-    ]
-  },
-  {
-    id: '6',
-    name: faker.commerce.productName(),
-    begin: beginWeek.clone().add(2, 'day').hour(12).minute(30),
-    end: beginWeek.clone().add(2, 'day').hour(15).minute(45),
-    lastChange: lastChange,
-    column: 1,
-    type: reservationtypes[0],
-    persons: [
-      person_8
-    ],
-    resources: [
-      room_7,
-      r_2,
-      r_5,
-      r_1,
-      r_4
-    ]
-  },
-  {
-    id: '7',
-    name: faker.commerce.productName(),
-    begin: beginWeek.clone().add(2, 'day').hour(12).minute(30),
-    end: beginWeek.clone().add(2, 'day').hour(15).minute(45),
-    lastChange: lastChange,
-    column: 2,
-    type: reservationtypes[0],
-    persons: [
-      person_18
-    ],
-    resources: [
-      r_2,
-      r_5,
-      r_1,
-      r_4
-    ]
-  },
-  {
-    id: '8',
-    name: faker.commerce.productName(),
-    begin: beginWeek.clone().add(2, 'day').hour(13).minute(30),
-    end: beginWeek.clone().add(2, 'day').hour(16).minute(45),
-    lastChange: lastChange,
-    column: 3,
-    type: reservationtypes[0],
-    persons: [
-      person_6
-    ],
-    resources: [
-      r_2,
-      r_5,
-      r_1,
-      r_4,
-      room_2
-    ]
-  },
+  new Reservation(
+    '3',
+    faker.commerce.productName(),
+    beginWeek.clone().add(2, 'day').hour(8).minute(30),
+    beginWeek.clone().add(2, 'day').hour(11).minute(15),
+    lastChange,
+    1,
+    reservationtypes[0],
+    [person_11],
+    [room_7, r_2, r_5, r_1, r_4]
+  ),
+  new Reservation(
+    '4',
+    faker.commerce.productName(),
+    beginWeek.clone().add(2, 'day').hour(8).minute(30),
+    beginWeek.clone().add(2, 'day').hour(11).minute(45),
+    lastChange,
+    2,
+    reservationtypes[0],
+    [person_7, person_16],
+    [r_2, r_5, r_1, r_4, room_3]
+  ),
+  new Reservation(
+    '5',
+    faker.commerce.productName(),
+    beginWeek.clone().add(2, 'day').hour(9).minute(30),
+    beginWeek.clone().add(2, 'day').hour(12).minute(45),
+    lastChange,
+    3,
+    reservationtypes[0],
+    [person_10],
+    [r_2, r_5, r_1, r_4, room_2]
+  ),
+  new Reservation(
+    '6',
+    faker.commerce.productName(),
+    beginWeek.clone().add(2, 'day').hour(12).minute(30),
+    beginWeek.clone().add(2, 'day').hour(15).minute(45),
+    lastChange,
+    1,
+    reservationtypes[0],
+    [person_8],
+    [room_7, r_2, r_5, r_1, r_4]
+  ),
+  new Reservation(
+    '7',
+    faker.commerce.productName(),
+    beginWeek.clone().add(2, 'day').hour(12).minute(30),
+    beginWeek.clone().add(2, 'day').hour(15).minute(45),
+    lastChange,
+    2,
+    reservationtypes[0],
+    [person_18],
+    [r_2, r_5, r_1, r_4]
+  ),
+  new Reservation(
+    '8',
+    faker.commerce.productName(),
+    beginWeek.clone().add(2, 'day').hour(13).minute(30),
+    beginWeek.clone().add(2, 'day').hour(16).minute(45),
+    lastChange,
+    3,
+    reservationtypes[0],
+    [person_6],
+    [r_2, r_5, r_1, r_4, room_2]
+  ),
   // Donnerstag
-  {
-    id: '9',
-    name: faker.commerce.productName(),
-    begin: beginWeek.clone().add(3, 'day').hour(8).minute(30),
-    end: beginWeek.clone().add(3, 'day').hour(11).minute(45),
-    lastChange: lastChange,
-    type: reservationtypes[0],
-    persons: [
-      person_12
-    ],
-    resources: [
-      room_7,
-      r_5
-    ]
-  },
-  {
-    id: '10',
-    name: faker.commerce.productName(),
-    begin: beginWeek.clone().add(3, 'day').hour(12).minute(30),
-    end: beginWeek.clone().add(3, 'day').hour(15).minute(45),
-    lastChange: lastChange,
-    type: reservationtypes[0],
-    persons: [
-      person_17
-    ],
-    resources: [
-      room_7,
-      r_5
-    ]
-  },
+  new Reservation(
+    '9',
+    faker.commerce.productName(),
+    beginWeek.clone().add(3, 'day').hour(8).minute(30),
+    beginWeek.clone().add(3, 'day').hour(11).minute(45),
+    lastChange,
+    1,
+    reservationtypes[0],
+    [person_12],
+    [room_7, r_5]
+  ),
+  new Reservation(
+    '10',
+    faker.commerce.productName(),
+    beginWeek.clone().add(3, 'day').hour(12).minute(30),
+    beginWeek.clone().add(3, 'day').hour(15).minute(45),
+    lastChange,
+    1,
+    reservationtypes[0],
+    [person_17],
+    [room_7, r_5]
+  ),
   // Freitag
-  {
-    id: '11',
-    name: faker.commerce.productName(),
-    begin: beginWeek.clone().add(4, 'day').hour(8).minute(30),
-    end: beginWeek.clone().add(4, 'day').hour(11).minutes(45),
-    lastChange: lastChange,
-    column: 1,
-    type: reservationtypes[0],
-    persons: [
-      person_5
-    ],
-    resources: [
-      r_0,
-      r_2,
-      r_5,
-      r_1,
-      r_4,
-      room_3,
-      r_3
-    ]
-  },
-  {
-    id: '12',
-    name: faker.commerce.productName(),
-    begin: beginWeek.clone().add(4, 'day').hour(8).minute(30),
-    end: beginWeek.clone().add(4, 'day').hour(11).minutes(45),
-    lastChange: lastChange,
-    column: 2,
-    type: reservationtypes[0],
-    persons: [
-      person_2
-    ],
-    resources: [
-      r_2,
-      r_5,
-      r_1,
-      r_4,
-      room_3,
-      r_3
-    ]
-  },
-  {
-    id: '14',
-    name: faker.commerce.productName(),
-    begin: beginWeek.clone().add(4, 'day').hour(8).minute(30),
-    end: beginWeek.clone().add(4, 'day').hour(11).minutes(45),
-    lastChange: lastChange,
-    column: 3,
-    type: reservationtypes[0],
-    persons: [
-      person_1
-    ],
-    resources: [
-      r_2,
-      r_5,
-      room_4,
-      r_1,
-      r_4,
-      r_3
-    ]
-  },
-  {
-    id: '15',
-    name: faker.commerce.productName(),
-    begin: beginWeek.clone().add(4, 'day').hour(8).minute(30),
-    end: beginWeek.clone().add(4, 'day').hour(11).minutes(45),
-    lastChange: lastChange,
-    column: 4,
-    type: reservationtypes[0],
-    persons: [
-      person_4
-    ],
-    resources: [
-      room_7,
-      r_2,
-      r_5,
-      r_1,
-      r_3
-    ]
-  },
-  {
-    id: '16',
-    name: faker.commerce.productName(),
-    begin: beginWeek.clone().add(4, 'day').hour(8).minutes(30),
-    end: beginWeek.clone().add(4, 'day').hour(11).minutes(45),
-    lastChange: lastChange,
-    column: 5,
-    type: reservationtypes[0],
-    persons: [
-      person_13
-    ],
-    resources: [
-      r_2,
-      r_5,
-      r_1,
-      room_5,
-      r_4,
-      r_3
-    ]
-  },
-  {
-    id: '17',
-    name: faker.commerce.productName(),
-    begin: beginWeek.clone().add(4, 'day').hour(9).minutes(0),
-    end: beginWeek.clone().add(4, 'day').hour(12).minutes(15),
-    lastChange: lastChange,
-    column: 6,
-    type: reservationtypes[0],
-    persons: [
-      person_15
-    ],
-    resources: [
-      r_2,
-      r_5,
-      r_1,
-      r_4,
-      room_6,
-      r_3
-    ]
-  },
-  {
-    id: '18',
-    name: faker.commerce.productName(),
-    begin: beginWeek.clone().add(5, 'day').hour(9).minutes(0),
-    end: beginWeek.clone().add(5, 'day').hour(17).minutes(0),
-    lastChange: lastChange,
-    type: reservationtypes[1],
-    persons: [
-      person_6
-    ],
-    resources: [
-      r_1,
-      r_2,
-      r_3,
-      r_4,
-      r_5
-    ]
-  }
+  new Reservation(
+    '11',
+    faker.commerce.productName(),
+    beginWeek.clone().add(4, 'day').hour(8).minute(30),
+    beginWeek.clone().add(4, 'day').hour(11).minutes(45),
+    lastChange,
+    1,
+    reservationtypes[0],
+    [person_5],
+    [r_0, r_2, r_5, r_1, r_4, room_3, r_3]
+  ),
+  new Reservation(
+    '12',
+    faker.commerce.productName(),
+    beginWeek.clone().add(4, 'day').hour(8).minute(30),
+    beginWeek.clone().add(4, 'day').hour(11).minutes(45),
+    lastChange,
+    2,
+    reservationtypes[0],
+    [person_2],
+    [r_2, r_5, r_1, r_4, room_3, r_3]
+  ),
+  new Reservation(
+    '14',
+    faker.commerce.productName(),
+    beginWeek.clone().add(4, 'day').hour(8).minute(30),
+    beginWeek.clone().add(4, 'day').hour(11).minutes(45),
+    lastChange,
+    3,
+    reservationtypes[0],
+    [person_1],
+    [r_2, r_5, room_4, r_1, r_4, r_3]
+  ),
+  new Reservation(
+    '15',
+    faker.commerce.productName(),
+    beginWeek.clone().add(4, 'day').hour(8).minute(30),
+    beginWeek.clone().add(4, 'day').hour(11).minutes(45),
+    lastChange,
+    4,
+    reservationtypes[0],
+    [person_4],
+    [room_7, r_2, r_5, r_1, r_3]
+  ),
+  new Reservation(
+    '16',
+    faker.commerce.productName(),
+    beginWeek.clone().add(4, 'day').hour(8).minutes(30),
+    beginWeek.clone().add(4, 'day').hour(11).minutes(45),
+    lastChange,
+    5,
+    reservationtypes[0],
+    [person_13],
+    [r_2, r_5, r_1, room_5, r_4, r_3]
+  ),
+  new Reservation(
+    '17',
+    faker.commerce.productName(),
+    beginWeek.clone().add(4, 'day').hour(9).minutes(0),
+    beginWeek.clone().add(4, 'day').hour(12).minutes(15),
+    lastChange,
+    6,
+    reservationtypes[0],
+    [person_15],
+    [r_2, r_5, r_1, r_4, room_6, r_3]
+  ),
+  new Reservation(
+    '18',
+    faker.commerce.productName(),
+    beginWeek.clone().add(5, 'day').hour(9).minutes(0),
+    beginWeek.clone().add(5, 'day').hour(17).minutes(0),
+    lastChange,
+    1,
+    reservationtypes[1],
+    [person_6],
+    [r_1, r_2, r_3, r_4, r_5]
+  )
 ]
 
 const demodata = {
