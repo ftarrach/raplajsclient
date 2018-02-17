@@ -46,11 +46,9 @@ export default {
   computed: {
     selected: {
       get() {
-        console.log(`get selected: ${this.selectedItems[0].id}`)
         return [this.selectedItems[0].id]
       },
       set(newVal) {
-        console.log(`set selected: ${newVal}`)
         this.$emit('input', newVal[0])
       }
     }

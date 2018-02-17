@@ -7,6 +7,7 @@ const Api = {
       if (result) {
         return result
       }
+      console.warn(`WARN: no string for key ${value} found`)
     }
     return `»${value}«`
   },
@@ -17,6 +18,7 @@ const Api = {
       if (result) {
         return result
       }
+      console.warn(`WARN: no string for key ${key} found`)
     }
     return `»${key}(${parameters.join()})«`
   }

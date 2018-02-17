@@ -15,23 +15,29 @@
             label.label {{ "reservation_type" | gwt-localize }}
             reservation-type-chooser(v-model="type")
           //- step chooser
+          .column.is-full
+            hr.line
           .column.is-three-quarters
             ul.steps
               li.steps-segment(:class="{ 'is-active': step === 'appointment' }")
                 span.steps-marker(@click="switchStep('appointment')")
-                  i.fas.fa-calendar
+                  i.fas.fa-calendar-alt
               li.steps-segment(:class="{ 'is-active': step === 'resource' }")
                 span.steps-marker(@click="switchStep('resource')")
-                  i.fas.fa-calendar
+                  i.fas.fa-archive
           //- Dynamic Components, Appointments and Resources
           .column.is-full(v-show="step === 'appointment'")
             reservation-form-appointment(v-model="appointments")
           .column.is-full(v-show="step === 'resource'")
             reservation-form-resource(v-model="resources")
-    footer
-      .card-footer
-        a.card-footer-item(href="#") {{ "delete" | gwt-localize }}
-        a.card-footer-item(href="#") {{ "save" | gwt-localize }}
+      footer
+        .card-footer
+          a.card-footer-item(href="#") {{ "delete" | gwt-localize }}
+          a.card-footer-item(@click.stop.prevent="previousStep", :class="{'disabled': isFirstStep}")
+            i.fas.fa-arrow-left
+          a.card-footer-item(@click.stop.prevent="nextStep" :class="{'disabled': isLastStep}")
+            i.fas.fa-arrow-right
+          a.card-footer-item(href="#") {{ "save" | gwt-localize }}
 </template>
 
 <script>
@@ -56,6 +62,8 @@ export default {
     }
   },
 
+  steps: ['appointment', 'resource'],
+
   data() {
     return {
       id: null,
@@ -63,7 +71,39 @@ export default {
       name: '',
       appointments: [],
       resources: [],
-      step: 'appointment'
+      step: 'appointment',
+      stepNr: 0
+    }
+  },
+
+  computed: {
+    isFirstStep() {
+      return this.stepNr === 0
+    },
+    isLastStep() {
+      return this.stepNr === this.$options.steps.length - 1
+    }
+  },
+
+  methods: {
+    back() {
+      this.$router.go(-1)
+    },
+    switchStep(newStep) {
+      this.step = newStep
+      this.stepNr = this.$options.steps.indexOf(newStep)
+    },
+    nextStep() {
+      if (this.stepNr < this.$options.steps.length - 1) {
+        this.stepNr = this.stepNr + 1
+        this.step = this.$options.steps[this.stepNr]
+      }
+    },
+    previousStep() {
+      if (this.stepNr > 0) {
+        this.stepNr = this.stepNr - 1
+        this.step = this.$options.steps[this.stepNr]
+      }
     }
   },
 
@@ -118,23 +158,21 @@ export default {
       // TODO: if id is set, but not found in store, show an error to the user
       alert(`no reservation with id ${id} found`)
     }
-  },
-
-  methods: {
-    back() {
-      this.$router.go(-1)
-    },
-    switchStep(newStep) {
-      this.step = newStep
-    }
   }
-
 }
 </script>
 
 <style scoped>
+  .container {
+    padding-bottom: 1em;
+  }
+
   .card {
-    margin: 2em 0
+    margin: 2em;
+  }
+
+  hr.line {
+    margin: 0.2em
   }
 
   header.card-header {
@@ -143,6 +181,12 @@ export default {
   }
 
   .steps-marker {
-    cursor: pointer
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .disabled {
+    pointer-events: none;
+    color: #000;
   }
 </style>
