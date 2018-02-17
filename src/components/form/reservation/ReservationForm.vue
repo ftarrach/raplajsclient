@@ -5,7 +5,7 @@
         p.card-header-title {{ title }}
         b-button(icon="fa-arrow-left" no-text @click="back" pull-right)
       .card-content
-        .columns.is-multiline
+        .columns.is-multiline.is-centered
           //- Name
           .column.is-half
             label.label {{ "name" | gwt-localize }}
@@ -14,47 +14,31 @@
           .column.is-half
             label.label {{ "reservation_type" | gwt-localize }}
             reservation-type-chooser(v-model="type")
-          .column.is-full
-            component(:is="stepComponent" v-model="appointments")
-          .column.is-half
-            label.label {{ "reservation.used_resources" | gwt-localize }}
-            reservation-form-resources-list(:resources="allResources" @click="addResourceToReservation")
-              div(slot="buttons")
-                b-button(icon="fa-calendar-alt") {{ "calendar" | gwt-localize }}
-                b-button(icon="fa-filter" pull-right) {{ "filter" | gwt-localize }}
-              div(slot="item-action" slot-scope="prop")
-                p.has-text-success(v-if="isAllFree(prop.resource)")
-                  | {{ "every_appointment" | gwt-localize }}
-                p(v-else-if="isSometimesFree(prop.resource)")
-                  | auswählbar an {{ prop.resource.free | list }}
-          .column.is-half
-            label.label {{ "reservation.allocations" | gwt-localize }}
-            reservation-form-resources-list(:resources="resources"
-                                            @click="removeResourceFromReservation")
-              div(slot="buttons")
-                b-button(icon="fa-calendar-alt") {{ "calendar" | gwt-localize }}
-              div(slot="item-action" slot-scope="prop")
-               .dropdown.is-pulled-right
-                  .dropdown-trigger(@click.stop="")
-                    button.button
-                      span.dropdown-text {{ "every_appointment" | gwt-localize }}
-                      span.icon.is-small
-                        i.fa.fa-angle-down
-                  .dropdown-menu(role='menu')
-                    .dropdown-content
-                      | TODO: Add items here
-                      | TODO: Add open parameter
+          //- step chooser
+          .column.is-three-quarters
+            ul.steps
+              li.steps-segment(:class="{ 'is-active': step === 'appointment' }")
+                span.steps-marker(@click="switchStep('appointment')")
+                  i.fas.fa-calendar
+              li.steps-segment(:class="{ 'is-active': step === 'resource' }")
+                span.steps-marker(@click="switchStep('resource')")
+                  i.fas.fa-calendar
+          //- Dynamic Components, Appointments and Resources
+          .column.is-full(v-show="step === 'appointment'")
+            reservation-form-appointment(v-model="appointments")
+          .column.is-full(v-show="step === 'resource'")
+            reservation-form-resource(v-model="resources")
     footer
       .card-footer
-        a.card-footer-item(href="#") Löschen
-        a.card-footer-item(href="#") Speichern
+        a.card-footer-item(href="#") {{ "delete" | gwt-localize }}
+        a.card-footer-item(href="#") {{ "save" | gwt-localize }}
 </template>
 
 <script>
 
 import ReservationFormAppointment from './ReservationFormAppointment'
+import ReservationFormResource from './ReservationFormResource'
 import ReservationTypeChooser from '@/components/widgets/ReservationTypeChooser'
-import ReservationFormResourcesList from './ReservationFormResourcesList'
 import moment from 'moment'
 
 export default {
@@ -62,7 +46,7 @@ export default {
   components: {
     ReservationTypeChooser,
     ReservationFormAppointment,
-    ReservationFormResourcesList
+    ReservationFormResource
   },
 
   props: {
@@ -79,13 +63,7 @@ export default {
       name: '',
       appointments: [],
       resources: [],
-      stepComponent: null
-    }
-  },
-
-  computed: {
-    allResources() {
-      return this.$store.getters.allResources
+      step: 'appointment'
     }
   },
 
@@ -146,28 +124,11 @@ export default {
     back() {
       this.$router.go(-1)
     },
-    addResourceToReservation(resource) {
-      this.resources.push(resource)
-      this.resources.sort((a, b) => a.id - b.id) // sort by IDs
-    },
-    removeResourceFromReservation(resource) {
-      const index = this.resources.indexOf(resource)
-      this.resources.splice(index, 1)
-    },
-
-    isAllFree(resource) {
-      return (typeof resource.free === 'boolean') && resource.free
-    },
-    isSometimesFree(resource) {
-      return resource.free instanceof Array
-    }
-  },
-
-  filters: {
-    list(input) {
-      return input.join()
+    switchStep(newStep) {
+      this.step = newStep
     }
   }
+
 }
 </script>
 
@@ -179,5 +140,9 @@ export default {
   header.card-header {
     padding-right: 8px;
     align-items: center;
+  }
+
+  .steps-marker {
+    cursor: pointer
   }
 </style>
