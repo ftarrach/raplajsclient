@@ -2,6 +2,7 @@ import moment from 'moment'
 import faker from 'faker'
 
 faker.locale = 'de'
+moment.locale('de')
 
 const beginWeek = moment('20171002T0000')
 const lastChange = moment('20171231T1422')
@@ -37,6 +38,7 @@ const appointments = [
     enddatetype: 'until'
   }
 ]
+
 const categories = [
   {
     id: 1,
@@ -54,7 +56,7 @@ const permissions = [
   {
     id: 22,
     type: 'group',
-    value : categories[0],
+    value: categories[0],
     access: 'read'
   }
 ]
@@ -86,11 +88,8 @@ class Person {
     this.surname = surname
     this.firstname = firstname
     this.type = rt_person
+    this.name = `${this.surname} ${this.firstname}`
     this.free = free()
-  }
-
-  toString() {
-    return `${this.surname} ${this.firstname}`
   }
 
   compare(other) {
@@ -110,10 +109,6 @@ class Resource {
     this.type = type
     this.name = name
     this.free = free()
-  }
-
-  toString() {
-    return this.name
   }
 
   compare(other) {
@@ -219,6 +214,7 @@ class Reservation {
     this.persons = persons
     this.resources = resources
     this.appointments = appointments
+    this.permissions = permissions
   }
 }
 

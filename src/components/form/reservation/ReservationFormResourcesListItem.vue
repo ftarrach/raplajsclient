@@ -8,7 +8,7 @@
           i.fas.fa-exclamation-circle
         span.icon.is-small.has-text-danger(v-else-if="isNotFree")
           i.fas.fa-times-circle
-        span.text {{ resource.toString() }}
+        span.text {{ resource.name }}
       .column.is-half
         slot
 </template>
