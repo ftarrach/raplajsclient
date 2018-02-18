@@ -12,9 +12,11 @@ import CalendarDayView from './CalendarDayView'
 import moment from 'moment'
 
 export default {
+
   components: {
     CalendarDayLegend, CalendarDayView
   },
+
   computed: {
     date() {
       return this.$store.state.user.date
@@ -35,6 +37,7 @@ export default {
       ]
     }
   },
+
   methods: {
     reservationsAt(queryDate) {
       return this.reservations.filter(r => moment(r.begin).isSame(queryDate, 'day'))

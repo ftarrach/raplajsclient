@@ -9,6 +9,9 @@ let reservationtypes = demodata.reservationtypes
 export default {
 
   getters: {
+    allCalendars: (state) => {
+      return [ '»Default', '»Test' ]
+    },
     // List<DynamicTypes> (optional)
     allResourceTypes: (state) => {
       return resourceTypes

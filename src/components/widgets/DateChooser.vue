@@ -5,7 +5,7 @@
       .control.is-expanded
         b-datepicker(v-model='val')
       .control
-        button.button(@click='today') Heute
+        button.button(@click='today') {{ "today" | gwt-localize }}
       .control
         button.button.is-hidden-mobile(@click='previous')
           i.fa.fa-caret-left

@@ -10,7 +10,10 @@
           template(v-for="r in c")
             reservation-item(:reservation="r"
                              @dblclick="editReservation(r)")
-        reservation-item(v-show="newReservation.begin" :reservation="newReservation" is-new @dblclick="createNewReservation")
+        reservation-item(v-show="newReservation.begin"
+                         :reservation="newReservation"
+                         @dblclick="createNewReservation"
+                         is-new)
 </template>
 
 <script>
@@ -19,7 +22,6 @@
 
 import DayHeader from './DayHeader'
 import ReservationItem from './ReservationItem'
-import moment from 'moment'
 
 export default {
 
@@ -74,10 +76,12 @@ export default {
     },
 
     addReservation(h) {
-      let hour = Math.floor((h - 1) / 4)
-      let min = (h - 1 - (4 * hour)) * 15 || '00'
-      this.newReservation.begin = moment().hour(hour).minute(min)
-      this.newReservation.end = this.newReservation.begin.clone().add(1, 'hour')
+      let hours = Math.floor((h - 1) / 4)
+      let minutes = (h - 1 - (4 * hours)) * 15 || '00'
+      let seconds = 0
+      console.log(this.date)
+      this.newReservation.begin = { hours, minutes, seconds }
+      this.newReservation.end = { hours: hours + 1, minutes, seconds }
       this.newReservation.name = 'Neue Reservierung'
     },
 
@@ -93,7 +97,6 @@ export default {
     createNewReservation() {
       alert('navigate to create-new-reservation-dialog, keep from-to times')
     }
-
   }
 }
 </script>

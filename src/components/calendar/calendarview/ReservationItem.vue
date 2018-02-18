@@ -10,8 +10,6 @@
 
 <script>
 
-import moment from 'moment'
-
 export default {
 
   props: {
@@ -39,7 +37,8 @@ export default {
     },
     time() {
       if (this.reservation.begin) {
-        return `${moment(this.reservation.begin).format('LT')} - ${moment(this.reservation.end).format('LT')}`
+        let locale = this.$rapla.locale
+        return `${locale.formatTime(this.reservation.begin)} - ${locale.formatTime(this.reservation.end)}`
       }
     },
     style() {

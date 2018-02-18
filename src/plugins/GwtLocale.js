@@ -65,12 +65,13 @@ const Api = {
       return ''
     }
     if (locale) {
+      let raplaDate = locale.toRaplaDate(date.years, date.months, date.date)
       if (len === 'short') {
-        return locale.formatDateShort(locale.toRaplaDate(date.years, date.months, date.date))
+        return locale.formatDateShort(raplaDate)
       } else if (!len || len === 'medium') {
-        return locale.formatDate(locale.toRaplaDate(date.years, date.months, date.date))
+        return locale.formatDate(raplaDate)
       } else if (len === 'long') {
-        return locale.formatDateLong(locale.toRaplaDate(date.years, date.months, date.date))
+        return locale.formatDateLong(raplaDate)
       } else {
         console.warn(`unknown length '${len}' in GwtLocale.formatDate`)
         return ''
@@ -82,9 +83,8 @@ const Api = {
   },
 
   formatTime(date) { // date = {hours: …, minutes: …, …}
-    console.log(date)
     if (locale) {
-      // TODO: implement me
+      return locale.formatTime(locale.toTime(date.hours, date.minutes, date.seconds))
     }
     return moment(date).format('HH:mm')
   }
