@@ -28,7 +28,7 @@ const Api = {
 
   formatDateTime(date) {
     if (locale) {
-      // ASK: Where is this Date Format in Rapla?
+      // REVIEW: Where is this Date Format in Rapla?
       return moment(date).format('DD.MM.YYYY (dd) HH:mm')
     } else {
       return moment(date).format('DD.MM.YYYY (dd) HH:mm')

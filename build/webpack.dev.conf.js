@@ -50,7 +50,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     // https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: 'index_standalone.html',
+      template: 'index.html',
       inject: true
     }),
     // copy custom static assets
