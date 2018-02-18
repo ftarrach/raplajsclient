@@ -35,6 +35,31 @@ const Api = {
     }
   },
 
+  formatWeekday(weekdayNr, len) {
+    if (weekdayNr === undefined || weekdayNr === null) {
+      return ''
+    }
+    if (locale) {
+      if (++weekdayNr > 7) {
+        weekdayNr -= 7
+      }
+      if (len === 'short') {
+        return locale.getWeekdayNameShort(weekdayNr)
+      } else if (!len || len === 'long') {
+        return locale.getWeekdayName(weekdayNr)
+      } else {
+        console.warn(`unknown length '${len}' in GwtLocale.formatWeekday`)
+        return ''
+      }
+    }
+    weekdayNr--
+    if (len === 'short') {
+      return moment().weekday(weekdayNr).format('dd')
+    } else if (!len || len === 'long') {
+      return moment().weekday(weekdayNr).format('dddd')
+    }
+  },
+
   formatDate(date, len) { // date = {years: …, months: …, …}
     if (!date) {
       return ''
@@ -59,7 +84,7 @@ const Api = {
   formatTime(date) { // date = {hours: …, minutes: …, …}
     console.log(date)
     if (locale) {
-
+      // TODO: implement me
     }
     return moment(date).format('HH:mm')
   }
@@ -76,6 +101,7 @@ const Plugin = {
     Vue.filter('gwt-formatDate', (value, len) => Api.formatDate(value, len))
     Vue.filter('gwt-formatTime', (value, len) => Api.formatTime(value, len))
     Vue.filter('gwt-formatDateTime', (value, len) => Api.formatDateTime(value, len))
+    Vue.filter('gwt-formatWeekday', (value, len) => Api.formatWeekday(value, len))
   }
 }
 

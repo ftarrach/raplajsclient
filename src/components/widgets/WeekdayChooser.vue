@@ -11,22 +11,24 @@
 
 <script>
 
-import moment from 'moment'
-
 export default {
 
   data() {
     return {
-      items: [
-        {value: 0, label: moment().weekday(0).format('dd')}, // TODO: use locale
-        {value: 1, label: moment().weekday(1).format('dd')},
-        {value: 2, label: moment().weekday(2).format('dd')},
-        {value: 3, label: moment().weekday(3).format('dd')},
-        {value: 4, label: moment().weekday(4).format('dd')},
-        {value: 5, label: moment().weekday(5).format('dd')},
-        {value: 6, label: moment().weekday(6).format('dd')}
-      ]
+      items: []
     }
+  },
+
+  created() {
+    this.items = [
+      {value: 0, label: this.$rapla.locale.formatWeekday(1, 'short')}, // TODO: use locale
+      {value: 1, label: this.$rapla.locale.formatWeekday(2, 'short')},
+      {value: 2, label: this.$rapla.locale.formatWeekday(3, 'short')},
+      {value: 3, label: this.$rapla.locale.formatWeekday(4, 'short')},
+      {value: 4, label: this.$rapla.locale.formatWeekday(5, 'short')},
+      {value: 5, label: this.$rapla.locale.formatWeekday(6, 'short')},
+      {value: 6, label: this.$rapla.locale.formatWeekday(7, 'short')}
+    ]
   },
 
   props: {

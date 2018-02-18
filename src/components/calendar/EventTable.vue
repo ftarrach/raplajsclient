@@ -103,3 +103,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .table tbody tr {
+    cursor: pointer
+  }
+</style>
