@@ -10,6 +10,8 @@
 
 <script>
 
+import moment from 'moment'
+
 export default {
 
   props: {
@@ -27,23 +29,23 @@ export default {
   computed: {
     persons() {
       if (this.reservation.persons) {
-        return this.reservation.persons.map(p => p.toString())
+        return this.reservation.persons.map(p => p.name)
       }
     },
     resources() {
       if (this.reservation.resources) {
-        return this.reservation.resources.map(r => r.toString())
+        return this.reservation.resources.map(r => r.name)
       }
     },
     time() {
       if (this.reservation.begin) {
-        return `${this.reservation.begin.format('LT')} - ${this.reservation.end.format('LT')}`
+        return `${moment(this.reservation.begin).format('LT')} - ${moment(this.reservation.end).format('LT')}`
       }
     },
     style() {
       if (this.reservation.begin) {
-        let start = this.reservation.begin.hour() + this.reservation.begin.minute() / 60
-        let duration = this.reservation.end.hour() - this.reservation.begin.hour() + (this.reservation.end.minute() - this.reservation.begin.minute()) / 60
+        let start = this.reservation.begin.hours + this.reservation.begin.minutes / 60
+        let duration = this.reservation.end.hours - this.reservation.begin.hours + (this.reservation.end.minutes - this.reservation.begin.minutes) / 60
         return {
           top: start * 3 + 'em',
           height: duration * 3 + 'em'

@@ -10,8 +10,8 @@
       tbody
         tr(v-for='event in events' @dblclick="edit(event)")
           td {{ event.name }}
-          td {{ event.begin | moment }}
-          td.is-hidden-mobile {{ event.lastChange | moment }}
+          td {{ event.begin | gwt-formatDateTime }}
+          td.is-hidden-mobile {{ event.lastChange | gwt-formatDateTime }}
           td
             b-dropdown(is-right)
               b-dropdown-item(v-for="item in dropdownitems" 
@@ -99,13 +99,6 @@ export default {
     },
     cut() {
       alert('cut')
-    }
-  },
-
-  filters: {
-    moment(value) {
-      if (!value) return ''
-      return value.format('DD.MM.YYYY (dd) HH:mm')
     }
   }
 }

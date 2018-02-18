@@ -5,7 +5,7 @@ faker.locale = 'de'
 moment.locale('de')
 
 const beginWeek = moment('20171002T0000')
-const lastChange = moment('20171231T1422')
+const lastChange = moment('20171231T1422').toObject()
 
 const resourcetypes = [
   { id: 1, name: 'Kurs' },
@@ -201,8 +201,8 @@ class Reservation {
   constructor(id, name, begin, end, lastChange, column, type, persons, resources) {
     this.id = id
     this.name = name
-    this.begin = begin
-    this.end = end
+    this.begin = begin.toObject()
+    this.end = end.toObject()
     this.lastChange = lastChange
     this.column = column
     this.type = type

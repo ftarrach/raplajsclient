@@ -67,6 +67,16 @@ export default {
         this.value.begin = newVal.toObject()
       }
     },
+    end: {
+      get() {
+        if (this.value.end) {
+          return moment(this.value.end)
+        }
+      },
+      set(newVal) {
+        this.value.end = newVal.toObject()
+      }
+    },
     endtimetype: {
       get() {
         return this.value.time ? this.value.time.endtype : ''

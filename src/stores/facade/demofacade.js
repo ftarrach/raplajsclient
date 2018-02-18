@@ -1,4 +1,5 @@
 import demodata from './demodata'
+import moment from 'moment'
 
 let resourceTypes = demodata.resourcetypes
 let resources = demodata.resources
@@ -33,12 +34,12 @@ export default {
     reservationsOnDate: (state, _, rootState) => {
       // CalendarModel.queryReservations
       return reservations
-                  .filter(r => r.begin.isSame(rootState.user.date, 'day'))
+                  .filter(r => moment(r.begin).isSame(rootState.user.date, 'day'))
     },
     reservationsOnWeek: (state, _, rootState) => {
       // CalendarModel.queryReservations
       return reservations
-                  .filter(r => r.begin.isSame(rootState.user.date, 'isoweek'))
+                  .filter(r => moment(r.begin).isSame(rootState.user.date, 'isoweek'))
     },
     resourcesForType: (state) => (typeId) => {
       return resources
@@ -49,8 +50,8 @@ export default {
       let from = rootState.user.date.clone().startOf('isoweek')
       let to = rootState.user.date.clone().endOf('isoweek')
       return reservations
-                  .filter(r => r.begin.isAfter(from) &&
-                               r.begin.isBefore(to))
+                  .filter(r => moment(r.begin).isAfter(from) &&
+                               moment(r.begin).isBefore(to))
     },
     reservationById: (state) => (id) => {
       return reservations

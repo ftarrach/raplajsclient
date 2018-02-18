@@ -10,8 +10,8 @@
     tbody
       tr(v-for='appointment in appointments')
         td {{ appointment.name }}
-        td {{ appointment.begin | formatDate }}
-        td.is-hidden-mobile {{ appointment.end | formatDate }}
+        td {{ appointment.begin | gwt-formatDateTime }}
+        td.is-hidden-mobile {{ appointment.end | gwt-formatDateTime }}
         td.is-hidden-mobile
           joined-list(:list='appointment.resources | listresources')
         td.is-hidden-mobile
@@ -33,10 +33,6 @@ export default {
   },
 
   filters: {
-    formatDate(value) {
-      if (!value) return ''
-      return value.format('DD.MM.YYYY (dd) HH:mm')
-    },
     listresources(value) {
       if (!value) return ''
       return value.map(r => r.name || 'unbekannte Ressource').sort()

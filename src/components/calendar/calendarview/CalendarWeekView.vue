@@ -9,6 +9,7 @@
 <script>
 import CalendarDayLegend from './CalendarDayLegend'
 import CalendarDayView from './CalendarDayView'
+import moment from 'moment'
 
 export default {
   components: {
@@ -36,7 +37,7 @@ export default {
   },
   methods: {
     reservationsAt(queryDate) {
-      return this.reservations.filter(r => r.begin.isSame(queryDate, 'day'))
+      return this.reservations.filter(r => moment(r.begin).isSame(queryDate, 'day'))
     }
   }
 }

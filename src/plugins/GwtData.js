@@ -6,6 +6,11 @@ const Api = {
       return api.getCalendarNames()
     }
     return [ '»Default', '»Test' ]
+  },
+  loadCalendarModel(calendar) {
+    if (api) {
+      api.getCalendarModel().load(calendar)
+    }
   }
 }
 
