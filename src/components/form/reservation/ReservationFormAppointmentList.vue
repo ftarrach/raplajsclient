@@ -54,7 +54,7 @@ export default {
   methods: {
     // TODO: use gwt localization
     label(appointment) {
-      let weekdays = appointment.days.map(m => moment().weekday(m).format('dd')).join(', ')
+      let weekdays = appointment.days.map(m => moment(m).weekday(m).format('dd')).join(', ')
       let timespan = ''
       if (appointment.time) {
         timespan = `${appointment.time.from}-${appointment.time.to}`
@@ -62,14 +62,14 @@ export default {
       let repeat = this.localize(appointment.repeat)
       let until = 'Kein Ende'
       if (appointment.enddatetype === 'until') {
-        until = `bis zum ${appointment.end.format('L')}`
+        until = `bis zum ${moment(appointment.end).format('L')}`
       } else if (appointment.enddatetype === 'x-times') {
-        let enddate = appointment.end.add(appointment.repeat.times - 1, 'weeks').format('L')
+        let enddate = moment(appointment.end).add(appointment.repeat.times - 1, 'weeks').format('L')
         until = `bis zum ${enddate} wiederhole ${appointment.repeat.times} Mal`
       }
       return [
         `${weekdays} ${timespan} ${repeat}`,
-        `ab dem ${appointment.begin.format('L')} ${until}`
+        `ab dem ${moment(appointment.begin).format('L')} ${until}`
       ]
     },
 

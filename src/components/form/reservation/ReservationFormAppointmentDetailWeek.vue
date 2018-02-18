@@ -28,7 +28,7 @@
       .column.is-5
         span {{ "weekly" | gwt-localize }} {{ "repeating.start_date" | gwt-localize }}
       .column
-        b-datepicker(v-model="value.begin")
+        b-datepicker(v-model="begin")
     .columns
       .column.is-one-fifth.is-size-7
         appointment-endtime-date-chooser(v-model="endtype")
@@ -40,6 +40,8 @@
 </template>
 
 <script>
+
+import moment from 'moment'
 
 import WeekdayChooser from '@/components/widgets/WeekdayChooser'
 import AppointmentEndtimeDayChooser from '@/components/widgets/AppointmentEndtimeDayChooser'
@@ -57,6 +59,14 @@ export default {
   },
 
   computed: {
+    begin: {
+      get() {
+        return moment(this.value.begin)
+      },
+      set(newVal) {
+        this.value.begin = newVal.toObject()
+      }
+    },
     endtimetype: {
       get() {
         return this.value.time ? this.value.time.endtype : ''

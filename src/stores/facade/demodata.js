@@ -17,7 +17,7 @@ const appointments = [
   {
     id: 10,
     repeat: { type: 'weekly', interval: 1, times: 1 },
-    begin: moment('2017-10-03'),
+    begin: moment('2017-10-03').toObject(),
     days: [0, 1],
     time: { from: '09:00', to: '11:15', endtype: 'same-day' },
     end: null,
@@ -26,10 +26,10 @@ const appointments = [
   {
     id: 11,
     repeat: { type: 'weekly', interval: 1, times: 1 },
-    begin: moment('2017-10-04'),
+    begin: moment('2017-10-04').toObject(),
     days: [2],
     time: { from: '09:15', to: '11:30', endtype: 'x-day', xday: 1 },
-    end: moment('2017-12-20'),
+    end: moment('2017-12-20').toObject(),
     enddatetype: 'until'
   }
 ]
