@@ -33,17 +33,14 @@ export default {
     // List<Reservation>
     reservationsOnDate: (state, _, rootState) => {
       // CalendarModel.queryReservations
-      return reservations
-                  .filter(r => moment(r.begin).isSame(rootState.user.date, 'day'))
+      return reservations.filter(r => moment(r.begin).isSame(rootState.user.date, 'day'))
     },
     reservationsOnWeek: (state, _, rootState) => {
       // CalendarModel.queryReservations
-      return reservations
-                  .filter(r => moment(r.begin).isSame(rootState.user.date, 'isoweek'))
+      return reservations.filter(r => moment(r.begin).isSame(rootState.user.date, 'isoweek'))
     },
     resourcesForType: (state) => (typeId) => {
-      return resources
-                  .filter(r => r.type.id === typeId)
+      return resources.filter(r => r.type.id === typeId)
     },
       // CalendarModel.queryReservations
     reservationsInPeriod: (state, _, rootState) => {
@@ -54,8 +51,7 @@ export default {
                                moment(r.begin).isBefore(to))
     },
     reservationById: (state) => (id) => {
-      return reservations
-                  .filter(r => r.id === id)
+      return reservations.filter(r => r.id === id)
     }
   },
 

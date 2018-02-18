@@ -161,4 +161,8 @@ export default {
     pointer-events: none;
     color: #000;
   }
+
+  .card-content {
+    min-height: 43em;
+  }
 </style>

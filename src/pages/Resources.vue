@@ -14,7 +14,7 @@
         th Name
       tr(v-for='resource in resources')
         td {{ resource.type.name }}
-        td {{ resource.toString() }}
+        td {{ resource.name }}
 </template>
 
 <script>

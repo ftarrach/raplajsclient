@@ -14,7 +14,7 @@ const Api = {
     if (user) {
       return user.getName()
     }
-    return 'username'
+    return '»username'
   }
 }
 
