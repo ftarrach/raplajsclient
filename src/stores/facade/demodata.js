@@ -13,33 +13,13 @@ const resourcetypes = [
   { id: 3, name: 'Person' }
 ]
 
-const appointments = [
-  {
-    id: 10,
-    repeat: { type: 'weekly', interval: 1, times: 1 },
-    begin: moment('2017-10-03').toObject(),
-    days: [0, 1],
-    time: { from: '09:00', to: '11:15', endtype: 'same-day' },
-    end: null,
-    enddatetype: 'infinity'
-  },
-  {
-    id: 11,
-    repeat: { type: 'weekly', interval: 1, times: 1 },
-    begin: moment('2017-10-04').toObject(),
-    days: [2],
-    time: { from: '09:15', to: '11:30', endtype: 'x-day', xday: 1 },
-    end: moment('2017-12-20').toObject(),
-    enddatetype: 'until'
-  }
-]
-
 const categories = [
   {
     id: 1,
     name: 'Die Veranstaltungen anderer sehen'
   }
 ]
+
 const permissions = [
   {
     id: 21,
@@ -197,6 +177,23 @@ let person_16 = resources[27]
 let person_17 = resources[28]
 let person_18 = resources[29]
 
+let appointmentId = 10
+class Appointment {
+  constructor(repeat, begin, days, time, end, enddatetype) {
+    this.id = appointmentId++
+    this.repeat = repeat
+    this.begin = begin.toObject()
+    this.days = days
+    this.time = time
+    if (end) {
+      this.end = end.toObject()
+    } else {
+      this.end = null
+    }
+    this.enddatetype = enddatetype
+  }
+}
+
 class Reservation {
   constructor(id, name, begin, end, lastChange, column, type, persons, resources) {
     this.id = id
@@ -208,7 +205,16 @@ class Reservation {
     this.type = type
     this.persons = persons
     this.resources = resources
-    this.appointments = appointments
+    this.appointments = [
+      new Appointment(
+        { type: 'weekly', interval: 1, times: 1 },
+        begin,
+        [ begin.weekday() ],
+        { from: begin.format('HH:mm'), to: end.format('HH:mm'), endtype: 'same-day' },
+        null,
+        'infinity'
+      )
+    ]
     this.permissions = permissions
   }
 }
