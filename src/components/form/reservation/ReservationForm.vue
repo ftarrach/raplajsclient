@@ -120,9 +120,9 @@ export default {
     if (found.length > 0) {
       let reservation = found[0]
       this.id = id
-      this.appointments = reservation.appointments.map(a => Object.assign({}, a))
-      this.resources = reservation.resources.map(r => Object.assign({}, r))
-      this.permissions = reservation.permissions.map(p => Object.assign({}, p))
+      this.appointments = reservation.appointments
+      this.resources = reservation.resources
+      this.permissions = reservation.permissions
       this.type = reservation.type
       this.name = reservation.name
       this.stepComponent = ReservationFormAppointment

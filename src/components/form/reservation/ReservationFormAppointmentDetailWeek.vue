@@ -14,7 +14,7 @@
         input.input(type="text" v-model="startTime" :disabled="wholeDay")
       .column.is-two-fifths
         .b-checkbox.is-primary
-          | #[input#whole-day(type="checkbox" v-model="wholeDay").styled] #[label(for="whole-day") ganztägig]
+          | #[input#whole-day(type="checkbox" v-model="wholeDay").styled] #[label(for="whole-day") {{ "all-day" | gwt-localize }}]
     .columns
       .column.is-2
         span {{ "end_time" | gwt-localize }}

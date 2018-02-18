@@ -1,61 +1,59 @@
 import demodata from './demodata'
 
-export default {
+let resourceTypes = demodata.resourcetypes
+let resources = demodata.resources
+let reservations = demodata.reservations
+let reservationtypes = demodata.reservationtypes
 
-  state: {
-    resourceTypes: demodata.resourcetypes,
-    resources: demodata.resources,
-    reservations: demodata.reservations,
-    reservationtypes: demodata.reservationtypes
-  },
+export default {
 
   getters: {
     // List<DynamicTypes> (optional)
     allResourceTypes: (state) => {
-      return state.resourceTypes
+      return resourceTypes
     },
     // List<Allocatable> (optional)
     allResources: (state) => {
-      return state.resources
+      return resources
     },
     allReservationTypes: (state) => {
-      return state.reservationtypes
+      return reservationtypes
     },
     // List<AppointmentBlock> (AppointmentBlock = 1 konkreter Termin, weil 1 Appointment kann n Reservierungen haben)
     appointmentsInPeriod: (state) => {
       // Implementierung: CalendarModel.queryBlocks(TimeInterval)
       // TODO: use userinputstate to filter
-      return state.reservations
+      return reservations
     },
     // List<Reservation>
     eventsInPeriod: (state) => {
-      return state.reservations
+      return reservations
     },
     // List<Reservation>
     reservationsOnDate: (state, _, rootState) => {
       // CalendarModel.queryReservations
-      return state.reservations
+      return reservations
                   .filter(r => r.begin.isSame(rootState.user.date, 'day'))
     },
     reservationsOnWeek: (state, _, rootState) => {
       // CalendarModel.queryReservations
-      return state.reservations
+      return reservations
                   .filter(r => r.begin.isSame(rootState.user.date, 'isoweek'))
     },
     resourcesForType: (state) => (typeId) => {
-      return state.resources
+      return resources
                   .filter(r => r.type.id === typeId)
     },
       // CalendarModel.queryReservations
     reservationsInPeriod: (state, _, rootState) => {
       let from = rootState.user.date.clone().startOf('isoweek')
       let to = rootState.user.date.clone().endOf('isoweek')
-      return state.reservations
+      return reservations
                   .filter(r => r.begin.isAfter(from) &&
                                r.begin.isBefore(to))
     },
     reservationById: (state) => (id) => {
-      return state.reservations
+      return reservations
                   .filter(r => r.id === id)
     }
   },
