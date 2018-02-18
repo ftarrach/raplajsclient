@@ -2,6 +2,7 @@
 
 import GwtLocale from './GwtLocale'
 import GwtUser from './GwtUser'
+import GwtData from './GwtData'
 
 require('./gwtEvents.js')
 
@@ -33,7 +34,8 @@ function setupGwtCallback(options) {
 
 const Api = {
   locale: GwtLocale.Api,
-  user: GwtUser.Api
+  user: GwtUser.Api,
+  data: GwtData.Api
 }
 
 function installChildPlugins(Vue, options) {
@@ -47,6 +49,7 @@ function installChildPlugins(Vue, options) {
   }})
   Vue.use(GwtLocale.Plugin, { api })
   Vue.use(GwtUser.Plugin, { api })
+  Vue.use(GwtData.Plugin, { api })
   options.onLoad()
 }
 

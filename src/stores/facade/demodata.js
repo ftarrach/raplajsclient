@@ -7,11 +7,6 @@ moment.locale('de')
 const beginWeek = moment('20171002T0000')
 const lastChange = moment('20171231T1422')
 
-const calendars = [
-  { id: 1, name: 'Kalender A' },
-  { id: 2, name: 'Kalender B' }
-]
-
 const resourcetypes = [
   { id: 1, name: 'Kurs' },
   { id: 2, name: 'Raum' },
@@ -222,7 +217,7 @@ const reservations = [
   // Dienstag
   new Reservation(
     '1',
-    faker.commerce.productName(),
+    faker.lorem.word(),
     beginWeek.clone().add(1, 'day').hour(8).minute(30),
     beginWeek.clone().add(1, 'day').hour(10).minute(30),
     lastChange,
@@ -233,7 +228,7 @@ const reservations = [
   ),
   new Reservation(
     '2',
-    faker.commerce.productName(),
+    faker.lorem.word(),
     beginWeek.clone().add(1, 'day').hour(12).minute(30),
     beginWeek.clone().add(1, 'day').hour(15).minute(45),
     lastChange,
@@ -245,7 +240,7 @@ const reservations = [
   // Mittwoch
   new Reservation(
     '3',
-    faker.commerce.productName(),
+    faker.lorem.word(),
     beginWeek.clone().add(2, 'day').hour(8).minute(30),
     beginWeek.clone().add(2, 'day').hour(11).minute(15),
     lastChange,
@@ -256,7 +251,7 @@ const reservations = [
   ),
   new Reservation(
     '4',
-    faker.commerce.productName(),
+    faker.lorem.word(),
     beginWeek.clone().add(2, 'day').hour(8).minute(30),
     beginWeek.clone().add(2, 'day').hour(11).minute(45),
     lastChange,
@@ -267,7 +262,7 @@ const reservations = [
   ),
   new Reservation(
     '5',
-    faker.commerce.productName(),
+    faker.lorem.word(),
     beginWeek.clone().add(2, 'day').hour(9).minute(30),
     beginWeek.clone().add(2, 'day').hour(12).minute(45),
     lastChange,
@@ -278,7 +273,7 @@ const reservations = [
   ),
   new Reservation(
     '6',
-    faker.commerce.productName(),
+    faker.lorem.word(),
     beginWeek.clone().add(2, 'day').hour(12).minute(30),
     beginWeek.clone().add(2, 'day').hour(15).minute(45),
     lastChange,
@@ -289,7 +284,7 @@ const reservations = [
   ),
   new Reservation(
     '7',
-    faker.commerce.productName(),
+    faker.lorem.word(),
     beginWeek.clone().add(2, 'day').hour(12).minute(30),
     beginWeek.clone().add(2, 'day').hour(15).minute(45),
     lastChange,
@@ -300,7 +295,7 @@ const reservations = [
   ),
   new Reservation(
     '8',
-    faker.commerce.productName(),
+    faker.lorem.word(),
     beginWeek.clone().add(2, 'day').hour(13).minute(30),
     beginWeek.clone().add(2, 'day').hour(16).minute(45),
     lastChange,
@@ -312,7 +307,7 @@ const reservations = [
   // Donnerstag
   new Reservation(
     '9',
-    faker.commerce.productName(),
+    faker.lorem.word(),
     beginWeek.clone().add(3, 'day').hour(8).minute(30),
     beginWeek.clone().add(3, 'day').hour(11).minute(45),
     lastChange,
@@ -323,7 +318,7 @@ const reservations = [
   ),
   new Reservation(
     '10',
-    faker.commerce.productName(),
+    faker.lorem.word(),
     beginWeek.clone().add(3, 'day').hour(12).minute(30),
     beginWeek.clone().add(3, 'day').hour(15).minute(45),
     lastChange,
@@ -335,7 +330,7 @@ const reservations = [
   // Freitag
   new Reservation(
     '11',
-    faker.commerce.productName(),
+    faker.lorem.word(),
     beginWeek.clone().add(4, 'day').hour(8).minute(30),
     beginWeek.clone().add(4, 'day').hour(11).minutes(45),
     lastChange,
@@ -346,7 +341,7 @@ const reservations = [
   ),
   new Reservation(
     '12',
-    faker.commerce.productName(),
+    faker.lorem.word(),
     beginWeek.clone().add(4, 'day').hour(8).minute(30),
     beginWeek.clone().add(4, 'day').hour(11).minutes(45),
     lastChange,
@@ -357,7 +352,7 @@ const reservations = [
   ),
   new Reservation(
     '14',
-    faker.commerce.productName(),
+    faker.lorem.word(),
     beginWeek.clone().add(4, 'day').hour(8).minute(30),
     beginWeek.clone().add(4, 'day').hour(11).minutes(45),
     lastChange,
@@ -368,7 +363,7 @@ const reservations = [
   ),
   new Reservation(
     '15',
-    faker.commerce.productName(),
+    faker.lorem.word(),
     beginWeek.clone().add(4, 'day').hour(8).minute(30),
     beginWeek.clone().add(4, 'day').hour(11).minutes(45),
     lastChange,
@@ -379,7 +374,7 @@ const reservations = [
   ),
   new Reservation(
     '16',
-    faker.commerce.productName(),
+    faker.lorem.word(),
     beginWeek.clone().add(4, 'day').hour(8).minutes(30),
     beginWeek.clone().add(4, 'day').hour(11).minutes(45),
     lastChange,
@@ -390,7 +385,7 @@ const reservations = [
   ),
   new Reservation(
     '17',
-    faker.commerce.productName(),
+    faker.lorem.word(),
     beginWeek.clone().add(4, 'day').hour(9).minutes(0),
     beginWeek.clone().add(4, 'day').hour(12).minutes(15),
     lastChange,
@@ -401,7 +396,7 @@ const reservations = [
   ),
   new Reservation(
     '18',
-    faker.commerce.productName(),
+    faker.lorem.word(),
     beginWeek.clone().add(5, 'day').hour(9).minutes(0),
     beginWeek.clone().add(5, 'day').hour(17).minutes(0),
     lastChange,
@@ -413,7 +408,6 @@ const reservations = [
 ]
 
 const demodata = {
-  calendars,
   resourcetypes,
   resources,
   reservations,

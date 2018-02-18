@@ -1,16 +1,9 @@
 <template lang="pug">
-p Index
+  p Index
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-
-    }
-  },
-  created() {
-  }
 }
 </script>
 

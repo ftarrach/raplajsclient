@@ -24,12 +24,16 @@ export default {
   data() {
     return {
       open: false,
-      items: [
-        {value: 'until', label: 'bis zum'},
-        {value: 'x-times', label: 'x Mal'},
-        {value: 'infinity', label: 'Kein Ende'}
-      ]
+      items: []
     }
+  },
+
+  created() {
+    this.items = [
+      { value: 'until', label: this.$rapla.locale.localize('repeating.end_date') },
+      { value: 'x-times', label: this.$rapla.locale.localize('repeating.n_times') },
+      { value: 'infinity', label: this.$rapla.locale.localize('repeating.forever') }
+    ]
   }
 
 }

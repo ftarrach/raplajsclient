@@ -11,10 +11,10 @@
         .dropdown-menu.r-fullwidth(role='menu')
           .dropdown-content
             .dropdown-item(v-for='calendar in calendars'
-                           :key="calendar.id"
+                           :key="calendar"
                            @click="choose(calendar)"
                            :class="{ 'is-active': calendar === value }")
-              | {{ calendar.name }}
+              | {{ calendar }}
 </template>
 
 <script>
@@ -30,10 +30,10 @@ export default {
 
   computed: {
     calendars() {
-      return this.$store.getters.allCalendars
+      return this.$rapla.data.allCalendars()
     },
     selectedCalendarName() {
-      return this.value ? this.value.name : ''
+      return this.value ? this.value : ''
     }
   },
 
@@ -49,7 +49,7 @@ export default {
       type: String
     },
     value: {
-      type: Object // Resource Object
+      type: String // Calendar
     }
   },
 
@@ -63,9 +63,9 @@ export default {
         })
       }
     },
-    choose(resource) {
+    choose(calendar) {
       this.open = false
-      this.$emit('input', resource)
+      this.$emit('input', calendar)
     },
     chooseFirst() {
       this.choose(this.calendars[0])

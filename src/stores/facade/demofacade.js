@@ -3,7 +3,6 @@ import demodata from './demodata'
 export default {
 
   state: {
-    calendars: demodata.calendars,
     resourceTypes: demodata.resourcetypes,
     resources: demodata.resources,
     reservations: demodata.reservations,
@@ -21,9 +20,6 @@ export default {
     },
     allReservationTypes: (state) => {
       return state.reservationtypes
-    },
-    allCalendars: (state) => {
-      return state.calendars
     },
     // List<AppointmentBlock> (AppointmentBlock = 1 konkreter Termin, weil 1 Appointment kann n Reservierungen haben)
     appointmentsInPeriod: (state) => {

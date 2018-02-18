@@ -2,16 +2,16 @@
   .container.period-and-calendar-chooser
     .columns
       .column.is-third
-        calendar-chooser(:resources='resources'
-                         :types='resourcetypes'
-                         title='Kalender'
-                         v-model='resource')
+        calendar-chooser(:resources="resources"
+                         :types="resourcetypes"
+                         :title="calendar"
+                         v-model="resource")
       .column.is-third
-        date-chooser(v-model='from'
-                     title='Start')
+        date-chooser(v-model="from"
+                     :title="fromString")
       .column.is-third
-        date-chooser(v-model='to'
-                     title='Ende')
+        date-chooser(v-model="to"
+                     :title="endString")
 </template>
 
 <script>
@@ -33,6 +33,15 @@ export default {
   },
 
   computed: {
+    calendar() {
+      return this.$rapla.locale.localize('calendar')
+    },
+    fromString() {
+      return this.$rapla.locale.localize('start_date')
+    },
+    endString() {
+      return this.$rapla.locale.localize('end_date')
+    },
     resourcetypes() {
       return this.$store.getters.allResourceTypes
     },
