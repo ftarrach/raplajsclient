@@ -4,14 +4,10 @@ import moment from 'moment'
 let resourceTypes = demodata.resourcetypes
 let resources = demodata.resources
 let reservations = demodata.reservations
-let reservationtypes = demodata.reservationtypes
 
 export default {
 
   getters: {
-    allCalendars: (state) => {
-      return [ '»Default', '»Test' ]
-    },
     // List<DynamicTypes> (optional)
     allResourceTypes: (state) => {
       return resourceTypes
@@ -19,9 +15,6 @@ export default {
     // List<Allocatable> (optional)
     allResources: (state) => {
       return resources
-    },
-    allReservationTypes: (state) => {
-      return reservationtypes
     },
     // List<AppointmentBlock> (AppointmentBlock = 1 konkreter Termin, weil 1 Appointment kann n Reservierungen haben)
     appointmentsInPeriod: (state) => {

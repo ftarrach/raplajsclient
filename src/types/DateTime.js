@@ -1,4 +1,4 @@
-class DateTime {
+export default class DateTime {
   constructor(years, months, date, hours, minutes, seconds) {
     this.years = years
     this.months = months
@@ -12,5 +12,3 @@ class DateTime {
     return new DateTime(...moment.toArray())
   }
 }
-
-export default DateTime

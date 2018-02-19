@@ -5,6 +5,8 @@ import { Appointment, Repeat } from '@/types/Appointment'
 import Timespan from '@/types/Timespan'
 import DateTime from '@/types/DateTime'
 import Reservation from '@/types/Reservation'
+import ReservationType from '@/types/ReservationType'
+import Resource from '@/types/Resource'
 
 faker.locale = 'de'
 moment.locale('de')
@@ -13,15 +15,15 @@ const beginWeek = moment('20171002T0000')
 const lastChange = moment('20171231T1422').toObject()
 
 const resourcetypes = [
-  { id: 1, name: 'Kurs' },
-  { id: 2, name: 'Raum' },
-  { id: 3, name: 'Person' }
+  new ReservationType(1, '»Kurs'),
+  new ReservationType(2, '»Raum'),
+  new ReservationType(3, '»Person')
 ]
 
 const categories = [
   {
     id: 1,
-    name: 'Die Veranstaltungen anderer sehen'
+    name: '»Die Veranstaltungen anderer sehen'
   }
 ]
 
@@ -82,50 +84,29 @@ class Person {
   }
 }
 
-// = Allocatable
-class Resource {
-  constructor(type, name) {
-    this.id = RESOURCE_ID++
-    this.type = type
-    this.name = name
-    this.free = free()
-  }
-
-  compare(other) {
-    return this.name.localeCompare(other.name)
-  }
-}
-
-class ReservationType {
-  constructor(id, name) {
-    this.id = id
-    this.name = name
-  }
-
-  toString() {
-    return this.name
-  }
+function createResource(type, name) {
+  return new Resource(RESOURCE_ID++, type, name, free())
 }
 
 const reservationtypes = [
-  new ReservationType(1, 'Vorlesung'),
-  new ReservationType(2, 'Seminar')
+  new ReservationType(1, '»Vorlesung'),
+  new ReservationType(2, '»Seminar')
 ]
 
 const resources = [
-  new Resource(rt_kurs, 'Klasse 1'),
-  new Resource(rt_kurs, 'Klasse 2'),
-  new Resource(rt_kurs, 'Klasse 3'),
-  new Resource(rt_kurs, 'Klasse 4'),
-  new Resource(rt_kurs, 'Klasse 5'),
-  new Resource(rt_kurs, 'Klasse 6'),
-  new Resource(rt_raum, faker.random.arrayElement(['A', 'B', 'C']) + faker.random.number({min: 100, max: 999})),
-  new Resource(rt_raum, faker.random.arrayElement(['A', 'B', 'C']) + faker.random.number({min: 100, max: 999})),
-  new Resource(rt_raum, faker.random.arrayElement(['A', 'B', 'C']) + faker.random.number({min: 100, max: 999})),
-  new Resource(rt_raum, faker.random.arrayElement(['A', 'B', 'C']) + faker.random.number({min: 100, max: 999})),
-  new Resource(rt_raum, faker.random.arrayElement(['A', 'B', 'C']) + faker.random.number({min: 100, max: 999})),
-  new Resource(rt_raum, faker.random.arrayElement(['A', 'B', 'C']) + faker.random.number({min: 100, max: 999})),
-  new Resource(rt_raum, faker.random.arrayElement(['A', 'B', 'C']) + faker.random.number({min: 100, max: 999})),
+  createResource(rt_kurs, '»Klasse 1'),
+  createResource(rt_kurs, '»Klasse 2'),
+  createResource(rt_kurs, '»Klasse 3'),
+  createResource(rt_kurs, '»Klasse 4'),
+  createResource(rt_kurs, '»Klasse 5'),
+  createResource(rt_kurs, '»Klasse 6'),
+  createResource(rt_raum, faker.random.arrayElement(['»A', '»B', '»C']) + faker.random.number({min: 100, max: 999})),
+  createResource(rt_raum, faker.random.arrayElement(['»A', '»B', '»C']) + faker.random.number({min: 100, max: 999})),
+  createResource(rt_raum, faker.random.arrayElement(['»A', '»B', '»C']) + faker.random.number({min: 100, max: 999})),
+  createResource(rt_raum, faker.random.arrayElement(['»A', '»B', '»C']) + faker.random.number({min: 100, max: 999})),
+  createResource(rt_raum, faker.random.arrayElement(['»A', '»B', '»C']) + faker.random.number({min: 100, max: 999})),
+  createResource(rt_raum, faker.random.arrayElement(['»A', '»B', '»C']) + faker.random.number({min: 100, max: 999})),
+  createResource(rt_raum, faker.random.arrayElement(['»A', '»B', '»C']) + faker.random.number({min: 100, max: 999})),
 
   // Personen
   new Person(faker.name.lastName(), faker.name.firstName()),
@@ -200,7 +181,7 @@ let reservationId = 1
 function createReservation(name, begin, end, lastChange, column, type, persons, resources) {
   return new Reservation(
     `${reservationId++}`,
-    name,
+    `»${name}`,
     DateTime.fromMoment(begin),
     DateTime.fromMoment(end),
     lastChange,

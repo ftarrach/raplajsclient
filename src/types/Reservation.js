@@ -1,4 +1,4 @@
-class Reservation {
+export default class Reservation {
   constructor(id, name, begin, end, lastChange, column, type, persons, resources, appointments, permissions) {
     this.id = id
     this.name = name
@@ -13,5 +13,3 @@ class Reservation {
     this.permissions = permissions
   }
 }
-
-export default Reservation

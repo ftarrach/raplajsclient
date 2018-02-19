@@ -79,7 +79,6 @@ export default {
       let hours = Math.floor((h - 1) / 4)
       let minutes = (h - 1 - (4 * hours)) * 15 || '00'
       let seconds = 0
-      console.log(this.date)
       this.newReservation.begin = { hours, minutes, seconds }
       this.newReservation.end = { hours: hours + 1, minutes, seconds }
       this.newReservation.name = 'Neue Reservierung'

@@ -1,3 +1,6 @@
+import demodata from '../stores/facade/demodata'
+import ReservationType from '@/types/ReservationType'
+
 let api = null
 
 const Api = {
@@ -7,10 +10,18 @@ const Api = {
     }
     return [ '»Default', '»Test' ]
   },
-  loadCalendarModel(calendar) {
+  loadCalendarModel(name) {
     if (api) {
-      api.getCalendarModel().load(calendar)
+      api.getCalendarModel().load(name)
     }
+  },
+  reservationTypes() {
+    if (api) {
+      return api.getFacade().getDynamicTypes('reservation').map(d => {
+        return new ReservationType(d.getId(), d.getName())
+      })
+    }
+    return demodata.reservationtypes
   }
 }
 

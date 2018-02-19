@@ -24,12 +24,16 @@ export default {
   data() {
     return {
       open: false,
-      items: [
-        {value: 'same-day', label: 'am selben Tag'},
-        {value: 'next-day', label: 'am nächsten Tag'},
-        {value: 'x-day', label: 'am Tag x'}
-      ]
+      items: []
     }
+  },
+
+  created() {
+    this.items = [
+      { value: 'same-day', label: this.$rapla.locale.localize('appointment.same_day') },
+      { value: 'next-day', label: this.$rapla.locale.localize('appointment.next_day') },
+      { value: 'x-day', label: this.$rapla.locale.localize('appointment.day_x') }
+    ]
   }
 }
 </script>
