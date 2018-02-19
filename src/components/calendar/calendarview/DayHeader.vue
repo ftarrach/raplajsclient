@@ -10,7 +10,7 @@
 export default {
   props: {
     date: {
-      // NOTE: type moment
+      // type moment
       required: true
     }
   },

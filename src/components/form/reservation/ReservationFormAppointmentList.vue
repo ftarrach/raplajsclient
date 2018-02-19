@@ -54,7 +54,7 @@ export default {
   methods: {
     // TODO: use gwt localization
     label(appointment) {
-      let weekdays = appointment.days.map(m => moment(m).weekday(m).format('dd')).join(', ')
+      let weekdays = appointment.days.map(m => moment(m).isoWeekday(m).format('dd')).join(', ')
       let timespan = ''
       if (appointment.time) {
         timespan = `${appointment.time.from}-${appointment.time.to}`

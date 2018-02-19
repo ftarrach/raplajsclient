@@ -25,7 +25,7 @@ export default {
       return this.$store.getters.reservationsOnWeek
     },
     weekDates() {
-      let startOfWeek = this.date.clone().startOf('isoweek') // ignore locale, always start on monday
+      let startOfWeek = this.date.clone().startOf('isoweek') // HACK: ignore locale, always start on monday
       return [
         startOfWeek,
         startOfWeek.clone().add(1, 'days'),

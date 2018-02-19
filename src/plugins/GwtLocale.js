@@ -28,6 +28,7 @@ const Api = {
 
   formatDateTime(date) {
     if (locale) {
+      // TODO: use locale
       // REVIEW: Where is this Date Format in Rapla?
       return moment(date).format('DD.MM.YYYY (dd) HH:mm')
     } else {
@@ -52,11 +53,10 @@ const Api = {
         return ''
       }
     }
-    weekdayNr--
     if (len === 'short') {
-      return moment().weekday(weekdayNr).format('dd')
+      return moment().isoWeekday(weekdayNr).format('dd')
     } else if (!len || len === 'long') {
-      return moment().weekday(weekdayNr).format('dddd')
+      return moment().isoWeekday(weekdayNr).format('dddd')
     }
   },
 
@@ -77,7 +77,6 @@ const Api = {
         return ''
       }
     } else {
-    // ASK: Where is this Date Format in Rapla?
       return moment(date).format('DD.MM.YYYY')
     }
   },
