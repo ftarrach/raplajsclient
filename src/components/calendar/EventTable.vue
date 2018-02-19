@@ -14,10 +14,10 @@
           td.is-hidden-mobile {{ event.lastChange | gwt-formatDateTime }}
           td
             b-dropdown(is-right)
-              b-dropdown-item(v-for="item in dropdownitems" 
-                              :key="item.label" 
-                              :value="item.label" 
-                              :icon="item.icon" 
+              b-dropdown-item(v-for="item in dropdownitems"
+                              :key="item.label"
+                              :value="item.label"
+                              :icon="item.icon"
                               @click="() => item.onClick(event)")
 </template>
 

@@ -39,7 +39,7 @@ export default {
     },
     listpersons(value) {
       if (!value) return ''
-      return value.map(p => `${p.surname} ${p.firstname}`)
+      return value.map(p => p.name)
     }
   }
 

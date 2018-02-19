@@ -1,6 +1,10 @@
 import moment from 'moment'
 import faker from 'faker'
 
+import Appointment from '@/types/Appointment'
+import DateTime from '@/types/DateTime'
+import Reservation from '@/types/Reservation'
+
 faker.locale = 'de'
 moment.locale('de')
 
@@ -178,50 +182,46 @@ let person_17 = resources[28]
 let person_18 = resources[29]
 
 let appointmentId = 10
-class Appointment {
-  constructor(repeat, begin, days, time, end, enddatetype) {
-    this.id = appointmentId++
-    this.repeat = repeat
-    this.begin = begin.toObject()
-    this.days = days
-    this.time = time
-    if (end) {
-      this.end = end.toObject()
-    } else {
-      this.end = null
-    }
-    this.enddatetype = enddatetype
+function createAppointment(repeat, begin, days, time, end, enddatetype) {
+  if (end) {
+    end = DateTime.fromMoment(end)
   }
+  return new Appointment(
+    appointmentId++,
+    repeat,
+    DateTime.fromMoment(begin),
+    days,
+    time,
+    end,
+    enddatetype
+  )
 }
 
-class Reservation {
-  constructor(id, name, begin, end, lastChange, column, type, persons, resources) {
-    this.id = id
-    this.name = name
-    this.begin = begin.toObject()
-    this.end = end.toObject()
-    this.lastChange = lastChange
-    this.column = column
-    this.type = type
-    this.persons = persons
-    this.resources = resources
-    this.appointments = [
-      new Appointment(
+function createReservation(id, name, begin, end, lastChange, column, type, persons, resources) {
+  return new Reservation(
+    id,
+    name,
+    DateTime.fromMoment(begin),
+    DateTime.fromMoment(end),
+    lastChange,
+    column,
+    type,
+    persons,
+    resources,
+    [createAppointment(
         { type: 'weekly', interval: 1, times: 1 },
         begin,
         [ begin.weekday() ],
         { from: begin.format('HH:mm'), to: end.format('HH:mm'), endtype: 'same-day' },
         null,
         'infinity'
-      )
-    ]
-    this.permissions = permissions
-  }
+    )],
+    permissions)
 }
 
 const reservations = [
   // Dienstag
-  new Reservation(
+  createReservation(
     '1',
     faker.lorem.word(),
     beginWeek.clone().add(1, 'day').hour(8).minute(30),
@@ -232,7 +232,7 @@ const reservations = [
     [person_3, person_14],
     [room_7, r_5, person_3, person_14]
   ),
-  new Reservation(
+  createReservation(
     '2',
     faker.lorem.word(),
     beginWeek.clone().add(1, 'day').hour(12).minute(30),
@@ -244,7 +244,7 @@ const reservations = [
     [r_5, room_1, r_3]
   ),
   // Mittwoch
-  new Reservation(
+  createReservation(
     '3',
     faker.lorem.word(),
     beginWeek.clone().add(2, 'day').hour(8).minute(30),
@@ -255,7 +255,7 @@ const reservations = [
     [person_11],
     [room_7, r_2, r_5, r_1, r_4]
   ),
-  new Reservation(
+  createReservation(
     '4',
     faker.lorem.word(),
     beginWeek.clone().add(2, 'day').hour(8).minute(30),
@@ -266,7 +266,7 @@ const reservations = [
     [person_7, person_16],
     [r_2, r_5, r_1, r_4, room_3]
   ),
-  new Reservation(
+  createReservation(
     '5',
     faker.lorem.word(),
     beginWeek.clone().add(2, 'day').hour(9).minute(30),
@@ -277,7 +277,7 @@ const reservations = [
     [person_10],
     [r_2, r_5, r_1, r_4, room_2]
   ),
-  new Reservation(
+  createReservation(
     '6',
     faker.lorem.word(),
     beginWeek.clone().add(2, 'day').hour(12).minute(30),
@@ -288,7 +288,7 @@ const reservations = [
     [person_8],
     [room_7, r_2, r_5, r_1, r_4]
   ),
-  new Reservation(
+  createReservation(
     '7',
     faker.lorem.word(),
     beginWeek.clone().add(2, 'day').hour(12).minute(30),
@@ -299,7 +299,7 @@ const reservations = [
     [person_18],
     [r_2, r_5, r_1, r_4]
   ),
-  new Reservation(
+  createReservation(
     '8',
     faker.lorem.word(),
     beginWeek.clone().add(2, 'day').hour(13).minute(30),
@@ -311,7 +311,7 @@ const reservations = [
     [r_2, r_5, r_1, r_4, room_2]
   ),
   // Donnerstag
-  new Reservation(
+  createReservation(
     '9',
     faker.lorem.word(),
     beginWeek.clone().add(3, 'day').hour(8).minute(30),
@@ -322,7 +322,7 @@ const reservations = [
     [person_12],
     [room_7, r_5]
   ),
-  new Reservation(
+  createReservation(
     '10',
     faker.lorem.word(),
     beginWeek.clone().add(3, 'day').hour(12).minute(30),
@@ -334,7 +334,7 @@ const reservations = [
     [room_7, r_5]
   ),
   // Freitag
-  new Reservation(
+  createReservation(
     '11',
     faker.lorem.word(),
     beginWeek.clone().add(4, 'day').hour(8).minute(30),
@@ -345,7 +345,7 @@ const reservations = [
     [person_5],
     [r_0, r_2, r_5, r_1, r_4, room_3, r_3]
   ),
-  new Reservation(
+  createReservation(
     '12',
     faker.lorem.word(),
     beginWeek.clone().add(4, 'day').hour(8).minute(30),
@@ -356,7 +356,7 @@ const reservations = [
     [person_2],
     [r_2, r_5, r_1, r_4, room_3, r_3]
   ),
-  new Reservation(
+  createReservation(
     '14',
     faker.lorem.word(),
     beginWeek.clone().add(4, 'day').hour(8).minute(30),
@@ -367,7 +367,7 @@ const reservations = [
     [person_1],
     [r_2, r_5, room_4, r_1, r_4, r_3]
   ),
-  new Reservation(
+  createReservation(
     '15',
     faker.lorem.word(),
     beginWeek.clone().add(4, 'day').hour(8).minute(30),
@@ -378,7 +378,7 @@ const reservations = [
     [person_4],
     [room_7, r_2, r_5, r_1, r_3]
   ),
-  new Reservation(
+  createReservation(
     '16',
     faker.lorem.word(),
     beginWeek.clone().add(4, 'day').hour(8).minutes(30),
@@ -389,7 +389,7 @@ const reservations = [
     [person_13],
     [r_2, r_5, r_1, room_5, r_4, r_3]
   ),
-  new Reservation(
+  createReservation(
     '17',
     faker.lorem.word(),
     beginWeek.clone().add(4, 'day').hour(9).minutes(0),
@@ -400,7 +400,7 @@ const reservations = [
     [person_15],
     [r_2, r_5, r_1, r_4, room_6, r_3]
   ),
-  new Reservation(
+  createReservation(
     '18',
     faker.lorem.word(),
     beginWeek.clone().add(5, 'day').hour(9).minutes(0),
