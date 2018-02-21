@@ -2,15 +2,11 @@
   div
     .columns.is-gapless.is-mobile
       .column.is-2-mobile.is-2-tablet
-        a.button.is-fullwidth.is-success
+        a.button.is-fullwidth.is-success(@click="add")
           span.icon
             i.fas.fa-plus
       .column.is-2-mobile.is-2-tablet
-        a.button.is-fullwidth.is-warning
-          span.icon
-            i.fas.fa-copy
-      .column.is-2-mobile.is-2-tablet
-        a.button.is-fullwidth.is-danger
+        a.button.is-fullwidth.is-danger(@click="remove")
           span.icon
             i.fas.fa-trash-alt
       .column.is-6
@@ -47,11 +43,22 @@ export default {
     }
   },
 
-  created() {
-    this.selectedItems = this.appointments.filter(a => a.id === this.value)
+  computed: {
+    selectedAppointment() {
+      return this.appointments.filter(a => a.id === this.value)[0]
+    }
   },
 
   methods: {
+
+    add() {
+      alert('ReservationFormAppointmentList.add')
+    },
+
+    remove() {
+      alert('ReservationFormAppointmentList.remove')
+    },
+
     // TODO: use gwt localization
     label(appointment) {
       let weekdays = appointment.days.map(m => moment(m).isoWeekday(m).format('dd')).join(', ')

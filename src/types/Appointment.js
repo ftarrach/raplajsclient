@@ -1,3 +1,4 @@
+
 class Appointment {
   constructor(id, repeat, begin, days, timespan, end, enddatetype) {
     this.id = id

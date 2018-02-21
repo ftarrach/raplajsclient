@@ -6,14 +6,14 @@
         b-button(icon="fa-arrow-left" no-text @click="back" pull-right)
       .card-content
         .columns.is-multiline.is-centered
-          //- Name
-          .column.is-half
-            label.label {{ "name" | gwt-localize }}
-            input.input(v-model="name")
           //- Reservation Type
           .column.is-half
             label.label {{ "reservation_type" | gwt-localize }}
             reservation-type-chooser(v-model="type")
+          //- Name
+          .column.is-half
+            label.label {{ "name" | gwt-localize }}
+            input.input(v-model="name")
           //- horizontal line
           .column.is-full
             hr.line

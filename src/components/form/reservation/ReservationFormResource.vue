@@ -1,7 +1,7 @@
 <template lang="pug">
   .columns
     .column.is-half
-      label.label {{ "reservation.used_resources" | gwt-localize }}
+      label.label {{ "reservation.allocations" | gwt-localize }}
       reservation-form-resources-list(:resources="allResources" @click="addResourceToReservation")
         div(slot="buttons")
           b-button(icon="fa-calendar-alt") {{ "calendar" | gwt-localize }}
@@ -12,7 +12,7 @@
           p(v-else-if="isSometimesFree(prop.resource)")
             | auswählbar an {{ prop.resource.free | list }}
     .column.is-half
-      label.label {{ "reservation.allocations" | gwt-localize }}
+      label.label {{ "reservation.used_resources" | gwt-localize }}
       reservation-form-resources-list(:resources="resources"
                                       @click="removeResourceFromReservation")
         div(slot="buttons")
