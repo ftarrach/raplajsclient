@@ -14,9 +14,10 @@
           .column.is-half
             label.label {{ "reservation_type" | gwt-localize }}
             reservation-type-chooser(v-model="type")
-          //- step chooser
+          //- horizontal line
           .column.is-full
             hr.line
+          //- step chooser
           .column.is-three-quarters
             b-steps(medium-dots
                     always-horizontal
@@ -87,8 +88,13 @@ export default {
     isLastStep() {
       return this.stepNr === this.$options.steps.length - 1
     },
-    stepNr() {
-      return this.$options.steps.findIndex(i => i.id === this.steps)
+    stepNr: {
+      get() {
+        return this.$options.steps.findIndex(i => i.id === this.step)
+      },
+      set(newVal) {
+        this.step = this.$options.steps[newVal].id
+      }
     }
   },
 
@@ -103,13 +109,13 @@ export default {
     nextStep() {
       if (this.stepNr < this.$options.steps.length - 1) {
         this.stepNr = this.stepNr + 1
-        this.step = this.$options.steps[this.stepNr]
+        this.step = this.$options.steps[this.stepNr].id
       }
     },
     previousStep() {
       if (this.stepNr > 0) {
         this.stepNr = this.stepNr - 1
-        this.step = this.$options.steps[this.stepNr]
+        this.step = this.$options.steps[this.stepNr].id
       }
     }
   },
@@ -154,7 +160,7 @@ export default {
 
   .disabled {
     pointer-events: none;
-    color: #000;
+    color: #aaa;
   }
 
   .card-content {
