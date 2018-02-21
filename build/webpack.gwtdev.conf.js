@@ -20,7 +20,9 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   },
   // cheap-module-eval-source-map is faster for development
   devtool: config.gwt.devtool,
-
+  output: {
+    publicPath: '/proxy'
+  },
   // these devServer options should be customized in /config/index.js
   devServer: {
     clientLogLevel: 'warning',
@@ -56,7 +58,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     }),
     new HtmlWebpackIncludeAssetsPlugin({
       assets: [
-        { path: 'http://localhost:8051/Rapla/Rapla.nocache.js', type: 'js' }
+        { path: '../../Rapla/Rapla.nocache.js', type: 'js' }
       ],
       append: true
     }),

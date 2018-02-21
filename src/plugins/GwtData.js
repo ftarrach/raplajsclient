@@ -8,7 +8,7 @@ const Api = {
     if (api) {
       return api.getCalendarNames()
     }
-    return [ '»Default', '»Test' ]
+    return [ 'Default', 'Test' ]
   },
   loadCalendarModel(name) {
     if (api) {
