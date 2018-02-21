@@ -3,13 +3,15 @@ import BDropdown from '@/components/bulma/BDropdown'
 import BDropdownItem from '@/components/bulma/BDropdownItem'
 import BDatepicker from '@/components/bulma/BDatepicker'
 import BToggleButton from '@/components/bulma/BToggleButton'
+import BSteps from '@/components/bulma/BSteps'
 
 const components = {
   BButton,
   BDropdown,
   BDropdownItem,
   BDatepicker,
-  BToggleButton
+  BToggleButton,
+  BSteps
 }
 
 const plugin = {

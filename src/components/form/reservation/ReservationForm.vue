@@ -18,16 +18,10 @@
           .column.is-full
             hr.line
           .column.is-three-quarters
-            ul.steps.is-medium.is-horizontal
-              li.steps-segment(:class="{ 'is-active': step === 'appointment' }")
-                span.steps-marker(@click="switchStep('appointment')")
-                  i.fas.fa-calendar-alt
-              li.steps-segment(:class="{ 'is-active': step === 'resource' }")
-                span.steps-marker(@click="switchStep('resource')")
-                  i.fas.fa-archive
-              li.steps-segment(:class="{ 'is-active': step === 'resource' }")
-                span.steps-marker(@click="switchStep('permission')")
-                  i.fas.fa-lock
+            b-steps(medium-dots
+                    always-horizontal
+                    :items="$options.steps"
+                    v-model="step")
           //- step components
           .column.is-full(v-show="step === 'appointment'")
             reservation-form-appointment(v-model="appointments")
@@ -68,7 +62,11 @@ export default {
     }
   },
 
-  steps: ['appointment', 'resource', 'permission'],
+  steps: [
+    { id: 'appointment', icon: 'fa-calendar-alt' },
+    { id: 'resource', icon: 'fa-archive' },
+    { id: 'permission', icon: 'fa-lock' }
+  ],
 
   data() {
     return {
@@ -78,8 +76,7 @@ export default {
       appointments: [],
       resources: [],
       permissions: [],
-      step: 'appointment',
-      stepNr: 0
+      step: 'appointment'
     }
   },
 
@@ -89,6 +86,9 @@ export default {
     },
     isLastStep() {
       return this.stepNr === this.$options.steps.length - 1
+    },
+    stepNr() {
+      return this.$options.steps.findIndex(i => i.id === this.steps)
     }
   },
 
@@ -150,11 +150,6 @@ export default {
   header.card-header {
     padding-right: 8px;
     align-items: center;
-  }
-
-  .steps-marker {
-    cursor: pointer;
-    user-select: none;
   }
 
   .disabled {
