@@ -75,7 +75,9 @@ export default {
 
     localize(repeat) {
       if (repeat.interval === 1) {
-        if (repeat.type === 'daily') {
+        if (repeat.type === 'single') {
+          return ''
+        } else if (repeat.type === 'daily') {
           return 'täglich'
         } else if (repeat.type === 'weekly') {
           return 'wöchentlich'
