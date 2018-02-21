@@ -41,12 +41,14 @@ export default {
   methods: {
     choose(event) {
       if (event.selected) {
-        let newVal = this.value.slice(0) // copy the array
+        let newVal = [...this.value]
         newVal.push(event.value)
         newVal.sort()
         this.$emit('input', newVal)
       } else {
-        this.$emit('input', this.value.filter(item => item !== event.value))
+        if (this.value.length > 1) {
+          this.$emit('input', this.value.filter(item => item !== event.value))
+        }
       }
     }
   }
