@@ -37,4 +37,13 @@ export default {
   .r-fullwidth {
     width: 100%
   }
+
+  /* hides number spinners in chrome */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+  }
+  /* hides number spinners in firefox */
+  input[type=number] { -moz-appearance:textfield }
 </style>

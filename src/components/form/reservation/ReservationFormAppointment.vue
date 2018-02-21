@@ -3,7 +3,8 @@
     //- Appointments
     .column.is-half
       label.label {{ "reservation.appointments" | gwt-localize }}
-      reservation-form-appointment-list(v-model="selectedAppointmentId" :appointments="appointments")
+      reservation-form-appointment-list(v-model="selectedAppointmentId"
+                                        :appointments="appointments")
       .columns.is-size-7
     //- Appointment Edit
     .column.is-half

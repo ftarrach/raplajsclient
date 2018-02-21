@@ -4,14 +4,19 @@
       .column.is-2
         span {{ "repeating.interval.pre" | gwt-localize }}
       .column.is-2
-        input.input(type="text" v-model.number="value.repeat.interval")
+        input.input(type="number"
+                    min="1"
+                    v-model.number="value.repeat.interval"
+                    :class="{ 'is-danger': value.repeat.interval < 1 }")
       .column.is-8
         weekday-chooser(v-model="value.days")
     .columns
       .column.is-2
         span {{ "start_time" | gwt-localize }}
       .column.is-3
-        input.input(type="text" v-model="startTime" :disabled="wholeDay")
+        input.input(type="text"
+                    v-model="startTime"
+                    :disabled="wholeDay")
       .column.is-two-fifths
         .b-checkbox.is-primary
           | #[input#whole-day(type="checkbox" v-model="wholeDay").styled] #[label(for="whole-day") {{ "all-day" | gwt-localize }}]
