@@ -16,28 +16,16 @@ nav.navbar.is-fixed-top(ref='navbar')
 <script>
 import HeaderBase from './HeaderBase'
 import SimpleItem from './SimpleItem'
-import DropdownItem from './DropdownItem'
 
 export default {
   components: {
     HeaderBase,
-    SimpleItem,
-    DropdownItem
+    SimpleItem
   },
 
   data() {
     return {
       sidemenuOpen: false,
-      items: [
-        {
-          label: 'Reservierungen',
-          route: 'Calendar'
-        },
-        {
-          label: 'Ressourcen',
-          route: 'Resources'
-        }
-      ]
     }
   },
 
