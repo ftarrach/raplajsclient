@@ -4,6 +4,7 @@ import BDropdownItem from '@/ui/BDropdownItem'
 import BDatepicker from '@/ui/BDatepicker'
 import BToggleButton from '@/ui/BToggleButton'
 import BSteps from '@/ui/BSteps'
+import BDrilldown from '@/ui/BDrilldown'
 
 const components = {
   BButton,
@@ -11,7 +12,8 @@ const components = {
   BDropdownItem,
   BDatepicker,
   BToggleButton,
-  BSteps
+  BSteps,
+  BDrilldown
 }
 
 const plugin = {

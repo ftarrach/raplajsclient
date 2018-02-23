@@ -28,8 +28,8 @@ const Api = {
 
   formatDateTime(date) {
     if (locale) {
-      // TODO: use locale
       // REVIEW: Where is this Date Format in Rapla?
+      // TODO: einfach zusammenbauen date + time
       return moment(date).format('DD.MM.YYYY (dd) HH:mm')
     } else {
       return moment(date).format('DD.MM.YYYY (dd) HH:mm')

@@ -21,7 +21,7 @@ export default {
 
   created() {
     this.items = [
-      {value: 1, label: this.$rapla.locale.formatWeekday(1, 'short')}, // TODO: use locale
+      {value: 1, label: this.$rapla.locale.formatWeekday(1, 'short')},
       {value: 2, label: this.$rapla.locale.formatWeekday(2, 'short')},
       {value: 3, label: this.$rapla.locale.formatWeekday(3, 'short')},
       {value: 4, label: this.$rapla.locale.formatWeekday(4, 'short')},
