@@ -1,9 +1,9 @@
-import BButton from '@/components/bulma/BButton'
-import BDropdown from '@/components/bulma/BDropdown'
-import BDropdownItem from '@/components/bulma/BDropdownItem'
-import BDatepicker from '@/components/bulma/BDatepicker'
-import BToggleButton from '@/components/bulma/BToggleButton'
-import BSteps from '@/components/bulma/BSteps'
+import BButton from '@/ui/BButton'
+import BDropdown from '@/ui/BDropdown'
+import BDropdownItem from '@/ui/BDropdownItem'
+import BDatepicker from '@/ui/BDatepicker'
+import BToggleButton from '@/ui/BToggleButton'
+import BSteps from '@/ui/BSteps'
 
 const components = {
   BButton,
