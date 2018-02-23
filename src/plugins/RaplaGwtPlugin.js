@@ -1,5 +1,3 @@
-/* global rapla */
-
 import GwtLocale from './GwtLocale'
 import GwtUser from './GwtUser'
 import GwtData from './GwtData'
@@ -15,18 +13,18 @@ function setupGwtCallback(options) {
         let registerAction = () => {
           let loginToken = starter.getValidToken()
           if (loginToken != null) {
-            starter.registerApi(loginToken.getAccessToken()).thenAccept(new rapla.Consumer((_api) => {
+            starter.registerApi(loginToken.getAccessToken()).thenAccept((_api) => {
               api = _api
               window.api = _api
               options.apiAvailable()
-            }))
+            })
           } else {
             window.location = '../rapla/login?url=' + window.location
           }
         }
         starter.initLocale('de_DE')
-          .thenRun(new rapla.Action(registerAction))
-          .exceptionally(new rapla.Catch((info) => console.warn(info)))
+          .thenRun(registerAction)
+          .exceptionally((info) => console.warn(info))
       }
     }
   }

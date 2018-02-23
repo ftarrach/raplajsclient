@@ -25,7 +25,7 @@ export default {
 
   data() {
     return {
-      sidemenuOpen: false,
+      sidemenuOpen: false
     }
   },
 

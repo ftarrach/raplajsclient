@@ -17,7 +17,7 @@ import Resources from '@/pages/Resources'
 Vue.use(Router)
 
 const config = {
-  mode: process.env.NODE_ENV === 'gwtdev' ? 'history' : 'hash',
+  mode: 'hash',
   base: process.env.NODE_ENV === 'gwtdev' ? '/proxy' : '/',
   routes: [
     {
