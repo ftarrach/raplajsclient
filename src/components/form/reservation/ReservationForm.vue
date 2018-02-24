@@ -26,7 +26,6 @@
           //- step components
           .column.is-full(v-show="step === 'appointment'")
             reservation-form-appointment(v-model="appointments")
-          .column.is-full(v-show="step === 'resource'")
             reservation-form-resource(v-model="resources")
           .column.is-full(v-show="step === 'permission'")
             reservation-form-permission(v-model="permissions")
@@ -65,7 +64,6 @@ export default {
 
   steps: [
     { id: 'appointment', icon: 'fa-calendar-alt' },
-    { id: 'resource', icon: 'fa-archive' },
     { id: 'permission', icon: 'fa-lock' }
   ],
 
