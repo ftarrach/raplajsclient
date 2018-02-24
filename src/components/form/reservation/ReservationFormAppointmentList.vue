@@ -3,12 +3,10 @@
     .columns.is-gapless.is-mobile
       .column.is-2-mobile.is-2-tablet
         a.button.is-fullwidth.is-success(@click="add")
-          span.icon
-            i.fas.fa-plus
+          fa-icon(icon="fa-plus")
       .column.is-2-mobile.is-2-tablet
         a.button.is-fullwidth.is-danger(@click="remove")
-          span.icon
-            i.fas.fa-trash-alt
+          fa-icon(icon="fa-trash-alt")
       .column.is-6
         a.button.is-fullwidth {{ "appointment.search_free" | gwt-localize }}
     .columns

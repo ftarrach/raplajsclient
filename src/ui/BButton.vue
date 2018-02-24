@@ -1,11 +1,11 @@
 <template lang="pug">
   button.button(:class="cssClasses" @click="emitClick")
     span.icon.is-small(v-if="icon && !iconRight")
-      i.fas(:class="[icon]")
+      fa-icon(:icon="icon")
     span(v-if="!noText")
       slot
     span.icon.is-small(v-if="icon && iconRight")
-      i.fas(:class="[icon]")
+      fa-icon(:icon="icon")
 </template>
 
 <script>

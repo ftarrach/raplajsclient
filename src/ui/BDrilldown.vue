@@ -1,7 +1,8 @@
 <template lang="pug">
   div.drilldown
     div.drilldown-menu
-      button.button(@click="back") Zurück
+      b-button(icon="fa-home" no-text @click="home")
+      b-button(icon="fa-arrow-left" no-text pull-right @click="back")
     ul.drilldown-list
       li.drilldown-list-item(v-for="item in itemsForPath" :key="item.id")
         span(v-if="item.children" @click="clickOnContainer(item)")
@@ -51,6 +52,10 @@ export default {
       if (this.path) {
         this.path.pop()
       }
+    },
+
+    home() {
+      this.path = []
     }
   }
 }

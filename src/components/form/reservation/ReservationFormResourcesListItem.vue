@@ -3,11 +3,11 @@
     .columns
       .column.is-half
         span.icon.is-small.has-text-success(v-if="isFree")
-          i.fas.fa-check-circle
+          fa-icon(icon="fa-check-circle")
         span.icon.is-small.has-text-warning(v-else-if="isSometimesFree")
-          i.fas.fa-exclamation-circle
+          fa-icon(icon="fa-exclamation-circle")
         span.icon.is-small.has-text-danger(v-else-if="isNotFree")
-          i.fas.fa-times-circle
+          fa-icon(icon="fa-times-circle")
         span.text {{ resource.name }}
       .column.is-half
         slot

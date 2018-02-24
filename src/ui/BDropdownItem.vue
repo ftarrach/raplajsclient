@@ -1,7 +1,7 @@
 <template lang="pug">
   a.dropdown-item.prevent.stop(@click="selected")
     span.icon(v-if="icon")
-      i.fas(:class="icon")
+      fa-icon(:icon="icon")
     | {{ value }}
 </template>
 

@@ -3,7 +3,7 @@
     li.steps-segment(:class="classOf(item)"
                      v-for="item in items")
       span.steps-marker(@click="fire(item)")
-        i.fas(:class="item.icon")
+        fa-icon(:icon="item.icon")
 </template>
 
 <script>

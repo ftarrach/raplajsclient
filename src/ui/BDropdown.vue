@@ -5,7 +5,7 @@
         span.dropdown-text(v-if="label")
           | {{ label }}
         span.icon.is-small
-          i.fas.fa-angle-down(aria-hidden='true')
+          fa-icon(icon="fa-angle-down(aria-hidden='true')")
     .dropdown-menu(role='menu')
       .dropdown-content
         slot

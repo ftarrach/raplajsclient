@@ -33,9 +33,9 @@
         .card-footer
           a.card-footer-item(href="#") {{ "delete" | gwt-localize }}
           a.card-footer-item(@click.stop.prevent="previousStep", :class="{'disabled': isFirstStep}")
-            i.fas.fa-arrow-left
+            fa-icon(icon="fa-arrow-left")
           a.card-footer-item(@click.stop.prevent="nextStep" :class="{'disabled': isLastStep}")
-            i.fas.fa-arrow-right
+            fa-icon(icon="fa-arrow-right")
           a.card-footer-item(href="#") {{ "save" | gwt-localize }}
 </template>
 
