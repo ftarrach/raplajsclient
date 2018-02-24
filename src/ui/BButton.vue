@@ -1,5 +1,5 @@
 <template lang="pug">
-  button.button(:class="cssClasses" @click="emitClick")
+  button.button(:class="cssClasses" :disabled="disabled" @click="emitClick")
     span.icon.is-small(v-if="icon && !iconRight")
       fa-icon(:icon="icon")
     span(v-if="!noText")
@@ -18,6 +18,10 @@ export default {
       type: String,
       default: ''
     },
+    disabled: {
+      type: Boolean,
+      default: () => false
+    },
     'pull-right': {
       type: Boolean,
       default: () => false
@@ -29,13 +33,18 @@ export default {
     'no-text': {
       type: Boolean,
       default: () => false
+    },
+    fill: {
+      type: Boolean,
+      default: () => false
     }
   },
 
   computed: {
     cssClasses() {
       return {
-        'is-pulled-right': this.pullRight
+        'is-pulled-right': this.pullRight,
+        'is-fullwidth': this.fill
       }
     }
   },
@@ -43,6 +52,14 @@ export default {
   methods: {
     emitClick(e) {
       this.$emit('click', e)
+    }
+  },
+
+  watch: {
+    disabled(old, newVal) {
+      if (old && !newVal) {
+        this.$el.blur()
+      }
     }
   }
 }
