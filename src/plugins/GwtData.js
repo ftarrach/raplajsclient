@@ -1,6 +1,5 @@
 import demodata from '../stores/facade/demodata'
 import DynamicType from '@/types/DynamicType'
-import Attribute from '@/types/Attribute'
 
 let api = null
 
@@ -18,19 +17,7 @@ const Api = {
   },
   reservationTypes() {
     if (api) {
-      return api.getFacade().getDynamicTypes('reservation').map(d => {
-        return new DynamicType(
-          d.getId(),
-          d.getName(),
-          d.getAttributes().map(a => {
-            return new Attribute(
-              a.getKey(),
-              a.getName(),
-              a.getType().name()
-            )
-          })
-        )
-      })
+      return api.getFacade().getDynamicTypes('reservation').map(DynamicType.fromGwt)
     }
     return demodata.reservationtypes
   }
