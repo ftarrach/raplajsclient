@@ -10,7 +10,8 @@ export default {
     }
   },
   created() {
-    window.debug = function(txt) {
+    window.debug = (txt) => {
+      console.log(this)
       this.content = txt
     }
   }
