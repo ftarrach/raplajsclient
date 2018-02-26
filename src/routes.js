@@ -13,6 +13,7 @@ import CalendarWeekProgram from '@/pages/calendar/CalendarWeekProgram'
 import CalendarMonth from '@/pages/calendar/CalendarMonth'
 import EditReservation from '@/pages/calendar/EditReservation'
 import Resources from '@/pages/Resources'
+import Debug from '@/pages/Debug'
 
 Vue.use(Router)
 
@@ -89,6 +90,16 @@ const config = {
           name: 'EditReservation'
         }
       ]
+    },
+    {
+      path: '/DEBUG',
+      component: Debug,
+      name: 'DEBUG'
+    },
+    // default route, keep at the bottom
+    {
+      path: '*',
+      redirect: '/'
     }
   ]
 }
