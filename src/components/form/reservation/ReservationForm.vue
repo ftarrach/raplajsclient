@@ -11,7 +11,7 @@
             label.label {{ "reservation_type" | gwt-localize }}
             reservation-type-chooser(v-model="type")
           //- Name
-          .column.is-half
+          //-.column.is-half
             label.label {{ "name" | gwt-localize }}
             input.input(v-model="name")
           //- horizontal line
@@ -24,11 +24,15 @@
                     :items="$options.steps"
                     v-model="step")
           //- step components
+          .column.is-full(v-show="step === 'attributes'")
+            reservation-form-attributes(v-model="attributes")
           .column.is-full(v-show="step === 'appointment'")
             reservation-form-appointment(v-model="appointments")
             reservation-form-resource(v-model="resources")
           .column.is-full(v-show="step === 'permission'")
             reservation-form-permission(v-model="permissions")
+          .column.is-full(v-show="step === 'moreAttributes'")
+            p TODO: More Attributes
       footer
         .card-footer
           a.card-footer-item(href="#") {{ "delete" | gwt-localize }}
@@ -45,6 +49,8 @@ import ReservationTypeChooser from '@/components/widgets/ReservationTypeChooser'
 import ReservationFormAppointment from './ReservationFormAppointment'
 import ReservationFormResource from './ReservationFormResource'
 import ReservationFormPermission from './ReservationFormPermission'
+import ReservationFormAttributes from './ReservationFormAttributes'
+import Attribute from '@/types/Attribute'
 
 export default {
 
@@ -52,7 +58,8 @@ export default {
     ReservationTypeChooser,
     ReservationFormAppointment,
     ReservationFormResource,
-    ReservationFormPermission
+    ReservationFormPermission,
+    ReservationFormAttributes
   },
 
   props: {
@@ -63,15 +70,17 @@ export default {
   },
 
   steps: [
-    { id: 'appointment', icon: 'fa-calendar-alt' },
-    { id: 'permission', icon: 'fa-lock' }
+    { id: 'attributes', icon: 'fa-align-justify', components: [] },
+    { id: 'appointment', icon: 'fa-calendar-alt', components: [ReservationFormAppointment, ReservationFormResource] },
+    { id: 'permission', icon: 'fa-lock', components: [ReservationFormPermission] },
+    { id: 'moreAttributes', icon: 'fa-info-circle', components: [] }
   ],
 
   data() {
     return {
       id: null,
       type: {},
-      name: '',
+      attributes: [],
       appointments: [],
       resources: [],
       permissions: [],
@@ -93,6 +102,10 @@ export default {
       set(newVal) {
         this.step = this.$options.steps[newVal].id
       }
+    },
+    stepComponents() {
+      console.log(this.$options.steps)
+      return this.$options.steps.find(s => s.id === this.step).components
     }
   },
 
@@ -124,11 +137,16 @@ export default {
     if (found.length > 0) {
       let reservation = found[0]
       this.id = id
+      // DEBUG: start
+      let a = new Attribute('name', 'eventname', 'STRING')
+      a.value = found.name
+      this.attributes = [a]
+      // DEBUG: end
       this.appointments = reservation.appointments
       this.resources = reservation.resources
       this.permissions = reservation.permissions
       this.type = reservation.type
-      this.name = reservation.name
+      // this.name = reservation.name
       this.stepComponent = ReservationFormAppointment
     } else {
       // TODO: if id is set, but not found in store, show an error to the user

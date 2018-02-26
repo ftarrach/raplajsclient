@@ -1,15 +1,16 @@
 <template lang="pug">
-  .columns
-    //- Appointments
-    .column.is-half
-      label.label {{ "reservation.appointments" | gwt-localize }}
-      reservation-form-appointment-list(v-model="selectedAppointmentId"
-                                        :appointments="appointments")
-      .columns.is-size-7
-    //- Appointment Edit
-    .column.is-half
-      label.label &nbsp;
-      reservation-form-appointment-detail(v-model="selectedAppointment")
+  div
+    .columns
+      //- Appointments
+      .column.is-half
+        label.label {{ "reservation.appointments" | gwt-localize }}
+        reservation-form-appointment-list(v-model="selectedAppointmentId"
+                                          :appointments="appointments")
+        .columns.is-size-7
+      //- Appointment Edit
+      .column.is-half
+        label.label &nbsp;
+        reservation-form-appointment-detail(v-model="selectedAppointment")
 </template>
 
 <script>

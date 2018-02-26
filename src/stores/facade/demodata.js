@@ -5,7 +5,7 @@ import { Appointment, Repeat } from '@/types/Appointment'
 import Timespan from '@/types/Timespan'
 import DateTime from '@/types/DateTime'
 import Reservation from '@/types/Reservation'
-import ReservationType from '@/types/ReservationType'
+import DynamicType from '@/types/DynamicType'
 import Resource from '@/types/Resource'
 
 faker.locale = 'de'
@@ -15,9 +15,9 @@ const beginWeek = moment('20171002T0000')
 const lastChange = moment('20171231T1422').toObject()
 
 const resourcetypes = [
-  new ReservationType(1, 'Kurs'),
-  new ReservationType(2, 'Raum'),
-  new ReservationType(3, 'Person')
+  new DynamicType(1, 'Kurs'),
+  new DynamicType(2, 'Raum'),
+  new DynamicType(3, 'Person')
 ]
 
 const categories = [
@@ -89,8 +89,8 @@ function createResource(type, name) {
 }
 
 const reservationtypes = [
-  new ReservationType(1, 'Vorlesung'),
-  new ReservationType(2, 'Seminar')
+  new DynamicType(1, 'Vorlesung'),
+  new DynamicType(2, 'Seminar')
 ]
 
 const resources = [
