@@ -1,22 +1,28 @@
-// FIXME: convert to gwt
+import DateTime from './util/DateTime'
+import Repeating from './Repeating'
+
 class Appointment {
-  constructor(id, repeat, begin, days, timespan, end, enddatetype) {
+  constructor(id, start, end, maxEnd, repeating, isWholeDay) {
     this.id = id
-    this.repeat = repeat
-    this.begin = begin
-    this.days = days
-    this.time = timespan
-    this.end = null
-    this.enddatetype = enddatetype
+    this.start = start
+    this.end = end
+    this.maxEnd = maxEnd
+    this.repeating = repeating
+    this.isWholeDay = isWholeDay
+  }
+
+  static fromGwt(gwtAppointment) {
+    return new Appointment(
+      gwtAppointment.getId(),
+      DateTime.fromGwtDate(gwtAppointment.getStart()),
+      DateTime.fromGwtDate(gwtAppointment.getEnd()),
+      DateTime.fromGwtDate(gwtAppointment.getMaxEnd()),
+      Repeating.fromGwt(gwtAppointment.getRepeating()),
+      gwtAppointment.isWholeDaysSet()
+    )
   }
 }
 
-class Repeat {
-  constructor(type, interval, times = 1) {
-    this.type = type
-    this.interval = interval
-    this.times = times
-  }
-}
+window.Appointment = Appointment
 
-export { Appointment, Repeat }
+export default Appointment

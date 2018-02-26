@@ -1,6 +1,5 @@
 
 class Attribute {
-
   constructor(id, key, name, type) {
     this.id = id
     this.key = key

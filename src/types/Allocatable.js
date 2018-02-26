@@ -1,8 +1,7 @@
 
 class Allocatable {
-  constructor(id, name, classification, createDate = null, lastChanged = null, lastChangedBy = null, permissions = []) {
+  constructor(id, classification, createDate = null, lastChanged = null, lastChangedBy = null, permissions = []) {
     this.id = id
-    this.name = name
     this.classification = classification
     this.createDate = createDate
     this.lastChanged = lastChanged
@@ -10,3 +9,5 @@ class Allocatable {
     this.permissions = permissions
   }
 }
+
+export default Allocatable

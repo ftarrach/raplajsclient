@@ -1,10 +1,9 @@
 
 class Classification {
-
-  constructor(type, name, attributes) {
+  constructor(type, data) {
     this.type = type
-    this.name = name
-    this.attributes = attributes
+    this.data = data // Allocatable.key => value
   }
-
 }
+
+export default Classification
