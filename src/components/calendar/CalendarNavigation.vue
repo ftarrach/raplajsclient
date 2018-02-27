@@ -17,39 +17,39 @@ export default {
       return [
         {
           route: 'CalendarEvent',
-          label: this.$rapla.locale.localize('reservations')
+          label: this.$store.getters['locale/localize']('reservations')
         },
         {
           route: 'CalendarAppointment',
-          label: this.$rapla.locale.localize('appointments')
+          label: this.$store.getters['locale/localize']('appointments')
         },
         {
           route: 'CalendarDay',
-          label: this.$rapla.locale.localize('day')
+          label: this.$store.getters['locale/localize']('day')
         },
         {
           route: 'CalendarDayResource',
-          label: this.$rapla.locale.localize('day_resource')
+          label: this.$store.getters['locale/localize']('day_resource')
         },
         {
           route: 'Calendar',
-          label: this.$rapla.locale.localize('week')
+          label: this.$store.getters['locale/localize']('week')
         },
         {
           route: 'CalendarWeekResource',
-          label: this.$rapla.locale.localize('week_compact')
+          label: this.$store.getters['locale/localize']('week_compact')
         },
         {
           route: 'CalendarWeekProgram',
-          label: this.$rapla.locale.localize('week_timeslot')
+          label: this.$store.getters['locale/localize']('week_timeslot')
         },
         {
           route: 'CalendarDayProgram',
-          label: this.$rapla.locale.localize('day_timeslot')
+          label: this.$store.getters['locale/localize']('day_timeslot')
         },
         {
           route: 'CalendarMonth',
-          label: this.$rapla.locale.localize('month')
+          label: this.$store.getters['locale/localize']('month')
         }
       ]
     }

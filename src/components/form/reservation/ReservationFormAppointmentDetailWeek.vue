@@ -46,7 +46,7 @@
 
 <script>
 
-import moment from 'moment'
+import DateTime from '@/types/util/DateTime'
 
 import WeekdayChooser from '@/components/widgets/WeekdayChooser'
 import AppointmentEndtimeDayChooser from '@/components/widgets/AppointmentEndtimeDayChooser'
@@ -66,20 +66,20 @@ export default {
   computed: {
     begin: {
       get() {
-        return moment(this.value.begin)
+        return DateTime.toMoment(this.value.begin)
       },
       set(newVal) {
-        this.value.begin = newVal.toObject()
+        this.value.begin = DateTime.fromMoment(newVal)
       }
     },
     end: {
       get() {
         if (this.value.end) {
-          return moment(this.value.end)
+          return DateTime.toMoment(this.value.end)
         }
       },
       set(newVal) {
-        this.value.end = newVal.toObject()
+        this.value.end = DateTime.fromMoment(newVal)
       }
     },
     endtimetype: {

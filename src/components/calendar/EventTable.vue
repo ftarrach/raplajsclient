@@ -33,32 +33,32 @@ export default {
     dropdownitems() {
       return [
         {
-          label: this.$rapla.locale.localize('new'),
+          label: this.$store.getters['locale/localize']('new'),
           icon: 'fa-user',
           onClick: this.create
         },
         {
-          label: this.$rapla.locale.localize('edit'),
+          label: this.$store.getters['locale/localize']('edit'),
           icon: 'fa-edit',
           onClick: this.edit
         },
         {
-          label: this.$rapla.locale.localize('delete'),
+          label: this.$store.getters['locale/localize']('delete'),
           icon: 'fa-trash-alt',
           onClick: this.remove
         },
         {
-          label: this.$rapla.locale.localize('view'),
+          label: this.$store.getters['locale/localize']('view'),
           icon: 'fa-info-circle',
           onClick: this.show
         },
         {
-          label: this.$rapla.locale.localize('copy'),
+          label: this.$store.getters['locale/localize']('copy'),
           icon: 'fa-clipboard',
           onClick: this.copy
         },
         {
-          label: this.$rapla.locale.localize('cut'),
+          label: this.$store.getters['locale/localize']('cut'),
           icon: 'fa-cut',
           onClick: this.cut
         }

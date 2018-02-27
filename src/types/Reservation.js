@@ -27,6 +27,6 @@ class Reservation {
   }
 }
 
-window.Reservation = Reservation
-
 export default Reservation
+
+window.Reservation = Reservation

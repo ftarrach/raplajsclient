@@ -4,6 +4,7 @@ let i18n = null
 let locale = null
 
 const Api = {
+
   localize(value) {
     if (i18n) {
       let result = i18n.getString(value)
@@ -27,6 +28,9 @@ const Api = {
   },
 
   formatDateTime(date) {
+    if (!date) {
+      return ''
+    }
     if (locale) {
       // REVIEW: Where is this Date Format in Rapla?
       // TODO: einfach zusammenbauen date + time
@@ -82,6 +86,9 @@ const Api = {
   },
 
   formatTime(date) { // date = {hours: …, minutes: …, …}
+    if (!date) {
+      return ''
+    }
     if (locale) {
       return locale.formatTime(locale.toTime(date.hours, date.minutes, date.seconds))
     }

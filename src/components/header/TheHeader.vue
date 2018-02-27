@@ -31,7 +31,7 @@ export default {
 
   computed: {
     login() {
-      return this.$rapla.user.name()
+      return this.$store.getters['calendar/username']
     }
   },
 

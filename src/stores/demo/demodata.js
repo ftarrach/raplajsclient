@@ -16,7 +16,7 @@ faker.locale = 'de'
 moment.locale('de')
 
 const beginWeek = moment('20171002T0000')
-// const lastChange = moment('20171231T1422').toObject()
+const lastChange = DateTime.fromMoment(moment('20171231T1422'))
 
 const calendars = [
   'Default',
@@ -78,7 +78,9 @@ const reservations = [
         false
       )
     ],
-    [ /* TODO: permissions */ ]
+    [ /* TODO: permissions */ ],
+    lastChange,
+    lastChange
   )
 ]
 

@@ -19,8 +19,7 @@ export default {
           locale: German,
           altInput: true,
           altFormat: 'd/m/Y D',
-          // desktop browsers don't support native dates yet, so mobile emulation fails.
-          // TODO: add this only if App is running in DEV mode
+          // desktop browsers don't support native datechoosers yet, so mobile emulation fails.
           disableMobile: process.env.NODE_ENV !== 'production'
         }
         return cfg
@@ -35,12 +34,6 @@ export default {
     return {
       datepicker: null, // Flatpickr object
       moment: null // selected date moment js object
-    }
-  },
-
-  computed: {
-    date() {
-      return this.moment.toDate()
     }
   },
 

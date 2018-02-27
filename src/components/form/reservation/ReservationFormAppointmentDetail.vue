@@ -37,11 +37,11 @@ export default {
   computed: {
     repeatOptions() {
       return [
-        { value: 'single', label: this.$rapla.locale.localize('no_repeating') },
-        { value: 'weekly', label: this.$rapla.locale.localize('weekly') },
-        { value: 'daily', label: this.$rapla.locale.localize('daily') },
-        { value: 'monthly', label: this.$rapla.locale.localize('monthly') },
-        { value: 'yearly', label: this.$rapla.locale.localize('yearly') }
+        { value: 'single', label: this.$store.getters['locale/localize']('no_repeating') },
+        { value: 'weekly', label: this.$store.getters['locale/localize']('weekly') },
+        { value: 'daily', label: this.$store.getters['locale/localize']('daily') },
+        { value: 'monthly', label: this.$store.getters['locale/localize']('monthly') },
+        { value: 'yearly', label: this.$store.getters['locale/localize']('yearly') }
       ]
     },
     repeatType() {

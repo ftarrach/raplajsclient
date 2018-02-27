@@ -1,14 +1,17 @@
 import DateTime from './util/DateTime'
 import Repeating from './Repeating'
+import Allocatable from './Allocatable'
 
 class Appointment {
-  constructor(id, start, end, maxEnd, repeating, isWholeDay) {
+  constructor(id, start, end, maxEnd, repeating, isWholeDay, reservationId, allocatables) {
     this.id = id
     this.start = start
     this.end = end
     this.maxEnd = maxEnd
     this.repeating = repeating
     this.isWholeDay = isWholeDay
+    this.reservationId = reservationId
+    this.allocatables = allocatables
   }
 
   static fromGwt(gwtAppointment) {
@@ -18,7 +21,9 @@ class Appointment {
       DateTime.fromGwtDate(gwtAppointment.getEnd()),
       DateTime.fromGwtDate(gwtAppointment.getMaxEnd()),
       Repeating.fromGwt(gwtAppointment.getRepeating()),
-      gwtAppointment.isWholeDaysSet()
+      gwtAppointment.isWholeDaysSet(),
+      gwtAppointment.getReservation().getId(),
+      gwtAppointment.getReservation().getAllocatablesFor(gwtAppointment).map(Allocatable.fromGwt)
     )
   }
 }

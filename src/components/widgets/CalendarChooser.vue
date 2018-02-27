@@ -30,7 +30,7 @@ export default {
 
   computed: {
     calendars() {
-      return this.$rapla.data.allCalendars()
+      return this.$store.getters['common/allCalendars']
     },
     selectedCalendarName() {
       return this.value ? this.value : ''

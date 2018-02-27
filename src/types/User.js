@@ -21,5 +21,3 @@ class User {
 }
 
 export default User
-
-window.User = User

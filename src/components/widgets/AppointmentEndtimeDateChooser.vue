@@ -30,9 +30,9 @@ export default {
 
   created() {
     this.items = [
-      { value: 'until', label: this.$rapla.locale.localize('repeating.end_date') },
-      { value: 'x-times', label: this.$rapla.locale.localize('repeating.n_times') },
-      { value: 'infinity', label: this.$rapla.locale.localize('repeating.forever') }
+      { value: 'until', label: this.$store.getters['locale/localize']('repeating.end_date') },
+      { value: 'x-times', label: this.$store.getters['locale/localize']('repeating.n_times') },
+      { value: 'infinity', label: this.$store.getters['locale/localize']('repeating.forever') }
     ]
   }
 

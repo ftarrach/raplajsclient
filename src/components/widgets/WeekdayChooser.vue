@@ -21,13 +21,13 @@ export default {
 
   created() {
     this.items = [
-      {value: 1, label: this.$rapla.locale.formatWeekday(1, 'short')},
-      {value: 2, label: this.$rapla.locale.formatWeekday(2, 'short')},
-      {value: 3, label: this.$rapla.locale.formatWeekday(3, 'short')},
-      {value: 4, label: this.$rapla.locale.formatWeekday(4, 'short')},
-      {value: 5, label: this.$rapla.locale.formatWeekday(5, 'short')},
-      {value: 6, label: this.$rapla.locale.formatWeekday(6, 'short')},
-      {value: 7, label: this.$rapla.locale.formatWeekday(7, 'short')}
+      {value: 1, label: this.$store.getters['locale/formatWeekday'](1, 'short')},
+      {value: 2, label: this.$store.getters['locale/formatWeekday'](2, 'short')},
+      {value: 3, label: this.$store.getters['locale/formatWeekday'](3, 'short')},
+      {value: 4, label: this.$store.getters['locale/formatWeekday'](4, 'short')},
+      {value: 5, label: this.$store.getters['locale/formatWeekday'](5, 'short')},
+      {value: 6, label: this.$store.getters['locale/formatWeekday'](6, 'short')},
+      {value: 7, label: this.$store.getters['locale/formatWeekday'](7, 'short')}
     ]
   },
 

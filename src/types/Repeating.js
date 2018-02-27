@@ -10,6 +10,10 @@ class Repeating {
   }
 
   static fromGwt(gwtRepeating) {
+    if (gwtRepeating === null) {
+      // single appointment, no repeating
+      return null
+    }
     let exceptions = gwtRepeating.getExceptions()
     if (exceptions.length > 0) {
       exceptions = exceptions.map(e => DateTime.fromGwtDate(e))

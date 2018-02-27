@@ -15,7 +15,7 @@ export default {
     title() {
       let found = this.$store.getters.reservationById(this.$route.params.id)
       if (found[0]) {
-        return this.$rapla.locale.format('edit_reservation.format', [found[0].name])
+        return this.$store.getters['locale/format']('edit_reservation.format', [found[0].name])
       }
       return ''
     }

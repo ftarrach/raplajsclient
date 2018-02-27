@@ -16,7 +16,7 @@ class Allocatable {
       gwtAllocatable.getId(),
       Classification.fromGwt(gwtAllocatable.getClassification()),
       DateTime.fromGwtDate(gwtAllocatable.getCreateDate()),
-      DateTime.fromGwtDate(gwtAllocatable.getLastChange()),
+      DateTime.fromGwtDate(gwtAllocatable.getLastChanged()),
       [ /* TODO: permissions */ ]
     )
   }

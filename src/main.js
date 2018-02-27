@@ -31,7 +31,6 @@ function startVue() {
     el: '#app',
     router,
     store,
-    rapla: RaplaGwtPlugin,
     template: '<App/>',
     components: { App }
   })

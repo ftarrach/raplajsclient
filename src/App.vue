@@ -17,6 +17,21 @@ export default {
   components: {
     TheHeader,
     RaplaDialog
+  },
+
+  created() {
+    this.loadCalendars()
+    this.initCalendar(null)
+  },
+
+  methods: {
+    loadCalendars() {
+      this.$store.dispatch('common/loadCalendars')
+    },
+
+    initCalendar(key) {
+      this.$store.dispatch('calendar/loadCalendar', key)
+    }
   }
 }
 </script>

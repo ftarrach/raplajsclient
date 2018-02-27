@@ -2,9 +2,7 @@
   .container.period-and-calendar-chooser
     .columns
       .column.is-third
-        calendar-chooser(:resources="resources"
-                         :types="resourcetypes"
-                         :title="calendar"
+        calendar-chooser(:title="calendar"
                          v-model="resource")
       .column.is-third
         date-chooser(v-model="from"
@@ -16,6 +14,7 @@
 
 <script>
 
+import DateTime from '@/types/util/DateTime'
 import DateChooser from '@/components/widgets/DateChooser'
 import CalendarChooser from '@/components/widgets/CalendarChooser'
 
@@ -34,34 +33,28 @@ export default {
 
   computed: {
     calendar() {
-      return this.$rapla.locale.localize('calendar')
+      return this.$store.getters['locale/localize']('calendar')
     },
     fromString() {
-      return this.$rapla.locale.localize('start_date')
+      return this.$store.getters['locale/localize']('start_date')
     },
     endString() {
-      return this.$rapla.locale.localize('end_date')
-    },
-    resourcetypes() {
-      return this.$store.getters.allResourceTypes
-    },
-    resources() {
-      return this.$store.getters.resources
+      return this.$store.getters['locale/localize']('end_date')
     },
     from: {
       get() {
-        return this.$store.state.user.from
+        return DateTime.toMoment(this.$store.state.calendar.startDate)
       },
       set(value) {
-        this.$store.commit('updateFrom', value)
+        this.$store.dispatch('calendar/setStartDate', DateTime.fromMoment(value))
       }
     },
     to: {
       get() {
-        return this.$store.state.user.to
+        return DateTime.toMoment(this.$store.state.calendar.endDate)
       },
       set(value) {
-        this.$store.commit('updateTo', value)
+        this.$store.dispatch('calendar/setEndDate', DateTime.fromMoment(value))
       }
     }
   }

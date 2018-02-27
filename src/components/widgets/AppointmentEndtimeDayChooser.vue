@@ -30,9 +30,9 @@ export default {
 
   created() {
     this.items = [
-      { value: 'same-day', label: this.$rapla.locale.localize('appointment.same_day') },
-      { value: 'next-day', label: this.$rapla.locale.localize('appointment.next_day') },
-      { value: 'x-day', label: this.$rapla.locale.localize('appointment.day_x') }
+      { value: 'same-day', label: this.$store.getters['locale/localize']('appointment.same_day') },
+      { value: 'next-day', label: this.$store.getters['locale/localize']('appointment.next_day') },
+      { value: 'x-day', label: this.$store.getters['locale/localize']('appointment.day_x') }
     ]
   }
 }

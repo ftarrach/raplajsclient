@@ -11,15 +11,36 @@ export default class DateTime {
   }
 
   static fromMoment(moment) {
-    return new DateTime(...moment.toArray())
+    let dt = new DateTime(...moment.toArray())
+    dt.months++
+    return dt
   }
 
-  static fromGwtDate(date) {
-    if (date) {
+  static toMoment(datetime) {
+    return moment({
+      years: datetime.years,
+      months: datetime.months - 1,
+      date: datetime.date,
+      hours: datetime.hours,
+      minutes: datetime.minutes,
+      seconds: datetime.seconds
+    })
+  }
+
+  static fromGwtDate(gwtDate) {
+    if (gwtDate) {
       /* global api */
       // HACK: works, but is inperformant. Better try direct parsing
-      return DateTime.fromMoment(moment(api.toJsDate(date)))
+      return DateTime.fromMoment(moment(api.toJsDate(gwtDate)))
     }
-    return date
+    return gwtDate
+  }
+
+  static toGwtDate(datetime) {
+    /* global api */
+    let locale = api.getRaplaLocale()
+    let date = locale.toRaplaDate(datetime.years, datetime.months, datetime.date)
+    let time = locale.toTime(datetime.hours, datetime.minutes, datetime.seconds)
+    return locale.toDate(date, time)
   }
 }
