@@ -23,6 +23,4 @@ class Appointment {
   }
 }
 
-window.Appointment = Appointment
-
 export default Appointment

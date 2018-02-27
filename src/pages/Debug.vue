@@ -11,7 +11,6 @@ export default {
   },
   created() {
     window.debug = (txt) => {
-      console.log(this)
       this.content = txt
     }
   }

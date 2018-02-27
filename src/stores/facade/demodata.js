@@ -16,7 +16,7 @@ faker.locale = 'de'
 moment.locale('de')
 
 const beginWeek = moment('20171002T0000')
-const lastChange = moment('20171231T1422').toObject()
+// const lastChange = moment('20171231T1422').toObject()
 
 const calendars = [
   'Default',
@@ -61,24 +61,32 @@ const allocatables = [
 ]
 
 const reservations = [
-  new Reservation('res1',
-    new Classification(types[2], { 'name': 'Mathematik I', 'a1': categories[0][1] },
+  new Reservation(
+    'res1',
+    new Classification(
+      types[2],
+      { 'name': 'Mathematik I', 'a1': categories[0][1] }
+    ),
     [ allocatables.filter(a => ['allo5', 'allo6', 'allo7'].includes(a.id)) ],
-      [ new Appointment('app1',
-          DateTime.fromMoment(beginWeek.clone().hour(9)),
-          DateTime.fromMoment(beginWeek.clone().hour(11)),
-          null,
-          new Repeating('WEEKLY', 1, null, -1, []),
-          false) ],
-    [ /* permissions */ ]
-  ))
+    [
+      new Appointment(
+        'app1',
+        DateTime.fromMoment(beginWeek.clone().hour(9)),
+        DateTime.fromMoment(beginWeek.clone().hour(11)),
+        null,
+        new Repeating('WEEKLY', 1, null, -1, []),
+        false
+      )
+    ],
+    [ /* TODO: permissions */ ]
+  )
 ]
 
 const demodata = {
   calendars,
   resourcetypes: [],
   resources: [],
-  reservations: [],
+  reservations,
   reservationtypes: []
 }
 
