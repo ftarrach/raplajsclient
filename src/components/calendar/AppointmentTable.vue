@@ -29,9 +29,6 @@ export default {
 
   computed: {
     appointments() {
-      // TODO: these are not appointments, but appointment blocks!
-      // Appointment = definition
-      // AppointmentBlock = instance
       return this.$store.state.calendar.appointmentBlocks
     }
   },

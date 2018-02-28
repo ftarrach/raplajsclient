@@ -4,6 +4,7 @@ import moment from 'moment'
 import DateTime from '@/types/util/DateTime'
 import User from '@/types/User'
 import AppointmentBlock from '@/types/AppointmentBlock'
+import Reservation from '@/types/Reservation'
 
 const calendar = {
   namespaced: true,
@@ -29,6 +30,10 @@ const calendar = {
 
     setAppointments(state, blocks) {
       state.appointmentBlocks = blocks
+    },
+
+    setReservations(state, reservations) {
+      state.reservations = reservations
     },
 
     setStartDate(state, newStartDate) {
@@ -58,10 +63,9 @@ const calendar = {
       console.log('load appointments')
       api.getCalendarModel().queryBlocks(api.getCalendarModel().getTimeIntervall())
         .thenAccept(b => {
-          let blocks = b.array_2_g$
+          let blocks = b.array_2_g$ // FIXME: server should return array instead of arraylist
           // TODO: parse blocks here in an async way, then commit the parsed blocks
-          let result = blocks.map(b => AppointmentBlock.fromGwt(b))
-          commit('setAppointments', result)
+          commit('setAppointments', blocks.map(b => AppointmentBlock.fromGwt(b)))
         })
         .exceptionally(console.warn)
     },
@@ -69,9 +73,9 @@ const calendar = {
     loadReservations({commit}) {
       console.log('load reservations')
       api.getCalendarModel().queryReservations(api.getCalendarModel().getTimeIntervall())
-        .thenAccept(b => {
-          /* TODO: cannot be implemented right now, linkedhashset in background */
-          console.log(b)
+        .thenAccept(result => {
+          let array = result.array_2_g$ // FIXME: server should return array instead of arraylist
+          commit('setReservations', array.map(r => Reservation.fromGwt(r)))
         })
     },
 

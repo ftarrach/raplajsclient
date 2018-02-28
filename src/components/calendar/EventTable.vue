@@ -10,7 +10,7 @@
       tbody
         tr(v-for='event in events' @dblclick="edit(event)")
           td {{ event.name }}
-          td {{ event.begin | gwt-formatDateTime }}
+          td {{ event.firstDate | gwt-formatDateTime }}
           td.is-hidden-mobile {{ event.lastChange | gwt-formatDateTime }}
           td
             b-dropdown(is-right)
@@ -27,7 +27,7 @@ export default {
 
   computed: {
     events() {
-      return this.$store.getters.eventsInPeriod
+      return this.$store.state.calendar.reservations
     },
 
     dropdownitems() {
@@ -66,6 +66,10 @@ export default {
     }
   },
 
+  created() {
+    this.$store.dispatch('calendar/loadReservations')
+  },
+
   methods: {
     create() {
       alert('create')
@@ -84,12 +88,13 @@ export default {
                })
     },
     edit(event) {
-      this.$router.push({
-        name: 'EditReservation',
-        params: {
-          id: event.id
-        }
-      })
+      alert('edit')
+      // this.$router.push({
+      //   name: 'EditReservation',
+      //   params: {
+      //     id: event.id
+      //   }
+      // })
     },
     show(event) {
       alert('show')
