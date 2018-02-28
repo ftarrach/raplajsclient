@@ -13,7 +13,7 @@ const calendar = {
     endDate: DateTime.fromMoment(moment('1970-01-01')),
     user: new User(),
     appointmentBlocks: [],
-    reservations: []
+    reservations: [],
   },
 
   getters: {

@@ -30,6 +30,10 @@ export default {
     step: {
       type: String,
       default: 'week'
+    },
+    isEnd: {
+      type: Boolean,
+      default: () => false
     }
   },
 
@@ -47,7 +51,11 @@ export default {
 
   methods: {
     today() {
-      this.val = moment()
+      if (this.isEnd) {
+        this.val = moment().endOf('day')
+      } else {
+        this.val = moment().startOf('day')
+      }
     },
     next() {
       switch (this.step) {

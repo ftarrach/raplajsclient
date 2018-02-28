@@ -9,7 +9,8 @@
                      :title="fromString")
       .column.is-third
         date-chooser(v-model="to"
-                     :title="endString")
+                     :title="endString"
+                     is-end)
 </template>
 
 <script>
