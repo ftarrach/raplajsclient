@@ -31,6 +31,7 @@ export default {
 
     initCalendar(key) {
       this.$store.dispatch('calendar/loadCalendar', key)
+      this.$store.dispatch('facade/initialize')
     }
   }
 }

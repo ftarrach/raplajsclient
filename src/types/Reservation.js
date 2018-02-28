@@ -4,8 +4,9 @@ import DateTime from './util/DateTime'
 import Appointment from './Appointment'
 
 class Reservation {
-  constructor(id, classification, allocatables, appointments, permissions, createDate, lastChange) {
+  constructor(id, name, classification, allocatables, appointments, permissions, createDate, lastChange) {
     this.id = id
+    this.name = name
     this.classification = classification
     this.allocatables = allocatables
     this.appointments = appointments
@@ -17,6 +18,7 @@ class Reservation {
   static fromGwt(gwtReservation) {
     return new Reservation(
       gwtReservation.getId(),
+      gwtReservation.getName(),
       Classification.fromGwt(gwtReservation.getClassification()),
       gwtReservation.getAllocatables().map(Allocatable.fromGwt),
       gwtReservation.getAppointments().map(Appointment.fromGwt),

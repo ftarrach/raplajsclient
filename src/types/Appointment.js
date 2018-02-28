@@ -1,6 +1,5 @@
 import DateTime from './util/DateTime'
 import Repeating from './Repeating'
-import Allocatable from './Allocatable'
 
 class Appointment {
   constructor(id, start, end, maxEnd, repeating, isWholeDay, reservationId, allocatables) {
@@ -23,7 +22,8 @@ class Appointment {
       Repeating.fromGwt(gwtAppointment.getRepeating()),
       gwtAppointment.isWholeDaysSet(),
       gwtAppointment.getReservation().getId(),
-      gwtAppointment.getReservation().getAllocatablesFor(gwtAppointment).map(Allocatable.fromGwt)
+      // TODO: this here should be in calendar.js : gwtAppointment.getReservation().getAllocatablesFor(gwtAppointment).map(Allocatable.fromGwt)
+      gwtAppointment.getReservation().getAllocatablesFor(gwtAppointment).map(a => a.getId())
     )
   }
 }

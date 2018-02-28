@@ -9,13 +9,13 @@
         th.is-hidden-mobile {{ "persons" | gwt-localize }}
     tbody
       tr(v-for='appointment in appointments')
-        td {{ reservationName(appointment) }}
+        td {{ appointment.name }}
         td {{ appointment.start | gwt-formatDateTime }}
         td.is-hidden-mobile {{ appointment.end | gwt-formatDateTime }}
         td.is-hidden-mobile
-          joined-list(:list='appointment.allocatables | listresources')
+          joined-list(:list='appointment.resources')
         td.is-hidden-mobile
-          joined-list(:list='appointment.persons | listpersons')
+          joined-list(:list='appointment.persons')
 </template>
 
 <script>
@@ -29,7 +29,10 @@ export default {
 
   computed: {
     appointments() {
-      return this.$store.state.calendar.appointments
+      // TODO: these are not appointments, but appointment blocks!
+      // Appointment = definition
+      // AppointmentBlock = instance
+      return this.$store.state.calendar.appointmentBlocks
     }
   },
 
@@ -42,24 +45,14 @@ export default {
       return this.$store.getters['calendar/reservation'](id)
     },
 
-    reservationName(appointment) {
-      // HACK: add type name to reservation which calls .getName() on gwt object
-      return this.findReservation(appointment.reservationId).classification.data.name
-    }
-  },
-
-  filters: {
-    listresources(value) {
-      if (!value) return ''
-      // HACK: see above
-      // TODO: distinguish persons and resources
-      return value.map(r => r.classification.data.name || 'unbekannte Ressource').sort()
+    findAllocatable(id) {
+      return this.$store.getters['facade/allocatable'](id)
     },
-    listpersons(value) {
-      if (!value) return ''
-      return value.map(p => p.name)
+
+    list(allocatables) {
+      if (!allocatables) return ''
+      return allocatables.map(id => this.findAllocatable(id).name)
     }
   }
-
 }
 </script>

@@ -1,4 +1,5 @@
 import moment from 'moment'
+import DateTime from '@/types/util/DateTime'
 
 let i18n = null
 let locale = null
@@ -34,9 +35,9 @@ const Api = {
     if (locale) {
       // REVIEW: Where is this Date Format in Rapla?
       // TODO: einfach zusammenbauen date + time
-      return moment(date).format('DD.MM.YYYY (dd) HH:mm')
+      return DateTime.toMoment(date).format('DD.MM.YYYY (dd) HH:mm')
     } else {
-      return moment(date).format('DD.MM.YYYY (dd) HH:mm')
+      return DateTime.toMoment(date).format('DD.MM.YYYY (dd) HH:mm')
     }
   },
 
@@ -81,7 +82,7 @@ const Api = {
         return ''
       }
     } else {
-      return moment(date).format('DD.MM.YYYY')
+      return DateTime.toMoment(date).format('DD.MM.YYYY')
     }
   },
 
@@ -92,7 +93,7 @@ const Api = {
     if (locale) {
       return locale.formatTime(locale.toTime(date.hours, date.minutes, date.seconds))
     }
-    return moment(date).format('HH:mm')
+    return DateTime.toMoment(date).format('HH:mm')
   }
 }
 

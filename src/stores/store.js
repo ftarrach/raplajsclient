@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import common from './common'
 import calendar from './calendar'
 import locale from './locale'
+import facade from './facade'
 
 Vue.use(Vuex)
 
@@ -11,6 +12,7 @@ export default new Vuex.Store({
   modules: {
     common,
     calendar,
-    locale
+    locale,
+    facade
   }
 })

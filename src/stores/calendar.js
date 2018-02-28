@@ -3,23 +3,21 @@
 import moment from 'moment'
 import DateTime from '@/types/util/DateTime'
 import User from '@/types/User'
-import Appointment from '@/types/Appointment'
 import Reservation from '@/types/Reservation'
+import AppointmentBlock from '@/types/AppointmentBlock'
 
 const calendar = {
   namespaced: true,
-
   state: {
     startDate: DateTime.fromMoment(moment('1970-01-01')),
     endDate: DateTime.fromMoment(moment('1970-01-01')),
     user: new User(),
-    appointments: [],
+    appointmentBlocks: [],
     reservations: []
   },
 
   getters: {
-    username: state => state.user.username,
-    reservation: state => id => state.reservations.find(r => r.id === id)
+    username: state => state.user.username
   },
 
   mutations: {
@@ -31,14 +29,7 @@ const calendar = {
     },
 
     setAppointments(state, blocks) {
-      state.appointments = blocks.map(b => Appointment.fromGwt(b.getAppointment()))
-    },
-
-    setReservations(state, blocks) {
-      state.reservations =
-        blocks.map(b => b.getAppointment().getReservation())
-          .filter((reservation, index, self) => self.findIndex(other => other.getId() === reservation.getId()) === index)
-          .map(r => Reservation.fromGwt(r))
+      state.appointmentBlocks = blocks.map(b => AppointmentBlock.fromGwt(b))
     },
 
     setStartDate(state, newStartDate) {
@@ -51,17 +42,26 @@ const calendar = {
   },
 
   actions: {
+
+    refresh({commit}) {
+      console.log('refresh calendar model')
+      api.getCalendarModel().refresh()
+      commit('refreshCalendar')
+    },
+
     loadCalendar({commit}, calendarKey) {
+      console.log(`load calendar ${calendarKey}`)
       api.getCalendarModel().load(calendarKey)
       commit('refreshCalendar')
     },
 
     loadAppointments({commit}) {
+      console.log('load appointments')
       api.getCalendarModel().queryBlocks(api.getCalendarModel().getTimeIntervall())
         .thenAccept(b => {
           let blocks = b.array_2_g$
+          // TODO: parse blocks here in an async way, then commit the parsed blocks
           commit('setAppointments', blocks)
-          commit('setReservations', blocks)
         })
         .exceptionally(console.warn)
     },
@@ -73,7 +73,6 @@ const calendar = {
     },
 
     setEndDate({commit, dispatch}, newEndDate) {
-      console.log(`new end date: ${JSON.stringify(newEndDate)}`)
       api.getCalendarModel().setEndDate(DateTime.toGwtDate(newEndDate))
       commit('setEndDate', newEndDate)
       dispatch('loadAppointments')
