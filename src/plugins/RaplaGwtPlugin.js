@@ -1,6 +1,4 @@
 import GwtLocale from './GwtLocale'
-import GwtUser from './GwtUser'
-import GwtData from './GwtData'
 
 require('./gwtEvents.js')
 
@@ -30,38 +28,18 @@ function setupGwtCallback(options) {
   }
 }
 
-const Api = {
-  locale: GwtLocale.Api,
-  user: GwtUser.Api,
-  data: GwtData.Api
-}
-
-function installChildPlugins(Vue, options) {
-  Vue.mixin({ beforeCreate: function() {
-    const options = this.$options
-    if (options.rapla) {
-      this.$rapla = Api
-    } else if (options.parent && options.parent.$rapla) {
-      this.$rapla = options.parent.$rapla
-    }
-  }})
-  Vue.use(GwtLocale.Plugin, { api })
-  Vue.use(GwtUser.Plugin, { api })
-  Vue.use(GwtData.Plugin, { api })
-  options.onLoad()
-}
-
 export default {
   install(Vue, options) {
     if (options.standaloneMode) {
       console.log('starting Vue Client in Standalone Mode')
-      installChildPlugins(Vue, options)
+      Vue.use(GwtLocale.Plugin, { api })
     } else {
       console.log('starting Vue Client in GWT Mode')
       console.log('installing Vue RaplaGwtPlugin')
       setupGwtCallback({
         apiAvailable() {
-          installChildPlugins(Vue, options)
+          Vue.use(GwtLocale.Plugin, { api })
+          options.onLoad()
         }
       })
     }
