@@ -82,14 +82,18 @@ const calendar = {
     setStartDate({commit, dispatch}, newStartDate) {
       api.getCalendarModel().setStartDate(DateTime.toGwtDate(newStartDate))
       commit('setStartDate', newStartDate)
+      // TODO: only reload if needed
       dispatch('loadAppointments')
+      dispatch('loadReservations')
     },
 
     setEndDate({commit, dispatch}, newEndDate) {
       let add1 = DateTime.fromMoment(DateTime.toMoment(newEndDate).add(1, 'day'))
       api.getCalendarModel().setEndDate(DateTime.toGwtDate(add1))
       commit('setEndDate', newEndDate)
+      // TODO: only reload if needed
       dispatch('loadAppointments')
+      dispatch('loadReservations')
     }
   }
 }

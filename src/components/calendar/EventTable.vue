@@ -74,9 +74,11 @@ export default {
     create() {
       alert('create')
     },
+
     changeOwner() {
       alert('changeOwner')
     },
+
     remove() {
       // DEBUG: only for demonstration purposes
       // eslint-disable-next-line
@@ -87,21 +89,24 @@ export default {
                  alert('user has chosen button nr ' + resultInt)
                })
     },
+
     edit(event) {
-      alert('edit')
-      // this.$router.push({
-      //   name: 'EditReservation',
-      //   params: {
-      //     id: event.id
-      //   }
-      // })
+      this.$router.push({
+        name: 'EditReservation',
+        params: {
+          id: event.id
+        }
+      })
     },
+
     show(event) {
       alert('show')
     },
+
     copy() {
       alert('copy')
     },
+
     cut() {
       alert('cut')
     }
