@@ -66,6 +66,15 @@ const calendar = {
         .exceptionally(console.warn)
     },
 
+    loadReservations({commit}) {
+      console.log('load reservations')
+      api.getCalendarModel().queryReservations(api.getCalendarModel().getTimeIntervall())
+        .thenAccept(b => {
+          /* TODO: cannot be implemented right now, linkedhashset in background */
+          console.log(b)
+        })
+    },
+
     setStartDate({commit, dispatch}, newStartDate) {
       api.getCalendarModel().setStartDate(DateTime.toGwtDate(newStartDate))
       commit('setStartDate', newStartDate)
