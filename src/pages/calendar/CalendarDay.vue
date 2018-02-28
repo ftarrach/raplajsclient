@@ -1,5 +1,5 @@
 <template lang="pug">
-  .container.calendar-day
+  //-.container.calendar-day
     date-and-calendar-chooser(step="day")
     .flex
       calendar-day-legend
@@ -20,12 +20,12 @@ export default {
   },
 
   computed: {
-    day() {
-      return this.$store.state.user.date
-    },
-    reservations() {
-      return this.$store.getters.reservationsOnDate
-    }
+  //   day() {
+  //     return this.$store.state.user.date
+  //   },
+  //   reservations() {
+  //     return this.$store.getters.reservationsOnDate
+  //   }
   }
 }
 </script>

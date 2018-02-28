@@ -1,5 +1,5 @@
 <template lang="pug">
-  .rapla-calendar
+  //- .rapla-calendar
     calendar-day-legend
     template(v-for="(d, index) in weekDates")
       calendar-day-view(:date="d"

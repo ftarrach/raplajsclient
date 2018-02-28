@@ -30,10 +30,6 @@ export default {
     step: {
       type: String,
       default: 'week'
-    },
-    isEnd: {
-      type: Boolean,
-      default: () => false
     }
   },
 
@@ -49,13 +45,10 @@ export default {
     }
   },
 
+  // TODO: if isEnd, add 1 Day (no 23:59:59)
   methods: {
     today() {
-      if (this.isEnd) {
-        this.val = moment().endOf('day')
-      } else {
-        this.val = moment().startOf('day')
-      }
+      this.val = moment().startOf('day')
     },
     next() {
       switch (this.step) {

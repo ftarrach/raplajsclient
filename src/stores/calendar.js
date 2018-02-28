@@ -63,7 +63,7 @@ const calendar = {
       console.log('load appointments')
       api.getCalendarModel().queryBlocks(api.getCalendarModel().getTimeIntervall())
         .thenAccept(b => {
-          let blocks = b.array_2_g$ // FIXME: server should return array instead of arraylist
+          let blocks = api.toArray(b)
           // TODO: parse blocks here in an async way, then commit the parsed blocks
           commit('setAppointments', blocks.map(b => AppointmentBlock.fromGwt(b)))
         })
@@ -74,7 +74,7 @@ const calendar = {
       console.log('load reservations')
       api.getCalendarModel().queryReservations(api.getCalendarModel().getTimeIntervall())
         .thenAccept(result => {
-          let array = result.array_2_g$ // FIXME: server should return array instead of arraylist
+          let array = api.toArray(result)
           commit('setReservations', array.map(r => Reservation.fromGwt(r)))
         })
     },
@@ -86,7 +86,8 @@ const calendar = {
     },
 
     setEndDate({commit, dispatch}, newEndDate) {
-      api.getCalendarModel().setEndDate(DateTime.toGwtDate(newEndDate))
+      let add1 = DateTime.fromMoment(DateTime.toMoment(newEndDate).add(1, 'day'))
+      api.getCalendarModel().setEndDate(DateTime.toGwtDate(add1))
       commit('setEndDate', newEndDate)
       dispatch('loadAppointments')
     }
