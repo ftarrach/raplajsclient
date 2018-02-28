@@ -3,7 +3,6 @@
 import moment from 'moment'
 import DateTime from '@/types/util/DateTime'
 import User from '@/types/User'
-import Reservation from '@/types/Reservation'
 import AppointmentBlock from '@/types/AppointmentBlock'
 
 const calendar = {
@@ -13,7 +12,7 @@ const calendar = {
     endDate: DateTime.fromMoment(moment('1970-01-01')),
     user: new User(),
     appointmentBlocks: [],
-    reservations: [],
+    reservations: []
   },
 
   getters: {
@@ -29,7 +28,7 @@ const calendar = {
     },
 
     setAppointments(state, blocks) {
-      state.appointmentBlocks = blocks.map(b => AppointmentBlock.fromGwt(b))
+      state.appointmentBlocks = blocks
     },
 
     setStartDate(state, newStartDate) {
@@ -61,7 +60,8 @@ const calendar = {
         .thenAccept(b => {
           let blocks = b.array_2_g$
           // TODO: parse blocks here in an async way, then commit the parsed blocks
-          commit('setAppointments', blocks)
+          let result = blocks.map(b => AppointmentBlock.fromGwt(b))
+          commit('setAppointments', result)
         })
         .exceptionally(console.warn)
     },
