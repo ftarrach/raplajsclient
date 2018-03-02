@@ -8,6 +8,7 @@ import Reservation from '@/types/Reservation'
 
 const calendar = {
   namespaced: true,
+
   state: {
     startDate: DateTime.fromMoment(moment('1970-01-01')),
     endDate: DateTime.fromMoment(moment('1970-01-01')),
@@ -17,7 +18,8 @@ const calendar = {
   },
 
   getters: {
-    username: state => state.user.username
+    username: state => state.user.username,
+    reservation: state => id => state.reservations.find(r => r.id === id)
   },
 
   mutations: {
@@ -61,22 +63,32 @@ const calendar = {
 
     loadAppointments({commit}) {
       console.log('load appointments')
-      api.getCalendarModel().queryBlocks(api.getCalendarModel().getTimeIntervall())
-        .thenAccept(b => {
-          let blocks = api.toArray(b)
-          // TODO: parse blocks here in an async way, then commit the parsed blocks
-          commit('setAppointments', blocks.map(b => AppointmentBlock.fromGwt(b)))
-        })
-        .exceptionally(console.warn)
+      new Promise((resolve, reject) => {
+        api.getCalendarModel().queryBlocks(api.getCalendarModel().getTimeIntervall())
+          .thenAccept(b => {
+            let blocks = api.toArray(b)
+            // TODO: parse blocks here in an async way, then commit the parsed blocks
+            commit('setAppointments', blocks.map(b => AppointmentBlock.fromGwt(b)))
+            resolve()
+          })
+          .exceptionally(console.warn)
+      })
     },
 
     loadReservations({commit}) {
       console.log('load reservations')
-      api.getCalendarModel().queryReservations(api.getCalendarModel().getTimeIntervall())
-        .thenAccept(result => {
-          let array = api.toArray(result)
-          commit('setReservations', array.map(r => Reservation.fromGwt(r)))
-        })
+      return new Promise((resolve, reject) => {
+        api.getCalendarModel().queryReservations(api.getCalendarModel().getTimeIntervall())
+          .thenAccept(result => {
+            let array = api.toArray(result)
+            commit('setReservations', array.map(r => Reservation.fromGwt(r)))
+            console.log('loaded reservations')
+            resolve()
+          }).exceptionally(error => {
+            // TODO: show dialog box or something
+            console.error(error)
+          })
+      })
     },
 
     setStartDate({commit, dispatch}, newStartDate) {

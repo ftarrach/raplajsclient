@@ -13,6 +13,7 @@ export default {
     window.debug = (txt) => {
       this.content = txt
     }
+    window.store = this.$store
   }
 }
 </script>

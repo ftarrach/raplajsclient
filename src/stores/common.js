@@ -19,9 +19,7 @@ const common = {
 
   actions: {
     loadCalendars({ commit }) {
-      if (api) {
-        commit('setCalendars', api.getCalendarNames())
-      }
+      commit('setCalendars', api.getCalendarNames())
     }
   }
 }

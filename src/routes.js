@@ -11,7 +11,8 @@ import CalendarWeekResource from '@/pages/calendar/CalendarWeekResource'
 import CalendarDayProgram from '@/pages/calendar/CalendarDayProgram'
 import CalendarWeekProgram from '@/pages/calendar/CalendarWeekProgram'
 import CalendarMonth from '@/pages/calendar/CalendarMonth'
-import EditReservation from '@/pages/calendar/EditReservation'
+import NewReservation from '@/pages/form/NewReservation'
+import EditReservation from '@/pages/form/EditReservation'
 import Resources from '@/pages/Resources'
 import Debug from '@/pages/Debug'
 
@@ -19,7 +20,7 @@ Vue.use(Router)
 
 const config = {
   mode: 'hash',
-  base: process.env.NODE_ENV === 'gwtdev' ? '/proxy' : '/',
+  base: '/proxy',
   routes: [
     {
       path: '/',
@@ -85,7 +86,12 @@ const config = {
           name: 'CalendarMonth'
         },
         {
-          path: 'reservation/:id',
+          path: 'reservationform',
+          component: NewReservation,
+          name: 'NewReservation'
+        },
+        {
+          path: 'reservationform/:id',
           component: EditReservation,
           name: 'EditReservation'
         }

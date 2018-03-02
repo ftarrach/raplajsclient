@@ -13,6 +13,10 @@ const locale = {
     },
 
     format: state => (key, parameters) => {
+      if (!parameters) {
+        console.warn(`called ${key} with locale/format with no arguments. You may want to use locale/localize`)
+        return ''
+      }
       if (api) {
         return api.getI18n().format(key, ...parameters)
       }

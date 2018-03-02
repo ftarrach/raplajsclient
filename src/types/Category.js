@@ -18,3 +18,11 @@ class Category {
 }
 
 export default Category
+
+export function toDrilldownItems(c) {
+  if (c.subcategories.length === 0) {
+    return { id: c.id, label: c.name }
+  } else {
+    return { id: c.id, label: c.name, children: c.subcategories.map(toDrilldownItems) }
+  }
+}

@@ -59,7 +59,7 @@ export default {
     this.config.onValueUpdate = (selectedDate, _) => this.onDateUpdate(selectedDate[0])
     this.datepicker = new Flatpickr(this.$el, this.config)
     if (!this.value) {
-      this.onDateUpdate(moment().toDate())
+      // this.onDateUpdate(moment().toDate())
     } else {
       this.setDate(this.value.toDate())
       this.moment = this.value

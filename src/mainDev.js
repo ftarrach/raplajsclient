@@ -1,9 +1,7 @@
 import moment from 'moment'
 
 import Vue from 'vue'
-import App from './App'
-import router from './routes'
-import store from './stores/store'
+import DevApp from './DevApp'
 import 'cool-checkboxes-for-bulma.io/dist/css/bulma-radio-checkbox.min.css'
 import LayoutHelper from './globalComponents'
 import RaplaGwtPlugin from './plugins/RaplaGwtPlugin'
@@ -15,15 +13,13 @@ Vue.config.productionTip = false
 Vue.use(LayoutHelper)
 Vue.use(RaplaGwtPlugin, {
   onLoad: startVue,
-  standaloneMode: false
+  standaloneMode: true
 })
 
 function startVue() {
   window.raplaVue = new Vue({
     el: '#app',
-    router,
-    store,
-    template: '<App/>',
-    components: { App }
+    template: '<DevApp/>',
+    components: { DevApp }
   })
 }

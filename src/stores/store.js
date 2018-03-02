@@ -4,6 +4,7 @@ import common from './common'
 import calendar from './calendar'
 import locale from './locale'
 import facade from './facade'
+import reservationform from './reservationform'
 
 Vue.use(Vuex)
 
@@ -13,6 +14,7 @@ export default new Vuex.Store({
     common,
     calendar,
     locale,
-    facade
+    facade,
+    reservationform
   }
 })

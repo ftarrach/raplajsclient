@@ -15,3 +15,7 @@ selenium-debug.log
 *.ntvs*
 *.njsproj
 *.sln
+
+# ignore folders starting with an underscore
+
+**/_*

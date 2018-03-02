@@ -1,10 +1,11 @@
 <template lang="pug">
   div.drilldown
     div.drilldown-menu.columns.is-gapless.is-marginless
-      .column.is-half
-        b-button(icon="fa-home" no-text fill :disabled="notHome" @click="home")
-      .column.is-half
-        b-button(icon="fa-arrow-left" no-text fill :disabled="notHome" pull-right @click="back")
+      .column
+        span {{ readablePath }}
+        .is-pulled-right
+          b-button(icon="fa-home" no-text pull-right :disabled="notHome" @click="home")
+          b-button(icon="fa-arrow-left" no-text pull-right :disabled="notHome" @click="back")
     ul.drilldown-list
       li.drilldown-list-item(v-for="item in itemsForPath" :key="item.id")
         span(v-if="item.children" @click="clickOnContainer(item)")
@@ -14,6 +15,7 @@
 </template>
 
 <script>
+// TODO: selected item(s), single/multiselectmode etc
 export default {
 
   name: 'BDrilldown',
@@ -39,13 +41,19 @@ export default {
       }
       return level
     },
+
     notHome() {
       return this.path.length === 0
+    },
+
+    readablePath() {
+      return ' › ' + this.path.map(id => this.items.find(i => i.id === id).label).join(' › ')
     }
   },
 
   methods: {
     clickOnContainer(container) {
+      console.log('click')
       this.path.push(container.id)
     },
 
@@ -73,7 +81,6 @@ export default {
     display: flex;
     flex-direction: column;
     flex: 1 1 auto;
-    min-height: 100%;
   }
 
   .drilldown-list {
@@ -85,14 +92,14 @@ export default {
 
     .drilldown-list-item {
       cursor: pointer;
+      border-bottom: 1px solid $border;
+
+      @include touch {
+        padding: 0.5em
+      }
 
       &:hover {
         background-color: $white-bis;
-      }
-
-      &:not(:last-child),
-      &:only-child {
-        border-bottom: 1px solid $border;
       }
     }
   }

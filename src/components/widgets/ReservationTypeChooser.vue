@@ -23,7 +23,7 @@ export default {
 
   computed: {
     items() {
-      return this.$rapla.data.reservationTypes()
+      return this.$store.state.facade.reservationtypes
     },
     selectedItemName() {
       return this.value.name

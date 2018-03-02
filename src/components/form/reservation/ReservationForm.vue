@@ -4,35 +4,25 @@
       header.card-header
         p.card-header-title {{ title }}
         b-button(icon="fa-arrow-left" no-text @click="back" pull-right)
-      .card-content
+      .card-content(v-if="error")
+        p.has-text-danger {{ error }}
+      .card-content(v-else)
         .columns.is-multiline.is-centered
           //- Reservation Type
           .column.is-half
             label.label {{ "reservation_type" | gwt-localize }}
             reservation-type-chooser(v-model="type")
-          //- Name
-          //-.column.is-half
-            label.label {{ "name" | gwt-localize }}
-            input.input(v-model="name")
-          //- horizontal line
-          .column.is-full
-            hr.line
           //- step chooser
-          .column.is-three-quarters
+          .column.is-half
+            label.label &nbsp;
             b-steps(medium-dots
                     always-horizontal
                     :items="$options.steps"
-                    v-model="step")
-          //- step components
-          .column.is-full(v-show="step === 'attributes'")
-            reservation-form-attributes(v-model="attributes")
-          .column.is-full(v-show="step === 'appointment'")
-            reservation-form-appointment(v-model="appointments")
-            reservation-form-resource(v-model="resources")
-          .column.is-full(v-show="step === 'permission'")
-            reservation-form-permission(v-model="permissions")
-          .column.is-full(v-show="step === 'moreAttributes'")
-            p TODO: More Attributes
+                    v-model="step"
+                    v-show="typeChosen")
+          .column.is-full(v-show="typeChosen")
+            keep-alive
+              component(:is="stepComponent")
       footer
         .card-footer
           a.card-footer-item(href="#") {{ "delete" | gwt-localize }}
@@ -46,113 +36,100 @@
 <script>
 
 import ReservationTypeChooser from '@/components/widgets/ReservationTypeChooser'
-import ReservationFormAppointment from './ReservationFormAppointment'
-import ReservationFormResource from './ReservationFormResource'
-import ReservationFormPermission from './ReservationFormPermission'
-import ReservationFormAttributes from './ReservationFormAttributes'
-import Attribute from '@/types/Attribute'
+// import ReservationFormAppointment from './ReservationFormAppointment'
+// import ReservationFormResource from './ReservationFormResource'
+// import ReservationFormPermission from './ReservationFormPermission'
+// import ReservationFormAttributes from './ReservationFormAttributes'
+import ClassificationView from './components/ClassificationView'
 
 export default {
 
   components: {
     ReservationTypeChooser,
-    ReservationFormAppointment,
-    ReservationFormResource,
-    ReservationFormPermission,
-    ReservationFormAttributes
+    ClassificationView
+//    ReservationFormAppointment,
+//    ReservationFormResource,
+//    ReservationFormPermission,
+//    ReservationFormAttributes
   },
 
   props: {
-    title: {
-      type: String,
-      required: true
+    id: {
+      type: [Number, String],
+      required: false
+    },
+    modeNew: {
+      type: Boolean,
+      required: false,
+      default: () => false
     }
   },
 
   steps: [
-    { id: 'attributes', icon: 'fa-align-justify', components: [] },
-    { id: 'appointment', icon: 'fa-calendar-alt', components: [ReservationFormAppointment, ReservationFormResource] },
-    { id: 'permission', icon: 'fa-lock', components: [ReservationFormPermission] },
-    { id: 'moreAttributes', icon: 'fa-info-circle', components: [] }
+    { id: 'attributes', icon: 'fa-align-justify', component: ClassificationView }
+    // { id: 'appointment', icon: 'fa-calendar-alt', components: [ReservationFormAppointment, ReservationFormResource] },
+    // { id: 'permission', icon: 'fa-lock', components: [ReservationFormPermission] },
+    // { id: 'moreAttributes', icon: 'fa-info-circle', components: [] }
   ],
 
   data() {
     return {
-      id: null,
-      type: {},
-      attributes: [],
-      appointments: [],
-      resources: [],
-      permissions: [],
-      step: 'appointment'
+      step: this.$options.steps[0].id,
+      error: 'init'
     }
   },
 
   computed: {
-    isFirstStep() {
-      return this.stepNr === 0
-    },
-    isLastStep() {
-      return this.stepNr === this.$options.steps.length - 1
-    },
+    // Step Controls
+    isFirstStep() { return this.stepNr === 0 },
+    isLastStep() { return this.stepNr === this.$options.steps.length - 1 },
+    stepComponent() { return this.$options.steps.find(s => s.id === this.step).component },
     stepNr: {
-      get() {
-        return this.$options.steps.findIndex(i => i.id === this.step)
-      },
-      set(newVal) {
-        this.step = this.$options.steps[newVal].id
+      get() { return this.$options.steps.findIndex(i => i.id === this.step) },
+      set(newVal) { this.step = this.$options.steps[newVal].id }
+    },
+
+    // Reservation
+    type: {
+      get() { return this.$store.state.reservationform.type },
+      set(newVal) { this.$store.commit('reservationform/setType', newVal) }
+    },
+
+    typeChosen() { return Boolean(this.type.id) },
+
+    title() {
+      if (this.id) {
+        if (this.persistent) {
+          this.error = null
+          return this.$store.getters['locale/format']('edit_reservation.format', [this.persistent.name])
+        } else {
+          // invalid id or not loaded yet
+          this.error = `No reservation with id ${this.id} found`
+          return ''
+        }
+      } else {
+        this.error = null
+        return this.$store.getters['locale/localize']('new_reservation')
       }
     },
-    stepComponents() {
-      console.log(this.$options.steps)
-      return this.$options.steps.find(s => s.id === this.step).components
+
+    persistent() {
+      if (this.id) {
+        return this.$store.getters['calendar/reservation'](this.id)
+      } else {
+        return null
+      }
     }
   },
 
   methods: {
-    back() {
-      this.$router.go(-1)
-    },
-    switchStep(newStep) {
-      this.step = newStep
-      this.stepNr = this.$options.steps.indexOf(newStep)
-    },
-    nextStep() {
-      if (this.stepNr < this.$options.steps.length - 1) {
-        this.stepNr = this.stepNr + 1
-        this.step = this.$options.steps[this.stepNr].id
-      }
-    },
-    previousStep() {
-      if (this.stepNr > 0) {
-        this.stepNr = this.stepNr - 1
-        this.step = this.$options.steps[this.stepNr].id
-      }
-    }
-  },
-
-  created() {
-    let id = this.$route.params.id
-    let found = this.$store.getters.reservationById(id)
-    if (found.length > 0) {
-      let reservation = found[0]
-      this.id = id
-      // DEBUG: start
-      let a = new Attribute('name', 'eventname', 'STRING')
-      a.value = found.name
-      this.attributes = [a]
-      // DEBUG: end
-      this.appointments = reservation.appointments
-      this.resources = reservation.resources
-      this.permissions = reservation.permissions
-      this.type = reservation.type
-      // this.name = reservation.name
-      this.stepComponent = ReservationFormAppointment
-    } else {
-      // TODO: if id is set, but not found in store, show an error to the user
-      alert(`no reservation with id ${id} found`)
-    }
+    // Step Controls
+    back() { this.$router.go(-1) },
+    switchStep(newStep) { this.step = newStep },
+    nextStep() { this.step = this.$options.steps[this.stepNr].id },
+    previousStep() { this.step = this.$options.steps[this.stepNr].id }
   }
+
 }
 </script>
 
