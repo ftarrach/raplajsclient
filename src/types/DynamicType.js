@@ -13,7 +13,7 @@ class DynamicType {
       gwtDynamicType.getId(),
       gwtDynamicType.getKey(),
       gwtDynamicType.getName(),
-      gwtDynamicType.getAttributes().map(Attribute.fromGwt)
+      gwtDynamicType.getAttributes().map(a => Attribute.fromGwt(a, this))
     )
   }
 }

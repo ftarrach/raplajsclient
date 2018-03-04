@@ -36,25 +36,19 @@
               b-drilldown-container(slot="container" slot-scope="{ item, selected }" :item="item" :selected="selected")
       template(v-else-if="attribute.type === 'ALLOCATABLE'")
         //- Allocatable
-        template(v-if="hasDynamicType(attribute)")
-          //- simple allocatable menu
-          b-drilldown(:items="drilldownAllocatables(attribute)"
-                      :value="values[attribute.key]"
-                      @input="setClassificationValue(attribute.key, $event)"
-                      :multi-select="isMultiselect(attribute)")
-            b-drilldown-item(slot="item" slot-scope="{ item, selected }" :item="item" :selected="selected")
-        template(v-else)
-          b-drilldown(:items="drilldownRootAllocatables(attribute)"
-                      :value="values[attribute.key]"
-                      @input="setClassificationValue(attribute.key, $event)"
-                      :multi-select="isMultiselect(attribute)")
-            b-drilldown-item(slot="item" slot-scope="{ item, selected }" :item="item" :selected="selected")
+        b-drilldown(:items="drilldownAllocatables(attribute)"
+                    :value="values[attribute.key]"
+                    @input="setClassificationValue(attribute.key, $event)"
+                    :multi-select="isMultiselect(attribute)")
+          b-drilldown-container(slot="container" slot-scope="{ item, selected }" :item="item" :selected="selected")
+          b-drilldown-item(slot="item" slot-scope="{ item, selected }" :item="item" :selected="selected")
 </template>
 
 <script>
 
 import { toDrilldownItem as categoryToDrilldownItem } from '@/types/Category'
 import { toDrilldownItem as allocatableToDrilldownItem } from '@/types/Allocatable'
+import { sortByName } from '@/types/Nameable'
 import DateTime from '@/types/util/DateTime'
 
 export default {
@@ -102,41 +96,30 @@ export default {
 
     drilldownAllocatables(attribute) {
       if (this.hasDynamicType(attribute)) {
-        let type = attribute.constraints['dynamic-type']
-        return this.$store.getters['facade/allocatablesForType'](type.id).sort((a, b) => a.name.localeCompare(b.name)).map(allocatableToDrilldownItem)
+        return this.drilldownAllocatablesWithType(attribute.constraints['dynamic-type'])
       } else {
-        // TODO: baum bauen
-        return [ {id: 0, label: '// TODO'} ]
+        return this.drilldownAllocatablesRoot()
       }
     },
 
-    drilldownRootAllocatables() {
-      let a = Object.values(this.$store.state.facade.resourcetypes)
-      let b = a.map(dt => this.$store.getters['facade/allocatablesForType'](dt.id))
-      // TODO: hier fragen, wie ich an "Informatik" und "Technik" herankomme
-      // debug(
-      //   Object.values(raplaVue.$store.state.facade.resourcetypes).map(d =>
-      //     (
-      //       {
-      //         id: d.id,
-      //         name: d.name,
-      //         children: raplaVue.$store.getters['facade/allocatablesForType'](d.id).map(a =>
-      //           {
-      //             if (a instanceof DynamicType) {
-      //               return DynamicType.fromGwt(a)
-      //             } else {
-      //               return {
-      //                 id: a.id,
-      //                 name: a.name
-      //               }
-      //             }
-      //           }
-      //         )
-      //       }
-      //     )
-      //   )
-      // )
-      return []
+    drilldownAllocatablesWithType(resourcetypeid) {
+      let allocatables = this.$store.getters['facade/allocatablesForType'](resourcetypeid)
+      if (allocatables.length > 0) {
+        // TODO: build a tree (subrooms, etc)
+      }
+      return allocatables.sort(sortByName).map(allocatableToDrilldownItem)
+    },
+
+    drilldownAllocatablesRoot() {
+      return this.$store.getters['facade/allResourcetypes'].sort(sortByName).map(type => {
+        return [
+          {
+            id: type.id,
+            label: type.name,
+            children: this.$store.getters['facade/allocatablesForType'](type.id).sort(sortByName).map(a => ({ id: a.id, label: a.name }))
+          }
+        ]
+      }).reduce((acc, arr) => {acc.push(...arr); return acc;}, [])
     }
   }
 }

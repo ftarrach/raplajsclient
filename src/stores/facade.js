@@ -29,6 +29,7 @@ const facade = {
     allocatable: state => id => state.allocatables[id],
     firstReservationType: state => state.reservationtypes[Object.keys(state.reservationtypes)[0]],
     resourcetype: state => id => state.resourcetypes[id],
+    allResourcetypes: state => Object.values(state.resourcetypes),
     allocatablesForType: state => id => {
       let gwtType = gwtStore.resourcetypes.find(r => r.getId() === id)
       if (!gwtType) {

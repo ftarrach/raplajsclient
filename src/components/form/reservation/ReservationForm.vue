@@ -75,7 +75,14 @@ export default {
   data() {
     return {
       step: this.$options.steps[0].id,
-      error: 'init'
+      error: 'init',
+      reservationform: {
+        type: {},
+        classifications: [],
+        allocatables: [],
+        appointments: [],
+        permissions: []
+      }
     }
   },
 

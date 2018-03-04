@@ -2,7 +2,7 @@ import Classification from './Classification'
 import DateTime from './util/DateTime'
 
 class Allocatable {
-  constructor(id, name, isPerson, classification, createDate = null, lastChanged = null, lastChangedBy = null, permissions = []) {
+  constructor(id, name, isPerson, classification, createDate, lastChanged, lastChangedBy, permissions) {
     this.id = id
     this.name = name
     this.isPerson = isPerson
@@ -34,3 +34,5 @@ export function toDrilldownItem(a) {
     label: a.name
   }
 }
+
+window.Allocatable = Allocatable
