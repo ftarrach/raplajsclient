@@ -4,9 +4,10 @@ import Vue from 'vue'
 import App from './App'
 import router from './routes'
 import store from './stores/store'
-import 'cool-checkboxes-for-bulma.io/dist/css/bulma-radio-checkbox.min.css'
 import LayoutHelper from './globalComponents'
 import RaplaGwtPlugin from './plugins/RaplaGwtPlugin'
+
+import 'cool-checkboxes-for-bulma.io/dist/css/bulma-radio-checkbox.min.css'
 
 moment.locale('de')
 

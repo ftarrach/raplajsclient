@@ -5,6 +5,7 @@ let parseGwtAttributeValue = function(gwtClassification, gwtAttribute) {
   let value = gwtClassification.getValue(gwtAttribute.getKey())
   if (value) {
     if (['CATEGORY', 'ALLOCATABLE'].includes(type)) {
+      // TODO: support arrays
       return value.getId()
     } else if (type === 'NUMBER') {
       return parseInt(value)
@@ -23,12 +24,12 @@ class Classification {
     return new Classification(
       DynamicType.fromGwt(gwtClassification.getType()),
       gwtClassification
-          .getAttributes()
-          .reduce((acc, a) =>
-            Object.assign(
-              acc,
-              { [a.getKey()]: parseGwtAttributeValue(gwtClassification, a) }
-            ), {})
+        .getAttributes()
+        .reduce((acc, a) =>
+          Object.assign(
+            acc,
+            { [a.getKey()]: parseGwtAttributeValue(gwtClassification, a) }
+          ), {})
     )
   }
 }

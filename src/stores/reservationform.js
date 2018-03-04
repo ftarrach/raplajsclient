@@ -19,6 +19,14 @@ const reservationform = {
     },
     setType(state, type) {
       state.type = type
+    },
+    setClassifications(state, classifications) {
+      state.classifications = classifications
+    },
+    /** payload: {key, value} */
+    updateClassificationValue(state, payload) {
+      // TODO: send a change to the reservation controller
+      state.classifications.data[payload.key] = payload.value
     }
   },
 
@@ -30,6 +38,7 @@ const reservationform = {
 
     editReservation({commit}, reservation) {
       commit('setType', reservation.type)
+      commit('setClassifications', reservation.classifications)
     }
   }
 

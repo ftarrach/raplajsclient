@@ -82,7 +82,6 @@ const calendar = {
           .thenAccept(result => {
             let array = api.toArray(result)
             commit('setReservations', array.map(r => Reservation.fromGwt(r)))
-            console.log('loaded reservations')
             resolve()
           }).exceptionally(error => {
             // TODO: show dialog box or something

@@ -5,11 +5,11 @@ import Appointment from './Appointment'
 import DynamicType from './DynamicType'
 
 class Reservation {
-  constructor(id, name, type, classification, allocatables, appointments, permissions, createDate, lastChange, firstDate) {
+  constructor(id, name, type, classifications, allocatables, appointments, permissions, createDate, lastChange, firstDate) {
     this.id = id
     this.name = name
     this.type = type
-    this.classification = classification
+    this.classifications = classifications
     this.allocatables = allocatables
     this.appointments = appointments
     this.permissions = permissions
@@ -35,5 +35,3 @@ class Reservation {
 }
 
 export default Reservation
-
-window.Reservation = Reservation

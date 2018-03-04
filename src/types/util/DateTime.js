@@ -17,6 +17,9 @@ export default class DateTime {
   }
 
   static toMoment(datetime) {
+    if (!datetime) {
+      return
+    }
     return moment({
       years: datetime.years,
       months: datetime.months - 1,

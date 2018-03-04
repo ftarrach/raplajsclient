@@ -5,6 +5,8 @@ import BDatepicker from '@/ui/BDatepicker'
 import BToggleButton from '@/ui/BToggleButton'
 import BSteps from '@/ui/BSteps'
 import BDrilldown from '@/ui/BDrilldown'
+import BDrilldownItem from '@/ui/BDrilldownItem'
+import BDrilldownContainer from '@/ui/BDrilldownContainer'
 import FaIcon from '@/ui/FaIcon'
 
 const components = {
@@ -15,6 +17,8 @@ const components = {
   BToggleButton,
   BSteps,
   BDrilldown,
+  BDrilldownItem,
+  BDrilldownContainer,
   FaIcon
 }
 

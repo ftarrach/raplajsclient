@@ -20,11 +20,8 @@ cd .../raplajsclient
 # install dependencies
 yarn install
 
-# run the standalone dev server
+# run the dev server
 yarn run dev
-
-# run the gwt dev server
-yarn run gwt
 
 # build the site for production usage
 yarn build

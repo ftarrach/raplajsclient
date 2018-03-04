@@ -47,10 +47,10 @@ export default {
   components: {
     ReservationTypeChooser,
     ClassificationView
-//    ReservationFormAppointment,
-//    ReservationFormResource,
-//    ReservationFormPermission,
-//    ReservationFormAttributes
+    // ReservationFormAppointment,
+    // ReservationFormResource,
+    // ReservationFormPermission,
+    // ReservationFormAttributes
   },
 
   props: {

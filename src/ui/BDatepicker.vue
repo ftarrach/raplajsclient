@@ -7,6 +7,9 @@ import Flatpickr from 'flatpickr'
 import { German } from 'flatpickr/dist/l10n/de'
 import moment from 'moment'
 
+// TODO: remove Flatpickr (also dependency), use https://wikiki.github.io/components/calendar/
+// TODO: remove moment, use DateTime
+
 export default {
 
   name: 'BDatepicker',

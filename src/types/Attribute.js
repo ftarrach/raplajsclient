@@ -32,17 +32,23 @@ function parseConstraint(key, constraint, gwtAttr) {
   if (api.isCategory(constraint)) {
     return Category.fromGwt(constraint)
   }
-  if (api.isDynamicType(constraint)) {
-    return DynamicType.fromGwt(constraint)
+  if (key === 'dynamic-type') {
+    if (constraint === null) {
+      return null
+    } else if (api.isDynamicType(constraint)) {
+      return DynamicType.fromGwt(constraint)
+    }
+  } else if (key === 'root-category') {
+    if (constraint === null) {
+      return null
+    } else if (api.isCategory(constraint)) {
+      return Category.fromGwt(constraint)
+    }
   }
-  console.error(`unknown type for constraint ${key} found. Value is:`)
-  console.error(constraint)
-  let classname = api.getClassname(constraint)
-  console.log(`${key} ${gwtAttr.getName()} ${classname}`)
-  console.log(constraint)
+  console.error(`unknown type for constraint ${gwtAttr.getName()}->${key} found. Value is: (see next line)`)
+  console.errror(constraint)
+  console.error(`${key} ${gwtAttr.getName()}`)
   return null
 }
-
-window.Attribute = Attribute
 
 export default Attribute

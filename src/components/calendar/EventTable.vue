@@ -83,11 +83,11 @@ export default {
       // DEBUG: only for demonstration purposes
       // eslint-disable-next-line
       gwtEvents.dialogUiFactoryInterface
-               .create(null, null, 'Löschen', 'wirklich löschen?', ['Ja', 'Nein'])
-               .start()
-               .thenApply(function(resultInt) {
-                 alert('user has chosen button nr ' + resultInt)
-               })
+        .create(null, null, 'Löschen', 'wirklich löschen?', ['Ja', 'Nein'])
+        .start()
+        .thenApply(function(resultInt) {
+          alert('user has chosen button nr ' + resultInt)
+        })
     },
 
     edit(event) {
