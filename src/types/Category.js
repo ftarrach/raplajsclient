@@ -19,6 +19,9 @@ class Category {
 
 export default Category
 
+window.Category = Category
+window.drilldownitem = toDrilldownItem
+
 export function toDrilldownItem(c) {
   if (c.subcategories.length === 0) {
     return { id: c.id, label: c.name }

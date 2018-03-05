@@ -1,6 +1,7 @@
 /* global api */
 import Allocatable from '@/types/Allocatable'
 import DynamicType from '@/types/DynamicType'
+import Category from '@/types/Category'
 
 let reduceToIdDictionary = function(target, obj) {
   target[obj.id] = obj
@@ -9,6 +10,23 @@ let reduceToIdDictionary = function(target, obj) {
 
 const gwtStore = {
   resourcetypes: []
+}
+
+Category.prototype.findRecursive = function(needleId, id, children) {
+  if (id(this) === needleId) {
+    return this
+  } else {
+    let childs = children(this)
+    if (childs && childs.length > 0) {
+      for (let c of childs) {
+        let res = c.findRecursive(needleId, id, children)
+        if (res) {
+          return res
+        }
+      }
+    }
+  }
+  return false
 }
 
 /*
@@ -22,7 +40,8 @@ const facade = {
   state: {
     allocatables: {}, // { id: Allocatable }
     reservationtypes: {}, // { id: DynamicType }
-    resourcetypes: {} // { id: DynamicType }
+    resourcetypes: {}, // { id: DynamicType },
+    categoryTree: {} // { id: Category }
   },
 
   getters: {
@@ -30,13 +49,14 @@ const facade = {
     firstReservationType: state => state.reservationtypes[Object.keys(state.reservationtypes)[0]],
     resourcetype: state => id => state.resourcetypes[id],
     allResourcetypes: state => Object.values(state.resourcetypes),
-    allocatablesForType: state => id => {
+    allocatablesForType: () => id => {
       let gwtType = gwtStore.resourcetypes.find(r => r.getId() === id)
       if (!gwtType) {
         return []
       }
       return api.getFacade().getAllocatablesWithFilter([gwtType.newClassificationFilter()]).map(a => Allocatable.fromGwt(a))
-    }
+    },
+    category: state => id => state.categoryTree.findRecursive(id, c => c.id, c => c.subcategories)
   },
 
   mutations: {
@@ -50,6 +70,10 @@ const facade = {
 
     setResourceTypes(state, resourcetypes) {
       state.resourcetypes = resourcetypes
+    },
+
+    setCategories(state, supercategory) {
+      state.categoryTree = supercategory
     }
   },
 
@@ -70,6 +94,8 @@ const facade = {
 
       commit('setResourceTypes',
         gwtStore.resourcetypes.reduce((acc, a) => reduceToIdDictionary(acc, DynamicType.fromGwt(a)), {}))
+
+      commit('setCategories', Category.fromGwt(api.getFacade().getSuperCategory()))
 
       console.log('refreshed facade data')
     }

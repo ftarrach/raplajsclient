@@ -17,23 +17,14 @@
         //- Date
         b-datepicker(:value="toMoment(values[attribute.key])"
                      @input="setClassificationValue(attribute.key, $event)")
-      //- template(v-else-if="attribute.type === 'CATEGORY'")
+      template(v-else-if="attribute.type === 'CATEGORY'")
         //- Category
-        //- TODO: events
-        //- THINK: Show Button, open Dialog containing drilldown
         .drilldown.is-flex
-          //- p {{ attribute.constraints['root-category'] !== null }}
-          template(v-if="isMultiselect(attribute)")
-            //- category multi select
-            p TODO: build category with multiselect
-          template(v-else)
-            //- category single select
-            p {{ attribute }}
-            b-drilldown(:items="drilldownCategories(attribute)"
-                        :value="values[attribute.key]"
-                        @input="setClassificationValue(attribute.key, $event)")
-              b-drilldown-item(slot="item" slot-scope="{ item, selected }" :item="item" :selected="selected")
-              b-drilldown-container(slot="container" slot-scope="{ item, selected }" :item="item" :selected="selected")
+          b-drilldown(:items="drilldownCategories(attribute)"
+                      :value="values[attribute.key]"
+                      @input="setClassificationValue(attribute.key, $event)")
+            b-drilldown-item(slot="item" slot-scope="{ item, selected }" :item="item" :selected="selected")
+            b-drilldown-container(slot="container" slot-scope="{ item, selected }" :item="item" :selected="selected")
       template(v-else-if="attribute.type === 'ALLOCATABLE'")
         //- Allocatable
         b-drilldown(:items="drilldownAllocatables(attribute)"
@@ -45,6 +36,7 @@
 </template>
 
 <script>
+// THINK: Show Button, open Dialog containing drilldown
 
 import { toDrilldownItem as categoryToDrilldownItem } from '@/types/Category'
 import { toDrilldownItem as allocatableToDrilldownItem } from '@/types/Allocatable'
@@ -70,9 +62,8 @@ export default {
 
   methods: {
 
-    toMoment(val) {
-      return DateTime.toMoment(val)
-    },
+    hasDynamicType(attribute) { return attribute.constraints['dynamic-type'] !== null },
+    toMoment(val) { return DateTime.toMoment(val) },
 
     setClassificationValue(key, value) {
       if (value._isAMomentObject) {
@@ -81,17 +72,10 @@ export default {
       this.$store.commit('reservationform/updateClassificationValue', { key, value })
     },
 
-    hasDynamicType(attribute) { return attribute.constraints['dynamic-type'] !== null },
-    hasCategory(attribute) { return attribute.constraints['root-category'] !== null },
     isMultiselect(attribute) { return attribute.constraints['multi-select'] },
 
     drilldownCategories(attribute) {
-      if (this.hasCategory(attribute)) {
-        return attribute.constraints['root-category'].subcategories.map(categoryToDrilldownItem)
-      } else {
-        // TODO: baum bauen
-        return [ {id: 0, label: '// TODO'} ]
-      }
+      return this.$store.getters['facade/category'](attribute.constraints['root-category']).subcategories.map(categoryToDrilldownItem)
     },
 
     drilldownAllocatables(attribute) {
@@ -119,7 +103,7 @@ export default {
             children: this.$store.getters['facade/allocatablesForType'](type.id).sort(sortByName).map(a => ({ id: a.id, label: a.name }))
           }
         ]
-      }).reduce((acc, arr) => {acc.push(...arr); return acc;}, [])
+      }).reduce((acc, arr) => { acc.push(...arr); return acc }, [])
     }
   }
 }
