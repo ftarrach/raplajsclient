@@ -117,17 +117,15 @@ export default {
     setNull() { this.$emit('input', []) },
 
     clickOnItem(item) {
-      // TODO: cleanup
+      let currentlySelected = this.safeValue.includes(item.id)
       if (this.multiSelect) {
-        if (this.safeValue.includes(item.id)) {
+        if (currentlySelected) {
           this.$emit('input', this.safeValue.filter(i => i !== item.id))
         } else {
-          let newVal = [...this.safeValue]
-          newVal.push(item.id)
-          this.$emit('input', newVal)
+          this.$emit('input', [...this.safeValue, item.id])
         }
       } else {
-        if (this.safeValue.includes(item.id)) {
+        if (currentlySelected) {
           this.$emit('input', [])
         } else {
           this.$emit('input', [item.id])
