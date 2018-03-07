@@ -1,5 +1,5 @@
 <template lang="pug">
-  .item(slot="leaf" :class="{ selected, 'is-father': item.father }")
+  .item(:class="{ selected, 'is-father': item.father }")
     fa-icon(regular small icon="circle" v-if="!item.father")
     fa-icon(regular icon="folder-open" v-else)
     span.tag.is-rounded(:class="{small: item.father}")
@@ -14,18 +14,12 @@ export default {
   props: {
     item: {
       type: Object, // { id, label }
-      required: true
+      default: () => {}
     },
 
     selected: {
       type: Boolean,
       required: true
-    },
-
-    isFather: {
-      type: Boolean,
-      required: false,
-      default: () => false
     }
 
   }

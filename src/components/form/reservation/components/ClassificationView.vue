@@ -24,15 +24,15 @@
                       :value="values[attribute.key]"
                       selectable-container
                       @input="setClassificationValue(attribute.key, $event)")
+            b-drilldown-container(slot="node" slot-scope="{ item, selected }" :item="item" :selected="selected" :values="values[attribute.key]")
             b-drilldown-item(slot="leaf" slot-scope="{ item, selected }" :item="item" :selected="selected")
-            b-drilldown-container(slot="node" slot-scope="{ item, selected }" :item="item" :selected="selected")
       template(v-else-if="attribute.type === 'ALLOCATABLE'")
         //- Allocatable
         b-drilldown(:items="drilldownAllocatables(attribute)"
                     :value="values[attribute.key]"
                     @input="setClassificationValue(attribute.key, $event)"
                     :multi-select="isMultiselect(attribute)")
-          b-drilldown-container(slot="node" slot-scope="{ item, selected }" :item="item" :selected="selected")
+          b-drilldown-container(slot="node" slot-scope="{ item, selected }" :item="item" :selected="selected" :values="values[attribute.key]")
           b-drilldown-item(slot="leaf" slot-scope="{ item, selected }" :item="item" :selected="selected")
 </template>
 
@@ -75,7 +75,17 @@ export default {
     },
 
     drilldownCategories(attribute) {
-      return this.$store.getters['facade/category'](attribute.constraints['root-category']).subcategories.map(categoryToDrilldownItem)
+      let rootCat = attribute.constraints['root-category']
+      if (rootCat) {
+        return this.$store.getters['facade/category'](attribute.constraints['root-category']).subcategories.map(categoryToDrilldownItem)
+      } else {
+        let whole = this.$store.getters['facade/category']('category_0').subcategories.map(categoryToDrilldownItem)
+        if (whole) {
+          return whole
+        } else {
+          return []
+        }
+      }
     },
 
     drilldownAllocatables(attribute) {

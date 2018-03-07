@@ -8,7 +8,7 @@
     ul.drilldown-list
       li.drilldown-list-item(v-for="item in itemsForPath" :key="item.id")
         span(v-if="item.children" @click="clickOnContainer(item)")
-          slot(name="node" :item="item" :selected="safeValue.includes(item.id)" :amount="() => selectedInContainer")
+          slot(name="node" :item="item" :selected="safeValue.includes(item.id)")
         span(v-else @click="clickOnItem(item)")
           slot(name="leaf" :item="item" :selected="safeValue.includes(item.id)")
     .drilldown-menu2
@@ -70,6 +70,7 @@ export default {
       }
       if (this.path.length > 0 && this.selectableContainer) {
         let currentFather = this.currentFatherCategory
+        console.log(currentFather)
         if (currentFather) {
           level = [{id: currentFather.id, label: currentFather.label, father: true}].concat(level)
         }
@@ -79,9 +80,11 @@ export default {
 
     currentFatherCategory() {
       if (this.path.length > 0) {
-        let father = this.items
+        let father = false
+        let fatheritems = this.items
         for (let part of this.path) {
-          father = father.find(i => i.id === part)
+          father = fatheritems.find(i => i.id === part)
+          fatheritems = father.children
         }
         return father
       } else {
@@ -114,6 +117,7 @@ export default {
     setNull() { this.$emit('input', []) },
 
     clickOnItem(item) {
+      // TODO: cleanup
       if (this.multiSelect) {
         if (this.safeValue.includes(item.id)) {
           this.$emit('input', this.safeValue.filter(i => i !== item.id))
@@ -123,26 +127,12 @@ export default {
           this.$emit('input', newVal)
         }
       } else {
-        this.$emit('input', [item.id])
-      }
-    },
-
-    selectedInContainer(item) {
-//      if (this.safeValue.includes(item.id)) {
-//        return true
-//      }
-      let count = item.children.reduce((acc, child) => {
-        if (child.children) {
-          acc += this.selectedInContainer(child)
-        } else if (this.safeValue.includes(child.id)) {
-          acc++
+        if (this.safeValue.includes(item.id)) {
+          this.$emit('input', [])
+        } else {
+          this.$emit('input', [item.id])
         }
-        return acc
-      }, 0)
-      if (count > 0) {
-        return count
       }
-      return null
     }
   }
 }

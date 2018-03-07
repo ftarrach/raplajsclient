@@ -1,10 +1,9 @@
 <template lang="pug">
-  .item(slot="container" slot-scope="{ item }" :class="{'selected' : typeof selected === 'boolean' }")
-    p {{ amount(items) }}
-    //    fa-icon(regular icon="folder")
-    //    span.tag.is-rounded {{ selected }}
-    //    span.grow {{ item.label }}
-    //    span.is-right &#x25B6;
+  .item(:class="{ selected }")
+    fa-icon(regular icon="folder")
+    span.tag.is-rounded {{ selectedInContainer }}
+    span.grow {{ item.label }}
+    span.is-right &#x25B6;
 </template>
 
 <script>
@@ -18,14 +17,51 @@ export default {
       required: true
     },
 
-    amount: {
-
-    },
-
     selected: {
       default: () => null
+    },
+
+    values: {
+      required: false
+    }
+  },
+
+  computed: {
+    safeValues() {
+      if (values) {
+        return values
+      } else {
+        return []
+      }
+    },
+
+    selectedInContainer() {
+      return this.countChildren(this.item)
+    }
+  },
+
+  methods: {
+    countChildren(item) {
+      if (this.values) {
+        if (!item.children && this.values.includes(item.id)) {
+          return 1
+        }
+        let count = item.children.reduce((acc, child) => {
+          if (child.children) {
+            acc += this.countChildren(child)
+          } else if (this.values.includes(child.id)) {
+            acc++
+          }
+          return acc
+        }, 0)
+        if (count > 0) {
+          return count
+        }
+      }
+      return null
     }
   }
+
 }
 </script>
 
@@ -37,6 +73,11 @@ export default {
     align-items: center;
     min-height: 2rem;
     padding: 0 .25em;
+
+    &.selected {
+      background: $info;
+      color: $white;
+    }
 
     .grow {
       flex-grow: 1;
