@@ -28,8 +28,8 @@ export default {
 
   computed: {
     safeValues() {
-      if (values) {
-        return values
+      if (this.values) {
+        return this.values
       } else {
         return []
       }
