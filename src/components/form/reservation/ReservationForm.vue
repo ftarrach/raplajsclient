@@ -3,7 +3,7 @@
     .card
       header.card-header
         p.card-header-title {{ title }}
-        b-button(icon="fa-arrow-left" no-text @click="back" pull-right)
+        b-button(icon="arrow-left" no-text @click="back" pull-right)
       .card-content(v-if="error")
         p.has-text-danger {{ error }}
       .card-content(v-else)
@@ -27,9 +27,9 @@
         .card-footer
           a.card-footer-item(href="#") {{ "delete" | gwt-localize }}
           a.card-footer-item(@click.stop.prevent="previousStep", :class="{'disabled': isFirstStep}")
-            fa-icon(icon="fa-arrow-left")
+            fa-icon(icon="arrow-left")
           a.card-footer-item(@click.stop.prevent="nextStep" :class="{'disabled': isLastStep}")
-            fa-icon(icon="fa-arrow-right")
+            fa-icon(icon="arrow-right")
           a.card-footer-item(href="#") {{ "save" | gwt-localize }}
 </template>
 
@@ -66,10 +66,10 @@ export default {
   },
 
   steps: [
-    { id: 'attributes', icon: 'fa-align-justify', component: ClassificationView }
-    // { id: 'appointment', icon: 'fa-calendar-alt', components: [ReservationFormAppointment, ReservationFormResource] },
-    // { id: 'permission', icon: 'fa-lock', components: [ReservationFormPermission] },
-    // { id: 'moreAttributes', icon: 'fa-info-circle', components: [] }
+    { id: 'attributes', icon: 'align-justify', component: ClassificationView }
+    // { id: 'appointment', icon: 'calendar-alt', components: [ReservationFormAppointment, ReservationFormResource] },
+    // { id: 'permission', icon: 'lock', components: [ReservationFormPermission] },
+    // { id: 'moreAttributes', icon: 'info-circle', components: [] }
   ],
 
   data() {

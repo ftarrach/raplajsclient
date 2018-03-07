@@ -3,20 +3,20 @@
     .drilldown-menu
         span.path {{ readablePath }}
         .actions
-          b-button(icon="fa-home" no-text :disabled="notHome" @click="home")
-          b-button(icon="fa-arrow-left" no-text :disabled="notHome" @click="back")
+          b-button(icon="home" no-text :disabled="notHome" @click="home")
+          b-button(icon="arrow-left" no-text :disabled="notHome" @click="back")
     ul.drilldown-list
       li.drilldown-list-item(v-for="item in itemsForPath" :key="item.id")
         span(v-if="item.children" @click="clickOnContainer(item)")
-          slot(name="container" :item="item" :selected="selectedInContainer(item)")
+          slot(name="node" :item="item" :selected="safeValue.includes(item.id)" :amount="() => selectedInContainer")
         span(v-else @click="clickOnItem(item)")
-          slot(name="item" :item="item" :selected="safeValue.includes(item.id)")
+          slot(name="leaf" :item="item" :selected="safeValue.includes(item.id)")
     .drilldown-menu2
       b-button(fill @click="setNull") {{ "nothing_selected" | gwt-localize }}
 </template>
 
 <script>
-// TODO: single/multiselectmode etc
+// TODO: Split selected into selected and selectedChildren for containers
 export default {
 
   name: 'BDrilldown',
@@ -37,6 +37,12 @@ export default {
       type: Boolean,
       required: false,
       default: () => true
+    },
+
+    selectableContainer: {
+      type: Boolean,
+      required: false,
+      default: () => false
     }
   },
 
@@ -57,11 +63,30 @@ export default {
     },
 
     itemsForPath() {
+      // TODO: clean up
       let level = this.items
       for (let part of this.path) {
         level = level.find(i => i.id === part).children
       }
+      if (this.path.length > 0 && this.selectableContainer) {
+        let currentFather = this.currentFatherCategory
+        if (currentFather) {
+          level = [{id: currentFather.id, label: currentFather.label, father: true}].concat(level)
+        }
+      }
       return level
+    },
+
+    currentFatherCategory() {
+      if (this.path.length > 0) {
+        let father = this.items
+        for (let part of this.path) {
+          father = father.find(i => i.id === part)
+        }
+        return father
+      } else {
+        return false
+      }
     },
 
     notHome() { return this.path.length === 0 },
@@ -81,7 +106,9 @@ export default {
   },
 
   methods: {
-    clickOnContainer(container) { this.path.push(container.id) },
+    clickOnContainer(container) {
+      this.path.push(container.id)
+    },
     back() { this.path.pop() },
     home() { this.path = [] },
     setNull() { this.$emit('input', []) },
@@ -101,6 +128,9 @@ export default {
     },
 
     selectedInContainer(item) {
+//      if (this.safeValue.includes(item.id)) {
+//        return true
+//      }
       let count = item.children.reduce((acc, child) => {
         if (child.children) {
           acc += this.selectedInContainer(child)

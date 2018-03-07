@@ -1,4 +1,4 @@
-  <template lang="pug">
+<template lang="pug">
   .columns.is-multiline
     .column.is-half(v-for="attribute in attributes")
       label.label {{ attribute.name }}
@@ -22,17 +22,18 @@
         .drilldown.is-flex
           b-drilldown(:items="drilldownCategories(attribute)"
                       :value="values[attribute.key]"
+                      selectable-container
                       @input="setClassificationValue(attribute.key, $event)")
-            b-drilldown-item(slot="item" slot-scope="{ item, selected }" :item="item" :selected="selected")
-            b-drilldown-container(slot="container" slot-scope="{ item, selected }" :item="item" :selected="selected")
+            b-drilldown-item(slot="leaf" slot-scope="{ item, selected }" :item="item" :selected="selected")
+            b-drilldown-container(slot="node" slot-scope="{ item, selected }" :item="item" :selected="selected")
       template(v-else-if="attribute.type === 'ALLOCATABLE'")
         //- Allocatable
         b-drilldown(:items="drilldownAllocatables(attribute)"
                     :value="values[attribute.key]"
                     @input="setClassificationValue(attribute.key, $event)"
                     :multi-select="isMultiselect(attribute)")
-          b-drilldown-container(slot="container" slot-scope="{ item, selected }" :item="item" :selected="selected")
-          b-drilldown-item(slot="item" slot-scope="{ item, selected }" :item="item" :selected="selected")
+          b-drilldown-container(slot="node" slot-scope="{ item, selected }" :item="item" :selected="selected")
+          b-drilldown-item(slot="leaf" slot-scope="{ item, selected }" :item="item" :selected="selected")
 </template>
 
 <script>
@@ -64,6 +65,7 @@ export default {
 
     hasDynamicType(attribute) { return attribute.constraints['dynamic-type'] !== null },
     toMoment(val) { return DateTime.toMoment(val) },
+    isMultiselect(attribute) { return attribute.constraints['multi-select'] },
 
     setClassificationValue(key, value) {
       if (value._isAMomentObject) {
@@ -71,8 +73,6 @@ export default {
       }
       this.$store.commit('reservationform/updateClassificationValue', { key, value })
     },
-
-    isMultiselect(attribute) { return attribute.constraints['multi-select'] },
 
     drilldownCategories(attribute) {
       return this.$store.getters['facade/category'](attribute.constraints['root-category']).subcategories.map(categoryToDrilldownItem)

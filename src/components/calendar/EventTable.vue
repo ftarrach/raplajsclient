@@ -34,32 +34,32 @@ export default {
       return [
         {
           label: this.$store.getters['locale/localize']('new'),
-          icon: 'fa-user',
+          icon: 'user',
           onClick: this.create
         },
         {
           label: this.$store.getters['locale/localize']('edit'),
-          icon: 'fa-edit',
+          icon: 'edit',
           onClick: this.edit
         },
         {
           label: this.$store.getters['locale/localize']('delete'),
-          icon: 'fa-trash-alt',
+          icon: 'trash-alt',
           onClick: this.remove
         },
         {
           label: this.$store.getters['locale/localize']('view'),
-          icon: 'fa-info-circle',
+          icon: 'info-circle',
           onClick: this.show
         },
         {
           label: this.$store.getters['locale/localize']('copy'),
-          icon: 'fa-clipboard',
+          icon: 'clipboard',
           onClick: this.copy
         },
         {
           label: this.$store.getters['locale/localize']('cut'),
-          icon: 'fa-cut',
+          icon: 'cut',
           onClick: this.cut
         }
       ]

@@ -1,8 +1,10 @@
 <template lang="pug">
-  .item(slot="container" slot-scope="{ item, selected }")
-    span.tag.is-rounded {{ selected }}
-    span.grow {{ item.label }}
-    span.is-right &#x25B6;
+  .item(slot="container" slot-scope="{ item }" :class="{'selected' : typeof selected === 'boolean' }")
+    p {{ amount(items) }}
+    //    fa-icon(regular icon="folder")
+    //    span.tag.is-rounded {{ selected }}
+    //    span.grow {{ item.label }}
+    //    span.is-right &#x25B6;
 </template>
 
 <script>
@@ -16,8 +18,11 @@ export default {
       required: true
     },
 
+    amount: {
+
+    },
+
     selected: {
-      type: [Number],
       default: () => null
     }
   }
@@ -31,6 +36,7 @@ export default {
     display: flex;
     align-items: center;
     min-height: 2rem;
+    padding: 0 .25em;
 
     .grow {
       flex-grow: 1;

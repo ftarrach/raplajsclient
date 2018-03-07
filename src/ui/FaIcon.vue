@@ -1,5 +1,5 @@
 <template lang="pug">
-  i.fas(:class="[icon, classes]")
+  i.icon(:class="[style, faIcon, classes]")
 </template>
 
 <script>
@@ -12,17 +12,40 @@ export default {
       type: String,
       required: true
     },
+
     pullRight: {
       type: Boolean,
+      required: false,
+      default: () => false
+    },
+
+    regular: {
+      type: Boolean,
+      required: false,
+      default: () => false
+    },
+
+    small: {
+      type: Boolean,
+      required: false,
       default: () => false
     }
   },
 
   computed: {
+    style() {
+      return this.regular ? 'far' : 'fas'
+    },
+
     classes() {
       return {
-        'is-pulled-right': this.pullRight
+        'is-pulled-right': this.pullRight,
+        'fa-xs': this.small
       }
+    },
+
+    faIcon() {
+      return `fa-${this.icon}`
     }
   }
 }
