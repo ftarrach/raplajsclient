@@ -8,7 +8,11 @@ const locale = {
   getters: {
     localize: state => localeKey => {
       if (api) {
-        return api.getI18n().getString(localeKey)
+        let str = api.getI18n().getString(localeKey)
+        if (!str) {
+          console.warn(`no resource string found for ${localeKey}`)
+        }
+        return str
       }
     },
 
@@ -67,7 +71,7 @@ const locale = {
 
     formatTime: state => (date) => {
       if (api) {
-        return api.getRaplaLocale().formatTime(locale.toTime(date.hours, date.minutes, date.seconds))
+        return api.getRaplaLocale().formatTime(api.getRaplaLocale().toTime(date.hours, date.minutes, date.seconds))
       }
     }
 

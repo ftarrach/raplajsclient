@@ -18,6 +18,9 @@ export default {
         return [this.value]
       },
       set(newVal) {
+        if (newVal.length === 0) {
+          return
+        }
         this.$emit('input', newVal[0])
         this.$nextTick(this.$forceUpdate)
       }

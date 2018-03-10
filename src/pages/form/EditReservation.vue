@@ -41,10 +41,10 @@ export default {
     },
 
     loadReservation() {
-      console.log('EditReservation: load')
       let persistent = this.$store.getters['calendar/reservation'](this.id)
       if (persistent) {
         this.$store.dispatch('reservationform/editReservation', persistent)
+        window.reservation = persistent
       } else {
         this.error = `No reservation with id ${this.id} found`
       }

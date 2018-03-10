@@ -11,7 +11,7 @@ export default class DateTime {
   }
 
   static fromMoment(moment) {
-    let dt = new DateTime(...moment.toArray())
+    let dt = new DateTime(...moment.utc().toArray())
     dt.months++
     return dt
   }
@@ -20,14 +20,14 @@ export default class DateTime {
     if (!datetime) {
       return
     }
-    return moment({
+    return moment.utc(moment({
       years: datetime.years,
       months: datetime.months - 1,
       date: datetime.date,
       hours: datetime.hours,
       minutes: datetime.minutes,
       seconds: datetime.seconds
-    })
+    }))
   }
 
   static fromGwtDate(gwtDate) {
@@ -45,5 +45,27 @@ export default class DateTime {
     let date = locale.toRaplaDate(datetime.years, datetime.months, datetime.date)
     let time = locale.toTime(datetime.hours, datetime.minutes, datetime.seconds)
     return locale.toDate(date, time)
+  }
+
+  static fromJs(jsdate) {
+    return new DateTime(
+      jsdate.getFullYear(),
+      jsdate.getMonth() + 1,
+      jsdate.getDate(),
+      jsdate.getHours(),
+      jsdate.getMinutes(),
+      jsdate.getSeconds()
+    )
+  }
+
+  static toJs(datetime) {
+    return new Date(
+      datetime.years,
+      datetime.months - 1,
+      datetime.date,
+      datetime.hours,
+      datetime.minutes,
+      datetime.seconds
+    )
   }
 }

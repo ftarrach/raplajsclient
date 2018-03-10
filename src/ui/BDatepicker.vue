@@ -1,20 +1,18 @@
 <template lang="pug">
-  input(class='input' type='text' :value='value')
+  input(class='input' type='text' :value='jsDate')
 </template>
 
 <script>
 import Flatpickr from 'flatpickr'
 import { German } from 'flatpickr/dist/l10n/de'
-import moment from 'moment'
-
-// TODO: remove Flatpickr (also dependency), use https://wikiki.github.io/components/calendar/
-// TODO: remove moment, use DateTime
+import DateTime from '@/types/util/DateTime'
 
 export default {
 
   name: 'BDatepicker',
 
   props: {
+
     config: {
       type: Object,
       default: () => {
@@ -28,15 +26,15 @@ export default {
         return cfg
       }
     },
+
     value: {
-      type: Object // a moment.js date object
+      type: DateTime
     }
   },
 
-  data() {
-    return {
-      datepicker: null, // Flatpickr object
-      moment: null // selected date moment js object
+  computed: {
+    jsDate() {
+      return this.value ? DateTime.toJs(this.value) : this.value
     }
   },
 
@@ -51,21 +49,16 @@ export default {
     },
     /* called when user chooses a date */
     onDateUpdate(selectedDate) {
-      this.moment = moment(selectedDate)
-      this.$emit('input', this.moment)
+      this.$emit('input', DateTime.fromJs(selectedDate))
     }
   },
 
   mounted() {
     this.$watch('config', this.redraw)
-    this.$watch('value', (value) => this.setDate(value.toDate()))
     this.config.onValueUpdate = (selectedDate, _) => this.onDateUpdate(selectedDate[0])
     this.datepicker = new Flatpickr(this.$el, this.config)
-    if (!this.value) {
-      // this.onDateUpdate(moment().toDate())
-    } else {
-      this.setDate(this.value.toDate())
-      this.moment = this.value
+    if (this.jsDate) {
+      this.setDate(this.jsDate)
     }
   },
 

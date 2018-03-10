@@ -36,18 +36,20 @@
 <script>
 
 import ReservationTypeChooser from '@/components/widgets/ReservationTypeChooser'
-// import ReservationFormAppointment from './ReservationFormAppointment'
+import AppointmentView from './pages/AppointmentView'
 // import ReservationFormResource from './ReservationFormResource'
 // import ReservationFormPermission from './ReservationFormPermission'
 // import ReservationFormAttributes from './ReservationFormAttributes'
-import ClassificationView from './components/ClassificationView'
+import ClassificationView from './pages/ClassificationView'
+import AdditionalClassificationView from './pages/AdditionalClassificationView'
 
 export default {
 
   components: {
     ReservationTypeChooser,
-    ClassificationView
-    // ReservationFormAppointment,
+    ClassificationView,
+    AdditionalClassificationView,
+    AppointmentView
     // ReservationFormResource,
     // ReservationFormPermission,
     // ReservationFormAttributes
@@ -58,6 +60,7 @@ export default {
       type: [Number, String],
       required: false
     },
+
     modeNew: {
       type: Boolean,
       required: false,
@@ -66,23 +69,16 @@ export default {
   },
 
   steps: [
-    { id: 'attributes', icon: 'align-justify', component: ClassificationView }
-    // { id: 'appointment', icon: 'calendar-alt', components: [ReservationFormAppointment, ReservationFormResource] },
-    // { id: 'permission', icon: 'lock', components: [ReservationFormPermission] },
-    // { id: 'moreAttributes', icon: 'info-circle', components: [] }
+    { id: 'attributes', icon: 'align-justify', component: ClassificationView },
+    { id: 'appointment', icon: 'calendar-alt', component: AppointmentView },
+    // { id: 'permission', icon: 'lock', component: [ReservationFormPermission] },
+    { id: 'moreAttributes', icon: 'info-circle', component: AdditionalClassificationView }
   ],
 
   data() {
     return {
       step: this.$options.steps[0].id,
-      error: 'init',
-      reservationform: {
-        type: {},
-        classifications: [],
-        allocatables: [],
-        appointments: [],
-        permissions: []
-      }
+      error: 'init'
     }
   },
 

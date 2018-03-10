@@ -1,11 +1,14 @@
+/* global api */
+
 import DateTime from './util/DateTime'
 
 class Repeating {
-  constructor(type, interval, end, number, exceptions) {
-    this.type = type // enum RepeatingTYPE { DAILY, WEEKLY, MONTHLY, YEARLY }
+  constructor(type, interval, end, number, weekdays, exceptions) {
+    this.type = type // enum RepeatingType { DAILY, WEEKLY, MONTHLY, YEARLY }
     this.interval = interval // interval between repeatings (days or weeks)
     this.end = end // if null => forever
     this.number = number // if -1 and end === null => forever
+    this.weekdays = weekdays
     this.exceptions = exceptions // array of dates
   }
 
@@ -19,10 +22,11 @@ class Repeating {
       exceptions = exceptions.map(e => DateTime.fromGwtDate(e))
     }
     return new Repeating(
-      gwtRepeating.getType().name(),
+      gwtRepeating.getType().toString(),
       gwtRepeating.getInterval(),
       DateTime.fromGwtDate(gwtRepeating.getEnd()),
       gwtRepeating.getNumber(),
+      api.toArray(gwtRepeating.getWeekdays()).map(w => parseInt(w.toString())),
       exceptions
     )
   }

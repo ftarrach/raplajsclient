@@ -34,5 +34,3 @@ export function toDrilldownItem(a) {
     label: a.name
   }
 }
-
-window.Allocatable = Allocatable

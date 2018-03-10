@@ -15,6 +15,8 @@ function setupGwtCallback(options) {
               api = _api
               window.api = _api
               options.apiAvailable()
+            }).exceptionally(e => {
+              console.error(e)
             })
           } else {
             window.location = '../rapla/login?url=' + window.location

@@ -5,11 +5,17 @@ let parseGwtAttributeValue = function(gwtClassification, gwtAttribute) {
   let value = gwtClassification.getValue(gwtAttribute.getKey())
   if (value) {
     if (['CATEGORY', 'ALLOCATABLE'].includes(type)) {
-      // TODO: support arrays
       return value.getId()
-    } else if (type === 'NUMBER') {
-      return parseInt(value)
+    } else if (type === 'INT') {
+      return parseInt(value.toString())
+    } else if (type === 'STRING') {
+      return value.toString()
+    } else if (type === 'DATE') {
+      // TODO: parse date
+    } else if (type === 'BOOLEAN') {
+      return value.toString() === 'true'
     }
+    console.error(`${JSON.stringify(value)} ${type}`)
   }
   return value
 }

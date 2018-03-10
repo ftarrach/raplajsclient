@@ -2,7 +2,9 @@ const reservationform = {
   namespaced: true,
 
   state: {
-    type: {},
+    type: {
+      attributes: []
+    },
     classifications: [],
     allocatables: [],
     appointments: [],
@@ -23,10 +25,17 @@ const reservationform = {
     setClassifications(state, classifications) {
       state.classifications = classifications
     },
+    setAppointments(state, appointments) {
+      state.appointments = appointments
+    },
     /** payload: {key, value} */
     updateClassificationValue(state, payload) {
       // TODO: send a change to the reservation controller
       state.classifications.data[payload.key] = payload.value
+    },
+    /** payload: {id: allocatableId, prop: nameOfChangedProperty, value: newValue} */
+    updateAppointmentValue(state, payload) {
+      console.log(payload.value)
     }
   },
 
@@ -39,6 +48,7 @@ const reservationform = {
     editReservation({commit}, reservation) {
       commit('setType', reservation.type)
       commit('setClassifications', reservation.classifications)
+      commit('setAppointments', reservation.appointments)
     }
   }
 

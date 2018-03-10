@@ -84,18 +84,18 @@ const config = {
           path: 'month',
           component: CalendarMonth,
           name: 'CalendarMonth'
-        },
-        {
-          path: 'reservationform',
-          component: NewReservation,
-          name: 'NewReservation'
-        },
-        {
-          path: 'reservationform/:id',
-          component: EditReservation,
-          name: 'EditReservation'
         }
       ]
+    },
+    {
+      path: '/form/reservation',
+      component: NewReservation,
+      name: 'NewReservation'
+    },
+    {
+      path: '/form/reservation/:id',
+      component: EditReservation,
+      name: 'EditReservation'
     },
     {
       path: '/DEBUG',

@@ -1,7 +1,6 @@
 <template lang="pug">
   .item(:class="{ selected, 'is-father': item.father }")
-    fa-icon(regular small icon="circle" v-if="!item.father")
-    fa-icon(regular icon="folder-open" v-else)
+    fa-icon(regular icon="folder-open" v-if="item.father")
     span.tag.is-rounded(:class="{small: item.father}")
     span.grow {{ item.label }}
 </template>

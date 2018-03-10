@@ -118,4 +118,8 @@ export default {
   .table tbody tr {
     cursor: pointer
   }
+
+  .table td {
+    user-select: none;
+  }
 </style>

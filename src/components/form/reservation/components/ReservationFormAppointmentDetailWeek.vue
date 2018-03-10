@@ -1,0 +1,216 @@
+<template lang="pug">
+  div
+    .columns
+      .column.is-2
+        span {{ "repeating.interval.pre" | gwt-localize }}
+      .column.is-2
+        input.input(type="number"
+                    min="1"
+                    v-model.number="interval"
+                    :class="{ 'is-danger': interval < 1 }")
+      .column.is-8
+        weekday-chooser(v-model="weekdays")
+    .columns
+      .column.is-2
+        span {{ "start_time" | gwt-localize }}
+      .column.is-3
+        input.input(type="text"
+                    v-model="startTime"
+                    :disabled="wholeDay")
+      .column.is-two-fifths
+        .b-checkbox.is-primary
+          | #[input#whole-day(type="checkbox" v-model="wholeDay").styled] #[label(for="whole-day") {{ "all-day" | gwt-localize }}]
+    .columns
+      .column.is-2
+        span {{ "end_time" | gwt-localize }}
+      .column.is-3
+        input.input(type="text" v-model="endTime" :disabled="wholeDay")
+      .column.is-two-fifth
+        appointment-endtime-day-chooser(v-model="endtimetype" :disabled="wholeDay")
+      .column.is-two-fifth
+        input.input.is-fullwidth(v-show="endtimetype === 'x-day'" v-model="xDay")
+    .columns
+      .column.is-5
+        span {{ "weekly" | gwt-localize }} {{ "repeating.start_date" | gwt-localize }}
+      .column
+        b-datepicker(v-model="start")
+    .columns
+      .column.is-two-fifths.is-size-7
+        appointment-endtime-date-chooser(v-model="endtype")
+      .column.is-two-fifths(v-show="endtype === 'until'")
+        b-datepicker(v-model="end")
+      .column.is-one-fifth(v-show="endtype === 'x-times'")
+        input.input(v-model.number="times")
+          //- TODO: +- Buttons
+</template>
+
+<script>
+
+import WeekdayChooser from '@/components/widgets/WeekdayChooser'
+import AppointmentEndtimeDayChooser from '@/components/widgets/AppointmentEndtimeDayChooser'
+import AppointmentEndtimeDateChooser from '@/components/widgets/AppointmentEndtimeDateChooser'
+
+export default {
+
+  components: {
+    WeekdayChooser,
+    AppointmentEndtimeDayChooser,
+    AppointmentEndtimeDateChooser
+  },
+
+  props: {
+    id: {
+      type: [String, Boolean],
+      required: true
+    }
+  },
+
+  data() {
+    return {
+      savedTime: null
+    }
+  },
+
+  computed: {
+    appointment() {
+      return this.id ? this.$store.state.reservationform.appointments.find(a => a.id === this.id) : false
+    },
+
+    start: {
+      get() {
+        return this.appointment.start
+      },
+      set(newVal) {
+        this.$store.commit('reservationform/updateAppointmentValue', {
+          id: this.id,
+          prop: 'start',
+          value: newVal
+        })
+      }
+    },
+
+    startTime: {
+      get() {
+        return this.$store.getters['locale/formatTime'](this.appointment.start)
+      },
+      set(newVal) {
+        // TODO
+      }
+    },
+
+    endTime: {
+      get() {
+        return this.$store.getters['locale/formatTime'](this.appointment.end)
+      },
+      set(newVal) {
+        // this.value.time.to = newVal
+      }
+    },
+
+    interval: {
+      get() {
+        return this.appointment.repeating.interval
+      },
+      set(newVal) {
+        // TODO
+      }
+    },
+
+    wholeDay: {
+      get() {
+        return this.appointment.isWholeDay
+      },
+      set(newVal) {
+        // if (newVal) {
+        //   this.savedTime = this.value.time
+        //   this.value.time = null
+        // } else {
+        //   if (this.savedTime) {
+        //     this.value.time = this.savedTime
+        //   } else {
+        //     this.value.time = {
+        //       from: '08:00',
+        //       to: '18:00',
+        //       endtype: 'same-day'
+        //     }
+        //   }
+        // }
+      }
+    },
+
+    end: {
+      get() {
+        return this.appointment.end
+      },
+      set(newVal) {
+        // this.appointment.end = DateTime.fromMoment(newVal)
+      }
+    },
+
+    endtimetype: {
+      get() {
+        return 'same-day'
+        // return this.appointment.time ? this.appointment.time.endtype : ''
+      },
+      set(newVal) {
+        // this.appointment.time.endtype = newVal
+      }
+    },
+
+    endtype: {
+      get() {
+        // return this.appointment.enddatetype
+        return 'infinity'
+      },
+      set(newVal) {
+        // this.appointment.enddatetype = newVal
+      }
+    },
+
+    times: {
+      get() {
+        // if (this.appointment.repeat.times < 1) {
+        //   this.xDay = 1
+        // }
+        // return this.appointment.repeat.times
+        return this.appointment.number
+      },
+      set(newVal) {
+        // this.appointment.repeat.times = newVal
+      }
+    },
+
+    xDay: {
+      get() {
+        return this.appointment.number
+      },
+      set(newVal) {
+        // if (this.appointment.time) {
+        //   this.appointment.time.xday = newVal
+        // }
+      }
+    },
+
+    weekdays: {
+      get() {
+        return this.appointment.repeating.weekdays
+      },
+      set(newVal) {
+        // TODO
+      }
+    }
+  },
+
+  methods: {
+    exceptionClick() {
+      alert('Exception Button Click')
+    }
+  }
+}
+</script>
+
+<style style="scss" scoped>
+  .is-size-7 .dropdown-text {
+    font-size: 0.75rem !important;
+  }
+</style>

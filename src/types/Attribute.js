@@ -1,15 +1,15 @@
 
 class Attribute {
-  constructor(id, key, name, type, constraints, _dynamictype) {
+  constructor(id, key, name, type, constraints, annotations) {
     this.id = id
     this.key = key
     this.name = name
     this.type = type
     this.constraints = constraints
-    this._dynamictype = _dynamictype
+    this.annotations = annotations
   }
 
-  static fromGwt(gwtAttribute, dynamictype) {
+  static fromGwt(gwtAttribute) {
     return new Attribute(
       gwtAttribute.getId(),
       gwtAttribute.getKey(),
@@ -18,7 +18,9 @@ class Attribute {
       gwtAttribute.getConstraintKeys().reduce((acc, key) =>
         Object.assign(acc, { [key]: parseConstraint(key, gwtAttribute.getConstraint(key), gwtAttribute) }), {}
       ),
-      dynamictype
+      gwtAttribute.getAnnotationKeys().reduce((acc, key) =>
+        Object.assign(acc, { [key]: gwtAttribute.getAnnotation(key) }), {}
+      )
     )
   }
 }

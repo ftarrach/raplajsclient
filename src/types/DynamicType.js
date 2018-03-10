@@ -19,5 +19,3 @@ class DynamicType {
 }
 
 export default DynamicType
-
-window.DynamicType = DynamicType

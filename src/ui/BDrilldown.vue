@@ -70,7 +70,6 @@ export default {
       }
       if (this.path.length > 0 && this.selectableContainer) {
         let currentFather = this.currentFatherCategory
-        console.log(currentFather)
         if (currentFather) {
           level = [{id: currentFather.id, label: currentFather.label, father: true}].concat(level)
         }
