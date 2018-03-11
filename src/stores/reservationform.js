@@ -33,9 +33,9 @@ const reservationform = {
       // TODO: send a change to the reservation controller
       state.classifications.data[payload.key] = payload.value
     },
-    /** payload: {id: allocatableId, prop: nameOfChangedProperty, value: newValue} */
+    /** payload: {id: appointmentId, prop: nameOfChangedProperty, value: newValue} */
     updateAppointmentValue(state, payload) {
-      console.log(payload.value)
+      state.appointments.find(a => a.id === payload.id)[payload.prop] = payload.value
     }
   },
 

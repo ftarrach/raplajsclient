@@ -10,6 +10,17 @@ export default class DateTime {
     this.seconds = seconds
   }
 
+  static clone(datetime) {
+    return new DateTime(
+      datetime.years,
+      datetime.months,
+      datetime.date,
+      datetime.hours,
+      datetime.minutes,
+      datetime.seconds
+    )
+  }
+
   static fromMoment(moment) {
     let dt = new DateTime(...moment.utc().toArray())
     dt.months++

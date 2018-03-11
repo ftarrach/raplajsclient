@@ -80,8 +80,7 @@ export default {
           repeat = this.$store.getters['locale/format']('interval.format', [appointment.repeating.interval, typeStr])
         }
       }
-
-      let until = []
+      let until = [`ab dem ${formatDate(appointment.start)}`]
       if (appointment.repeating.start) {
         until.push(format('format.repeat_from', [ formatDate(appointment.repeating.start) ]))
       }
@@ -91,7 +90,7 @@ export default {
       if (appointment.repeating.number !== -1) {
         until.push(format('format.repeat_n_times', appointment.repeating.number))
       }
-      if (until.length === 0) {
+      if (until.length === 1) {
         until.push('Kein Ende')
       }
       return [

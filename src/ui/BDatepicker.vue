@@ -49,6 +49,9 @@ export default {
     },
     /* called when user chooses a date */
     onDateUpdate(selectedDate) {
+      selectedDate.setHours(this.value.hours)
+      selectedDate.setMinutes(this.value.minutes)
+      selectedDate.setSeconds(this.value.seconds)
       this.$emit('input', DateTime.fromJs(selectedDate))
     }
   },

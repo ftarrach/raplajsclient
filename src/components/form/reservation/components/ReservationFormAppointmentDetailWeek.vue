@@ -14,9 +14,7 @@
       .column.is-2
         span {{ "start_time" | gwt-localize }}
       .column.is-3
-        input.input(type="text"
-                    v-model="startTime"
-                    :disabled="wholeDay")
+        b-timepicker(v-model="startTime" :disabled="wholeDay")
       .column.is-two-fifths
         .b-checkbox.is-primary
           | #[input#whole-day(type="checkbox" v-model="wholeDay").styled] #[label(for="whole-day") {{ "all-day" | gwt-localize }}]
@@ -24,7 +22,7 @@
       .column.is-2
         span {{ "end_time" | gwt-localize }}
       .column.is-3
-        input.input(type="text" v-model="endTime" :disabled="wholeDay")
+        b-timepicker(v-model="endTime" :disabled="wholeDay")
       .column.is-two-fifth
         appointment-endtime-day-chooser(v-model="endtimetype" :disabled="wholeDay")
       .column.is-two-fifth
@@ -46,6 +44,7 @@
 
 <script>
 
+import DateTime from '@/types/util/DateTime'
 import WeekdayChooser from '@/components/widgets/WeekdayChooser'
 import AppointmentEndtimeDayChooser from '@/components/widgets/AppointmentEndtimeDayChooser'
 import AppointmentEndtimeDateChooser from '@/components/widgets/AppointmentEndtimeDateChooser'
@@ -94,7 +93,16 @@ export default {
         return this.$store.getters['locale/formatTime'](this.appointment.start)
       },
       set(newVal) {
-        // TODO
+        if (/^\d{2}:\d{2}$/.test(newVal)) {
+          let startdate = DateTime.clone(this.start)
+          startdate.hours = parseInt(newVal.split(':')[0])
+          startdate.minutes = parseInt(newVal.split(':')[1])
+          this.$store.commit('reservationform/updateAppointmentValue', {
+            id: this.id,
+            prop: 'start',
+            value: startdate
+          })
+        }
       }
     },
 
@@ -121,20 +129,11 @@ export default {
         return this.appointment.isWholeDay
       },
       set(newVal) {
-        // if (newVal) {
-        //   this.savedTime = this.value.time
-        //   this.value.time = null
-        // } else {
-        //   if (this.savedTime) {
-        //     this.value.time = this.savedTime
-        //   } else {
-        //     this.value.time = {
-        //       from: '08:00',
-        //       to: '18:00',
-        //       endtype: 'same-day'
-        //     }
-        //   }
-        // }
+        this.$store.commit('reservationform/updateAppointmentValue', {
+          id: this.id,
+          prop: 'isWholeDay',
+          value: newVal
+        })
       }
     },
 

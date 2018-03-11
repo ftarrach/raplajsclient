@@ -69,7 +69,7 @@ export default {
   },
 
   steps: [
-    { id: 'attributes', icon: 'align-justify', component: ClassificationView },
+    // { id: 'attributes', icon: 'align-justify', component: ClassificationView },
     { id: 'appointment', icon: 'calendar-alt', component: AppointmentView },
     // { id: 'permission', icon: 'lock', component: [ReservationFormPermission] },
     { id: 'moreAttributes', icon: 'info-circle', component: AdditionalClassificationView }
