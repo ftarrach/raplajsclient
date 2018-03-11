@@ -36,6 +36,13 @@ const reservationform = {
     /** payload: {id: appointmentId, prop: nameOfChangedProperty, value: newValue} */
     updateAppointmentValue(state, payload) {
       state.appointments.find(a => a.id === payload.id)[payload.prop] = payload.value
+    },
+    updateInterval(state, payload) {
+      state.appointments.find(a => a.id === payload.id).repeating.interval = payload.value
+    },
+    /** payload: {id: appointmentId, value: repeatType } */
+    setRepeatType(state, payload) {
+      state.appointments.find(a => a.id === payload.id).repeating.type = payload.value
     }
   },
 

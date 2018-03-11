@@ -22,7 +22,8 @@ export default {
     },
 
     values: {
-      required: false
+      required: false,
+      default: () => []
     }
   },
 

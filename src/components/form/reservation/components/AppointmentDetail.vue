@@ -1,5 +1,5 @@
 <template lang="pug">
-  .reservation-form-appointment-detail(v-if="appointment")
+  .appointment-detail(v-if="appointment")
     .repeat.columns.is-multiline.is-gapless.is-marginless
       .column.is-one-fifth-desktop.is-half-tablet(v-for="option in repeatOptions")
         b-toggle-button(fullwidth
@@ -19,12 +19,12 @@
 
 <script>
 
-import ReservationFormAppointmentDetailWeek from './ReservationFormAppointmentDetailWeek'
+import AppointmentDetailWeek from './AppointmentDetailWeek'
 
 export default {
 
   components: {
-    ReservationFormAppointmentDetailWeek
+    AppointmentDetailWeek
   },
 
   props: {
@@ -54,7 +54,7 @@ export default {
 
     repeatType() {
       if (this.appointment && this.appointment.repeating.type === 'weekly') {
-        return ReservationFormAppointmentDetailWeek
+        return AppointmentDetailWeek
       }
       return null
     }
@@ -62,7 +62,10 @@ export default {
 
   methods: {
     setRepeat(newVal) {
-
+      this.$store.commit('reservationform/setRepeatType', {
+        id: this.appointment.id,
+        value: newVal.value
+      })
     },
     exceptionClick() {
       alert('exceptionClick()')

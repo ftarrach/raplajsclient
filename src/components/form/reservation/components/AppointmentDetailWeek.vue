@@ -1,13 +1,12 @@
 <template lang="pug">
   div
     .columns
-      .column.is-2
+      .column.is-1
         span {{ "repeating.interval.pre" | gwt-localize }}
-      .column.is-2
-        input.input(type="number"
-                    min="1"
-                    v-model.number="interval"
-                    :class="{ 'is-danger': interval < 1 }")
+      .column.is-3
+        b-spinner(min="1"
+                  v-model="interval")
+          //- TODO: +- Buttons
       .column.is-8
         weekday-chooser(v-model="weekdays")
     .columns
@@ -93,16 +92,14 @@ export default {
         return this.$store.getters['locale/formatTime'](this.appointment.start)
       },
       set(newVal) {
-        if (/^\d{2}:\d{2}$/.test(newVal)) {
-          let startdate = DateTime.clone(this.start)
-          startdate.hours = parseInt(newVal.split(':')[0])
-          startdate.minutes = parseInt(newVal.split(':')[1])
-          this.$store.commit('reservationform/updateAppointmentValue', {
-            id: this.id,
-            prop: 'start',
-            value: startdate
-          })
-        }
+        let startdate = DateTime.clone(this.start)
+        startdate.hours = parseInt(newVal.split(':')[0])
+        startdate.minutes = parseInt(newVal.split(':')[1])
+        this.$store.commit('reservationform/updateAppointmentValue', {
+          id: this.id,
+          prop: 'start',
+          value: startdate
+        })
       }
     },
 
@@ -111,7 +108,14 @@ export default {
         return this.$store.getters['locale/formatTime'](this.appointment.end)
       },
       set(newVal) {
-        // this.value.time.to = newVal
+        let startdate = DateTime.clone(this.end)
+        startdate.hours = parseInt(newVal.split(':')[0])
+        startdate.minutes = parseInt(newVal.split(':')[1])
+        this.$store.commit('reservationform/updateAppointmentValue', {
+          id: this.id,
+          prop: 'end',
+          value: startdate
+        })
       }
     },
 
@@ -120,7 +124,10 @@ export default {
         return this.appointment.repeating.interval
       },
       set(newVal) {
-        // TODO
+        this.$store.commit('reservationform/updateInterval', {
+          id: this.id,
+          value: newVal
+        })
       }
     },
 

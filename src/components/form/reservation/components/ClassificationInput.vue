@@ -126,15 +126,3 @@ export default {
 
 }
 </script>
-
-<style lang="scss" scoped>
-  @import '../../../../assets/sass/bulma.scss';
-
-  .drilldown {
-    height: 16em;
-
-    @include mobile {
-      height: 24em;
-    }
-  }
-</style>

@@ -2,8 +2,6 @@
 
 @import "~bulma/sass/utilities/initial-variables";
 
-/* override variables here */
-
 @import "~bulma/sass/utilities/_all";
 @import "~bulma/sass/base/_all";
 @import "~bulma/sass/elements/_all";
@@ -12,3 +10,11 @@
 @import "~bulma/sass/layout/_all";
 
 @import '~bulma-steps-component/bulma-steps';
+
+/* override variables here */
+.drilldown {
+  height: 16em;
+  @include mobile {
+    height: 24em;
+  }
+}

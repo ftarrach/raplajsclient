@@ -7,6 +7,7 @@ import BSteps from '@/ui/BSteps'
 import BDrilldown from '@/ui/BDrilldown'
 import BDrilldownItem from '@/ui/BDrilldownItem'
 import BDrilldownContainer from '@/ui/BDrilldownContainer'
+import BSpinner from '@/ui/BSpinner'
 import BTimepicker from '@/ui/BTimepicker'
 import FaIcon from '@/ui/FaIcon'
 
@@ -20,6 +21,7 @@ const components = {
   BDrilldown,
   BDrilldownItem,
   BDrilldownContainer,
+  BSpinner,
   BTimepicker,
   FaIcon
 }

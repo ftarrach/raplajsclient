@@ -41,7 +41,7 @@ const facade = {
     allocatables: {}, // { id: Allocatable }
     reservationtypes: {}, // { id: DynamicType }
     resourcetypes: {}, // { id: DynamicType },
-    categoryTree: {} // { id: Category }
+    supercategory: {} // { id: Category }
   },
 
   getters: {
@@ -56,7 +56,7 @@ const facade = {
       }
       return api.getFacade().getAllocatablesWithFilter([gwtType.newClassificationFilter()]).map(a => Allocatable.fromGwt(a))
     },
-    category: state => id => state.categoryTree.findRecursive(id, c => c.id, c => c.subcategories)
+    category: state => id => state.supercategory.findRecursive(id, c => c.id, c => c.subcategories)
   },
 
   mutations: {
@@ -73,7 +73,7 @@ const facade = {
     },
 
     setCategories(state, supercategory) {
-      state.categoryTree = supercategory
+      state.supercategory = supercategory
     }
   },
 

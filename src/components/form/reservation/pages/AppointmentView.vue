@@ -1,5 +1,5 @@
 <template lang="pug">
-  .columns
+  .columns.is-multiline
     //- Appointments
     .column.is-half
       label.label {{ "reservation.appointments" | gwt-localize }}
@@ -9,18 +9,22 @@
     .column.is-half
       label.label &nbsp;
       appointment-detail(:id="selectedAppointmentId")
+    .column.is-half
+      resource-list(:appointment-id="selectedAppointmentId")
 </template>
 
 <script>
 
 import AppointmentList from '../components/AppointmentList'
 import AppointmentDetail from '../components/AppointmentDetail'
+import ResourceList from '../components/ResourceList'
 
 export default {
 
   components: {
     AppointmentList,
-    AppointmentDetail
+    AppointmentDetail,
+    ResourceList
   },
 
   data() {

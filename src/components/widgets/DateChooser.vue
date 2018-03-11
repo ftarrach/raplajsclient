@@ -16,13 +16,14 @@
 
 <script>
 
+import DateTime from '@/types/util/DateTime'
 import moment from 'moment'
 
 export default {
 
   props: {
     value: {
-      type: Object // moment js date
+      type: DateTime
     },
     title: {
       type: String
@@ -42,31 +43,33 @@ export default {
       set(newValue) {
         this.$emit('input', newValue)
       }
+    },
+    moment() {
+      return DateTime.toMoment(this.value)
     }
   },
 
-  // TODO: if isEnd, add 1 Day (no 23:59:59)
   methods: {
     today() {
-      this.val = moment().startOf('day')
+      this.val = DateTime.fromMoment(moment().startOf('day'))
     },
     next() {
       switch (this.step) {
         case 'week':
-          this.val = this.val.clone().add(7, 'days')
+          this.val = DateTime.fromMoment(this.moment.add(7, 'days'))
           break
         case 'day':
-          this.val = this.val.clone().add(1, 'days')
+          this.val = DateTime.fromMoment(this.moment.add(1, 'days'))
           break
       }
     },
     previous() {
       switch (this.step) {
         case 'week':
-          this.val = this.val.clone().subtract(7, 'days')
+          this.val = DateTime.fromMoment(this.moment.add(7, 'days'))
           break
         case 'day':
-          this.val = this.val.clone().subtract(1, 'days')
+          this.val = DateTime.fromMoment(this.moment.add(1, 'days'))
           break
       }
     }

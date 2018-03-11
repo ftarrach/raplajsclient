@@ -49,11 +49,11 @@ export default {
   methods: {
 
     add() {
-      alert('ReservationFormAppointmentList.add')
+      alert('AppointmentList.add')
     },
 
     remove() {
-      alert('ReservationFormAppointmentList.remove')
+      alert('AppointmentList.remove')
     },
 
     // THINK: split up?
@@ -63,10 +63,16 @@ export default {
       let format = this.$store.getters['locale/format']
 
       let weekdays = appointment.repeating.weekdays.map(w => this.$store.getters['locale/formatWeekday'](parseInt(w.toString()), 'short')).join(', ')
-      let timespan = appointment.repeating.isWholeDay ? '' : `${formatTime(appointment.start)}-${formatTime(appointment.end)}`
+      let timespan = appointment.isWholeDay ? '' : `${formatTime(appointment.start)}-${formatTime(appointment.end)}`
 
-      let repeat = ''
-      if (appointment.repeating) {
+      if (appointment.repeating.type === null) {
+        // single appointment
+        return [
+          `${weekdays} ${formatDate(appointment.start)} ${timespan}`
+        ]
+      }
+      if (appointment.repeating.type) {
+        let repeat = ''
         let localize = this.$store.getters['locale/localize']
         if (appointment.repeating.interval === 1) {
           repeat = localize(appointment.repeating.type)
@@ -79,24 +85,21 @@ export default {
           }
           repeat = this.$store.getters['locale/format']('interval.format', [appointment.repeating.interval, typeStr])
         }
+        let until = [format('format.repeat_from', [ formatDate(appointment.start) ])]
+        if (appointment.repeating.end) {
+          until.push(format('format.repeat_until', [ formatDate(appointment.repeating.end) ]))
+        }
+        if (appointment.repeating.number !== -1) {
+          until.push(format('format.repeat_n_times', appointment.repeating.number))
+        }
+        if (until.length === 1) {
+          until.push('Kein Ende')
+        }
+        return [
+          `${weekdays} ${timespan} ${repeat}`,
+          until.join(' ')
+        ]
       }
-      let until = [`ab dem ${formatDate(appointment.start)}`]
-      if (appointment.repeating.start) {
-        until.push(format('format.repeat_from', [ formatDate(appointment.repeating.start) ]))
-      }
-      if (appointment.repeating.end) {
-        until.push(format('format.repeat_until', [ formatDate(appointment.repeating.end) ]))
-      }
-      if (appointment.repeating.number !== -1) {
-        until.push(format('format.repeat_n_times', appointment.repeating.number))
-      }
-      if (until.length === 1) {
-        until.push('Kein Ende')
-      }
-      return [
-        `${weekdays} ${timespan} ${repeat}`,
-        until.join(' ')
-      ]
     }
   }
 }

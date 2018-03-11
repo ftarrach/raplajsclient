@@ -15,7 +15,6 @@
 
 <script>
 
-import DateTime from '@/types/util/DateTime'
 import DateChooser from '@/components/widgets/DateChooser'
 import CalendarChooser from '@/components/widgets/CalendarChooser'
 
@@ -44,18 +43,18 @@ export default {
     },
     from: {
       get() {
-        return DateTime.toMoment(this.$store.state.calendar.startDate)
+        return this.$store.state.calendar.startDate
       },
       set(value) {
-        this.$store.dispatch('calendar/setStartDate', DateTime.fromMoment(value))
+        this.$store.dispatch('calendar/setStartDate', value)
       }
     },
     to: {
       get() {
-        return DateTime.toMoment(this.$store.state.calendar.endDate)
+        return this.$store.state.calendar.endDate
       },
       set(value) {
-        this.$store.dispatch('calendar/setEndDate', DateTime.fromMoment(value))
+        this.$store.dispatch('calendar/setEndDate', value)
       }
     }
   }
