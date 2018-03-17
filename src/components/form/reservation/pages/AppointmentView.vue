@@ -5,7 +5,7 @@
       label.label {{ "reservation.appointments" | gwt-localize }}
       appointment-list(v-model="selectedAppointmentId")
       .columns.is-size-7
-    //- Appointment Edit
+    //- Appointment edit
     .column.is-half
       label.label &nbsp;
       appointment-detail(:id="selectedAppointmentId")

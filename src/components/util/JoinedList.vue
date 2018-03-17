@@ -1,9 +1,9 @@
 <template lang="pug">
   span
-    template(v-for='(item, index) in list')
-      | {{ item.replace(/ /g, '&nbsp;') }}
-      template(v-if='index < list.length-1')
-        | #[span , ]
+      span(v-for='(item, index) in list' :key="index")
+        | {{ item.replace(/ /g, '&nbsp;') }}
+        template(v-if='index < list.length-1')
+          | #[span , ]
 </template>
 
 <script>

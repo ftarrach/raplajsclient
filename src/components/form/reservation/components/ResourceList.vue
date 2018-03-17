@@ -1,13 +1,14 @@
 <template lang="pug">
-  b-drilldown(:items="resources")
+  b-drilldown(:items="resources" :value="selectedResources")
     b-drilldown-container(slot="node"
                           slot-scope="{ item, selected }"
                           :item="item"
-                          :selected="selected")
+                          :selected="selected",
+                          :values="selectedResources")
     resource-list-item(slot="leaf"
-                     slot-scope="{ item, selected }"
-                     :item="item"
-                     :selected="selected")
+                       slot-scope="{ item, selected }"
+                       :item="item"
+                       :selected="selected")
 </template>
 
 <script>
@@ -27,12 +28,6 @@ export default {
     }
   },
 
-  data() {
-    return {
-
-    }
-  },
-
   computed: {
     resources() {
       return this.$store.getters['facade/allResourcetypes'].sort(sortByName).map(type => {
@@ -44,13 +39,21 @@ export default {
           }
         ]
       }).reduce((acc, arr) => { acc.push(...arr); return acc }, [])
+    },
+
+    selectedResources: {
+      get() {
+        let app = this.$store.getters['reservationform/appointment'](this.appointmentId)
+        if (app) {
+          return app.allocatables
+        } else {
+          return []
+        }
+      },
+      set(newVal) {
+        console.log(newVal)
+      }
     }
-  },
-
-  created() {
-  },
-
-  methods: {
   }
 }
 </script>

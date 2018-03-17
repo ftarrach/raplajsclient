@@ -14,20 +14,21 @@
         .select.is-multiple.is-flex.is-size-7-mobile
           include ../../../widgets/SingleMultiSelect.pug
             block option
-              option(:value="appointment.id"
-                     v-for="appointment in appointments"
-                     :key="appointment.id")
-                p(v-for="line in label(appointment)")
-                  | {{ line }}
+              appointment-list-item(:appointment="appointment" v-for="appointment in appointments" :key="appointment.id")
 </template>
 
 <script>
-// THINK: externalize ReservationFormAppointmentlistItem
+// TODO: externalize label methods to ReservationFormAppointmentlistItem
 import SingleMultiSelect from '@/components/widgets/SingleMultiSelect'
+import AppointmentListItem from './AppointmentListItem'
 
 export default {
 
   extends: SingleMultiSelect,
+
+  components: {
+    AppointmentListItem
+  },
 
   props: {
     value: {
@@ -54,52 +55,6 @@ export default {
 
     remove() {
       alert('AppointmentList.remove')
-    },
-
-    // THINK: split up?
-    label(appointment) {
-      let formatTime = this.$store.getters['locale/formatTime']
-      let formatDate = this.$store.getters['locale/formatDate']
-      let format = this.$store.getters['locale/format']
-
-      let weekdays = appointment.repeating.weekdays.map(w => this.$store.getters['locale/formatWeekday'](parseInt(w.toString()), 'short')).join(', ')
-      let timespan = appointment.isWholeDay ? '' : `${formatTime(appointment.start)}-${formatTime(appointment.end)}`
-
-      if (appointment.repeating.type === null) {
-        // single appointment
-        return [
-          `${weekdays} ${formatDate(appointment.start)} ${timespan}`
-        ]
-      }
-      if (appointment.repeating.type) {
-        let repeat = ''
-        let localize = this.$store.getters['locale/localize']
-        if (appointment.repeating.interval === 1) {
-          repeat = localize(appointment.repeating.type)
-        } else {
-          let typeStr = localize(appointment.repeating.type)
-          if (appointment.repeating.type === 'weekly') {
-            typeStr = localize('weeks')
-          } else if (appointment.repeating.type === 'daily') {
-            typeStr = localize('days')
-          }
-          repeat = this.$store.getters['locale/format']('interval.format', [appointment.repeating.interval, typeStr])
-        }
-        let until = [format('format.repeat_from', [ formatDate(appointment.start) ])]
-        if (appointment.repeating.end) {
-          until.push(format('format.repeat_until', [ formatDate(appointment.repeating.end) ]))
-        }
-        if (appointment.repeating.number !== -1) {
-          until.push(format('format.repeat_n_times', appointment.repeating.number))
-        }
-        if (until.length === 1) {
-          until.push('Kein Ende')
-        }
-        return [
-          `${weekdays} ${timespan} ${repeat}`,
-          until.join(' ')
-        ]
-      }
     }
   }
 }

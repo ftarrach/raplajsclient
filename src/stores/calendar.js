@@ -13,7 +13,6 @@ const calendar = {
     startDate: DateTime.fromMoment(moment('1970-01-01')),
     endDate: DateTime.fromMoment(moment('1970-01-01')),
     user: new User(),
-    appointmentBlocks: [],
     reservations: []
   },
 
@@ -61,17 +60,17 @@ const calendar = {
       commit('refreshCalendar')
     },
 
-    loadAppointments({commit}) {
+    /* WARNING: returns plain GWT Objects */
+    loadAppointmentBlocks() {
       console.log('load appointments')
-      new Promise((resolve, reject) => {
+      return new Promise((resolve, reject) => {
         api.getCalendarModel().queryBlocks(api.getCalendarModel().getTimeIntervall())
           .thenAccept(b => {
             let blocks = api.toArray(b)
-            // TODO: parse blocks here in an async way, then commit the parsed blocks
-            commit('setAppointments', blocks.map(b => AppointmentBlock.fromGwt(b)))
-            resolve()
+            let parsed = blocks.map(b => AppointmentBlock.fromGwt(b))
+            resolve(parsed)
           })
-          .exceptionally(console.warn)
+          .exceptionally(reject)
       })
     },
 

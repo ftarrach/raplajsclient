@@ -43,6 +43,7 @@ export default {
     loadReservation() {
       let persistent = this.$store.getters['calendar/reservation'](this.id)
       if (persistent) {
+        this.$store.commit('reservationform/markAsEdit')
         this.$store.dispatch('reservationform/editReservation', persistent)
         window.reservation = persistent
       } else {

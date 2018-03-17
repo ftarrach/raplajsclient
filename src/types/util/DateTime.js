@@ -50,6 +50,12 @@ export default class DateTime {
     return gwtDate
   }
 
+  static fromGwtTimestamp(gwtTimestamp) {
+    return DateTime.fromJs(
+      new Date(gwtTimestamp)
+    )
+  }
+
   static toGwtDate(datetime) {
     /* global api */
     let locale = api.getRaplaLocale()

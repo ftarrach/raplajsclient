@@ -6,7 +6,6 @@
       .column.is-3
         b-spinner(min="1"
                   v-model="interval")
-          //- TODO: +- Buttons
       .column.is-8
         weekday-chooser(v-model="weekdays")
     .columns
@@ -14,7 +13,7 @@
         span {{ "start_time" | gwt-localize }}
       .column.is-3
         b-timepicker(v-model="startTime" :disabled="wholeDay")
-      .column.is-two-fifths
+      .column
         .b-checkbox.is-primary
           | #[input#whole-day(type="checkbox" v-model="wholeDay").styled] #[label(for="whole-day") {{ "all-day" | gwt-localize }}]
     .columns
@@ -22,9 +21,9 @@
         span {{ "end_time" | gwt-localize }}
       .column.is-3
         b-timepicker(v-model="endTime" :disabled="wholeDay")
-      .column.is-two-fifth
+      .column.is-3
         appointment-endtime-day-chooser(v-model="endtimetype" :disabled="wholeDay")
-      .column.is-two-fifth
+      .column
         input.input.is-fullwidth(v-show="endtimetype === 'x-day'" v-model="xDay")
     .columns
       .column.is-5
@@ -32,13 +31,14 @@
       .column
         b-datepicker(v-model="start")
     .columns
-      .column.is-two-fifths.is-size-7
+      .column.is-3
         appointment-endtime-date-chooser(v-model="endtype")
-      .column.is-two-fifths(v-show="endtype === 'until'")
+      .column.is-4(v-show="endtype === 'until'")
         b-datepicker(v-model="end")
-      .column.is-one-fifth(v-show="endtype === 'x-times'")
+      .column.is-4(v-show="endtype === 'x-times'")
+        b-spinner(min="1"
+                  v-model="times")
         input.input(v-model.number="times")
-          //- TODO: +- Buttons
 </template>
 
 <script>
@@ -166,7 +166,9 @@ export default {
     endtype: {
       get() {
         // return this.appointment.enddatetype
-        return 'infinity'
+        if (this.appointment.maxEnd === null) {
+          return 'infinity'
+        }
       },
       set(newVal) {
         // this.appointment.enddatetype = newVal
@@ -182,7 +184,11 @@ export default {
         return this.appointment.number
       },
       set(newVal) {
-        // this.appointment.repeat.times = newVal
+        this.$store.commit('reservationform/updateAppointmentValue', {
+          id: this.id,
+          prop: 'number',
+          value: newVal
+        })
       }
     },
 

@@ -12,8 +12,7 @@ export default {
   },
 
   created() {
-    // TODO: don't pass firstreservation, use reservationcontroller.newReservation
-    this.$store.dispatch('reservationform/newReservation', this.$store.getters['facade/firstReservationType'])
+    this.$store.dispatch('reservationform/newReservation')
   }
 }
 </script>

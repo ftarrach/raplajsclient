@@ -1,3 +1,6 @@
+import Reservation from '@/types/Reservation'
+
+/* global api */
 const reservationform = {
   namespaced: true,
 
@@ -8,11 +11,15 @@ const reservationform = {
     classifications: [],
     allocatables: [],
     appointments: [],
-    permissions: []
+    permissions: [],
+    new: false,
+    gwtReservation: null
   },
 
   getters: {
-    hasType: state => state.type && Boolean(state.type.id)
+    isNew: state => state.new,
+    hasType: state => state.type && Boolean(state.type.id),
+    appointment: state => id => state.appointments.find(a => a.id === id)
   },
 
   mutations: {
@@ -42,23 +49,54 @@ const reservationform = {
     },
     /** payload: {id: appointmentId, value: repeatType } */
     setRepeatType(state, payload) {
-      state.appointments.find(a => a.id === payload.id).repeating.type = payload.value
+      let appointment = state.appointments.find(a => a.id === payload.id)
+      if (payload.value === null) {
+        appointment.repeating = null
+      } else {
+        appointment.repeating.type = payload.value
+      }
+    },
+    markAsNew(state) { state.new = true },
+    markAsEdit(state) { state.new = false },
+    setGwt(state, reservation) { state.gwtReservation = Object.freeze(reservation) },
+
+    delete(state) {
+      // TODO: after dialogs are implemented, remove message and uncomment code. Pass PopupContext instead of null
+      console.error('delete reservation code is implemented, but won\'t work until dialogs are implemented')
+//      api.getReservationController().deleteReservations(
+//        api.asSet([state.gwtReservation]), null
+//      ).thenRun(() => console.log('hi'))
+//       .exceptionally(console.error)
     }
   },
 
   actions: {
-    newReservation({commit}, type) {
+    newReservation({commit}) {
       commit('reset')
-      commit('setType', type)
+      commit('markAsNew')
     },
 
     editReservation({commit}, reservation) {
       commit('setType', reservation.type)
       commit('setClassifications', reservation.classifications)
       commit('setAppointments', reservation.appointments)
+    },
+
+    create({commit, dispatch}, typeId) {
+      /* global api */
+      let newReservation =
+        api.getFacade().newReservation(
+          api.getFacade().getDynamicTypes('reservation').find(r => r.getId() === typeId).newClassification(),
+          api.getCalendarModel().getUser()
+        )
+      commit('setGwt', newReservation)
+      dispatch('editReservation', Reservation.fromGwt(newReservation))
+    },
+
+    delete({commit}) {
+      commit('delete')
     }
   }
-
 }
 
 const defaultState = JSON.stringify(reservationform.state)

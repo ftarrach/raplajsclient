@@ -5,7 +5,7 @@
         b-toggle-button(fullwidth
                         :label="option.label"
                         :value="option.value"
-                        :selected="option.value === appointment.repeating.type"
+                        :selected="option.value === (appointment.repeating ? appointment.repeating.type : null)"
                         @click="setRepeat")
     .columns.is-gapless
       .column
@@ -19,11 +19,13 @@
 
 <script>
 
+import AppointmentDetailSingle from './AppointmentDetailSingle'
 import AppointmentDetailWeek from './AppointmentDetailWeek'
 
 export default {
 
   components: {
+    AppointmentDetailSingle,
     AppointmentDetailWeek
   },
 
@@ -36,10 +38,9 @@ export default {
 
   computed: {
     appointment() {
-      if (!this.id) {
-        return false
-      }
-      return this.$store.state.reservationform.appointments.find(a => a.id === this.id)
+      return this.id
+        ? this.$store.state.reservationform.appointments.find(a => a.id === this.id)
+        : false
     },
 
     repeatOptions() {
@@ -53,10 +54,20 @@ export default {
     },
 
     repeatType() {
-      if (this.appointment && this.appointment.repeating.type === 'weekly') {
-        return AppointmentDetailWeek
+      if (!this.appointment) {
+        return null
       }
-      return null
+      if (!this.appointment.repeating) {
+        return AppointmentDetailSingle
+      }
+      switch (this.appointment.repeating.type) {
+        case 'weekly':
+          return AppointmentDetailWeek
+        case 'daily':
+        case 'monthly':
+        case 'yearly':
+          return null
+      }
     }
   },
 

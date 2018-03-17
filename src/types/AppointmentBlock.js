@@ -1,4 +1,3 @@
-import moment from 'moment'
 import DateTime from './util/DateTime'
 
 class AppointmentBlock {
@@ -11,14 +10,21 @@ class AppointmentBlock {
   }
 
   static fromGwt(gwtBlock) {
-    let appointment = gwtBlock.getAppointment()
-    let allocatables = appointment.getReservation().getAllocatablesFor(appointment)
+    const appointment = gwtBlock.getAppointment()
+    const allocatables = appointment.getReservation().getAllocatablesFor(appointment)
+
+    const [ resources, persons ] =
+      allocatables.reduce((acc, a) => {
+        acc[a.isPerson() ? 1 : 0].push(a.getName())
+        return acc
+      }, [[], []])
+
     return new AppointmentBlock(
-      gwtBlock.getAppointment().getReservation().getName(),
-      DateTime.fromMoment(moment(gwtBlock.getStart())),
-      DateTime.fromMoment(moment(gwtBlock.getEnd())),
-      allocatables.filter(a => !a.isPerson()).map(a => a.getName()),
-      allocatables.filter(a => a.isPerson()).map(a => a.getName())
+      appointment.getReservation().getName(),
+      DateTime.fromGwtTimestamp(gwtBlock.getStart()),
+      DateTime.fromGwtTimestamp(gwtBlock.getEnd()),
+      resources,
+      persons
     )
   }
 }

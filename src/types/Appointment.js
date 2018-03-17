@@ -22,7 +22,6 @@ class Appointment {
       Repeating.fromGwt(gwtAppointment.getRepeating()),
       gwtAppointment.isWholeDaysSet(),
       gwtAppointment.getReservation().getId(),
-      // TODO: this here should be in calendar.js : gwtAppointment.getReservation().getAllocatablesFor(gwtAppointment).map(Allocatable.fromGwt)
       gwtAppointment.getReservation().getAllocatablesFor(gwtAppointment).map(a => a.getId())
     )
   }

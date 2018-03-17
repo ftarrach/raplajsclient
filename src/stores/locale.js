@@ -49,6 +49,8 @@ const locale = {
       }
     },
 
+    getWeekday: state => date => api.getRaplaLocale().getWeekday(DateTime.toGwtDate(date)),
+
     formatDate: state => (date, len) => {
       if (!date) {
         return ''

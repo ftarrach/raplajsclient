@@ -25,12 +25,12 @@
               component(:is="stepComponent")
       footer
         .card-footer
-          a.card-footer-item(href="#") {{ "delete" | gwt-localize }}
-          a.card-footer-item(@click.stop.prevent="previousStep", :class="{'disabled': isFirstStep}")
+          a.card-footer-item(@click.prevent="remove") {{ "delete" | gwt-localize }}
+          a.card-footer-item(@click.prevent="previousStep", :class="{'disabled': isFirstStep}")
             fa-icon(icon="arrow-left")
-          a.card-footer-item(@click.stop.prevent="nextStep" :class="{'disabled': isLastStep}")
+          a.card-footer-item(@click.prevent="nextStep" :class="{'disabled': isLastStep}")
             fa-icon(icon="arrow-right")
-          a.card-footer-item(href="#") {{ "save" | gwt-localize }}
+          a.card-footer-item(@click.prevent="save") {{ "save" | gwt-localize }}
 </template>
 
 <script>
@@ -59,12 +59,6 @@ export default {
     id: {
       type: [Number, String],
       required: false
-    },
-
-    modeNew: {
-      type: Boolean,
-      required: false,
-      default: () => false
     }
   },
 
@@ -95,7 +89,13 @@ export default {
     // Reservation
     type: {
       get() { return this.$store.state.reservationform.type },
-      set(newVal) { this.$store.commit('reservationform/setType', newVal) }
+      set(newVal) {
+        if (this.$store.getters['reservationform/isNew']) {
+          this.$store.dispatch('reservationform/create', newVal.id)
+        } else {
+          this.$store.commit('setType', newVal)
+        }
+      }
     },
 
     typeChosen() { return Boolean(this.type.id) },
@@ -129,8 +129,17 @@ export default {
     // Step Controls
     back() { this.$router.go(-1) },
     switchStep(newStep) { this.step = newStep },
-    nextStep() { this.step = this.$options.steps[this.stepNr].id },
-    previousStep() { this.step = this.$options.steps[this.stepNr].id }
+    nextStep() { this.step = this.$options.steps[this.stepNr + 1].id },
+    previousStep() { this.step = this.$options.steps[this.stepNr - 1].id },
+
+    save() {
+      alert('save')
+    },
+
+    remove() {
+      // TODO: disable delete button if reservation is new
+      this.$store.dispatch('reservationform/delete')
+    }
   }
 
 }

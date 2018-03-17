@@ -8,7 +8,7 @@
         th.is-hidden-mobile {{ "resources" | gwt-localize }}
         th.is-hidden-mobile {{ "persons" | gwt-localize }}
     tbody
-      tr(v-for='appointment in appointments')
+      tr(v-for='appointment in appointments' :key="appointment.id")
         td {{ appointment.name }}
         td {{ appointment.start | gwt-formatDateTime }}
         td.is-hidden-mobile {{ appointment.end | gwt-formatDateTime }}
@@ -21,20 +21,25 @@
 <script>
 
 import JoinedList from '@/components/util/JoinedList'
+import DateTime from '@/types/util/DateTime'
 
 export default {
   components: {
     JoinedList
   },
 
-  computed: {
-    appointments() {
-      return this.$store.state.calendar.appointmentBlocks
+  data() {
+    return {
+      appointments: []
     }
   },
 
   created() {
-    this.$store.dispatch('calendar/loadAppointments')
+    this.$store.dispatch('calendar/loadAppointmentBlocks')
+      .then(blocks => {
+        this.appointments = blocks
+      })
+      .catch(console.error)
   },
 
   methods: {
