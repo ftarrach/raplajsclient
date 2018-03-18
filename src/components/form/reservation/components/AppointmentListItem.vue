@@ -89,7 +89,7 @@ export default {
 
   methods: {
     selected() {
-      this.$emit('input', this.appointment.id)
+      this.$emit('selected', this.appointment.id)
     }
   }
 

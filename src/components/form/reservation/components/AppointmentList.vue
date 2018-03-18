@@ -16,7 +16,7 @@
                                 :key="appointment.id"
                                 :class="{'selected': appointment.id === value}"
                                 :appointment="appointment"
-                                @input="selected")
+                                @selected="selected")
 </template>
 
 <script>
