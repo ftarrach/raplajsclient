@@ -1,5 +1,5 @@
 <template lang="pug">
-  option.item(:value="appointment.id")
+  .item(@click="selected")
     p(v-for="line in label")
       | {{ line }}
 </template>
@@ -85,14 +85,29 @@ export default {
           : `${formatDateTime(this.appointment.start, 'short')} - ${formatDateTime(this.appointment.start, 'short')}`
       }
     }
+  },
+
+  methods: {
+    selected() {
+      this.$emit('input', this.appointment.id)
+    }
   }
 
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import '../../../../assets/sass/bulma.scss';
+
   .item {
     display: block;
-    line-break: normal
+    line-break: normal;
+    cursor: pointer;
+    padding: .25em 1em;
+  }
+
+  .selected {
+    background-color: $info;
+    color: white;
   }
 </style>

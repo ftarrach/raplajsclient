@@ -4,7 +4,7 @@
     .column.is-half
       label.label {{ "reservation.appointments" | gwt-localize }}
       appointment-list(v-model="selectedAppointmentId")
-      .columns.is-size-7
+    .columns.is-size-7
     //- Appointment edit
     .column.is-half
       label.label &nbsp;
