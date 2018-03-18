@@ -78,6 +78,7 @@ export default {
         value: newVal.value
       })
     },
+
     exceptionClick() {
       alert('exceptionClick()')
     }

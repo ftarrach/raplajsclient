@@ -51,6 +51,7 @@ export default {
         }
       },
       set(newVal) {
+        // TODO: user selected a resource, do something
         console.log(newVal)
       }
     }

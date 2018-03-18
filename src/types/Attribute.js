@@ -1,3 +1,4 @@
+/* global api */
 
 class Attribute {
   constructor(id, key, name, type, constraints, annotations) {
@@ -35,9 +36,9 @@ function parseConstraint(key, constraint, gwtAttr) {
   if (constraint.getId) {
     return constraint.getId()
   }
-  console.error(`unknown type for constraint ${gwtAttr.getName()}->${key} found. Value is: (see next line)`)
-  console.errror(constraint)
-  console.error(`${key} ${gwtAttr.getName()}`)
+  api.error(`unknown type for constraint ${gwtAttr.getName()}->${key} found. Value is: (see next line)`)
+  api.error(constraint)
+  api.error(`${key} ${gwtAttr.getName()}`)
   return null
 }
 

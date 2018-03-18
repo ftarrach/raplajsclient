@@ -1,35 +1,70 @@
 <template lang="pug">
   div
     .columns.is-multiline
-      .column.is-one-third
+      .column.is-2
         p {{ "start_date" | gwt-localize }}
-      .column.is-two-thirds
-        b-datepicker(v-model="start")
-      .column.is-one-third
+      .column.is-10
+        b-date-timepicker(v-model="start")
+      .column.is-2
         p {{ "end_date" | gwt-localize }}
-      .column.is-two-thirds
-        b-datepicker(v-model="end")
+      .column.is-10
+        b-date-timepicker(v-model="end")
+      .column.is-2
+      .column.is-10
+        .b-checkbox.is-primary
+          | #[input#whole-day(type="checkbox" v-model="wholeDay").styled] #[label(for="whole-day") {{ "all-day" | gwt-localize }}]
 </template>
 
 <script>
 
-import DateTime from '@/types/util/DateTime'
-import moment from 'moment'
-
 // TODO: real values
 export default {
 
-  data() {
-    return {
-      start: null,
-      end: null
+  props: {
+    id: {
+      type: [String, Boolean],
+      required: true
     }
   },
 
-  created() {
-    this.start = DateTime.fromMoment(moment())
-    this.end = DateTime.fromMoment(moment())
-  }
+  computed: {
+    appointment() {
+      return this.$store.getters['reservationform/appointment'](this.id)
+    },
 
+    start: {
+      get() { return this.appointment.start },
+      set(newVal) {
+        this.$store.commit('reservationform/updateAppointmentValue', {
+          id: this.id,
+          prop: 'start',
+          value: newVal
+        })
+      }
+    },
+
+    end: {
+      get() { return this.appointment.end },
+      set(newVal) {
+        this.$store.commit('reservationform/updateAppointmentValue', {
+          id: this.id,
+          prop: 'end',
+          value: newVal
+        })
+      }
+    },
+
+    wholeDay: {
+      get() { return this.appointment.isWholeDay },
+      set(newVal) {
+        this.$store.commit('reservationform/updateAppointmentValue', {
+          id: this.id,
+          prop: 'isWholeDay',
+          value: newVal
+        })
+      }
+    }
+
+  }
 }
 </script>

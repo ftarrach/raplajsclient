@@ -24,7 +24,7 @@ function setupGwtCallback(options) {
         }
         starter.initLocale('de_DE') // TODO: move this to locale store and save the current locale key as a state?
           .thenRun(registerAction)
-          .exceptionally((info) => console.warn(info))
+          .exceptionally(console.warn)
       }
     }
   }
@@ -33,12 +33,12 @@ function setupGwtCallback(options) {
 export default {
   install(Vue, options) {
     if (options.standaloneMode) {
-      console.log('starting Vue Client in Standalone Mode')
+      console.debug('starting Vue Client in Standalone Mode')
       Vue.use(GwtLocale.Plugin, { api })
       options.onLoad()
     } else {
-      console.log('starting Vue Client in GWT Mode')
-      console.log('installing Vue RaplaGwtPlugin')
+      console.debug('starting Vue Client in GWT Mode')
+      console.debug('installing Vue RaplaGwtPlugin')
       setupGwtCallback({
         apiAvailable() {
           Vue.use(GwtLocale.Plugin, { api })

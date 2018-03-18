@@ -71,7 +71,7 @@ export default {
 
   computed: {
     appointment() {
-      return this.id ? this.$store.state.reservationform.appointments.find(a => a.id === this.id) : false
+      return this.id ? this.$store.getters['reservationform/appointment'](this.id) : false
     },
 
     start: {
@@ -124,8 +124,9 @@ export default {
         return this.appointment.repeating.interval
       },
       set(newVal) {
-        this.$store.commit('reservationform/updateInterval', {
+        this.$store.commit('reservationform/updateRepeatingValue', {
           id: this.id,
+          prop: 'interval',
           value: newVal
         })
       }
@@ -149,10 +150,15 @@ export default {
         return this.appointment.end
       },
       set(newVal) {
-        // this.appointment.end = DateTime.fromMoment(newVal)
+        this.$store.commit('reservationform/updateAppointmentValue', {
+          id: this.id,
+          prop: 'end',
+          value: newVal
+        })
       }
     },
 
+    // TODO: implement it
     endtimetype: {
       get() {
         return 'same-day'
@@ -163,9 +169,9 @@ export default {
       }
     },
 
+    // TODO: implement it
     endtype: {
       get() {
-        // return this.appointment.enddatetype
         if (this.appointment.maxEnd === null) {
           return 'infinity'
         }
@@ -175,31 +181,31 @@ export default {
       }
     },
 
+    // TODO: implement it
     times: {
       get() {
-        // if (this.appointment.repeat.times < 1) {
-        //   this.xDay = 1
-        // }
-        // return this.appointment.repeat.times
-        return this.appointment.number
+        // return this.appointment.number
       },
       set(newVal) {
-        this.$store.commit('reservationform/updateAppointmentValue', {
-          id: this.id,
-          prop: 'number',
-          value: newVal
-        })
+        // this.$store.commit('reservationform/updateAppointmentValue', {
+        //   id: this.id,
+        //   prop: 'number',
+        //   value: newVal
+        // })
       }
     },
 
+    // TODO: implement it
     xDay: {
       get() {
-        return this.appointment.number
+        // return this.appointment.number
       },
       set(newVal) {
-        // if (this.appointment.time) {
-        //   this.appointment.time.xday = newVal
-        // }
+        // this.$store.commit('reservationform/updateAppointmentValue', {
+        //   id: this.id,
+        //   prop: 'number',
+        //   value: newVal
+        // })
       }
     },
 
@@ -208,7 +214,11 @@ export default {
         return this.appointment.repeating.weekdays
       },
       set(newVal) {
-        // TODO
+        this.$store.commit('reservationform/updateRepeatingValue', {
+          id: this.id,
+          prop: 'weekdays',
+          value: newVal
+        })
       }
     }
   },

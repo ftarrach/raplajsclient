@@ -49,20 +49,20 @@ const calendar = {
   actions: {
 
     refresh({commit}) {
-      console.log('refresh calendar model')
+      api.debug('refresh calendar model')
       api.getCalendarModel().refresh()
       commit('refreshCalendar')
     },
 
     loadCalendar({commit}, calendarKey) {
-      console.log(`load calendar ${calendarKey}`)
+      api.debug(`load calendar ${calendarKey}`)
       api.getCalendarModel().load(calendarKey)
       commit('refreshCalendar')
     },
 
     /* WARNING: returns plain GWT Objects */
     loadAppointmentBlocks() {
-      console.log('load appointments')
+      api.debug('load appointments')
       return new Promise((resolve, reject) => {
         api.getCalendarModel().queryBlocks(api.getCalendarModel().getTimeIntervall())
           .thenAccept(b => {
@@ -75,7 +75,7 @@ const calendar = {
     },
 
     loadReservations({commit}) {
-      console.log('load reservations')
+      api.debug('load reservations')
       return new Promise((resolve, reject) => {
         api.getCalendarModel().queryReservations(api.getCalendarModel().getTimeIntervall())
           .thenAccept(result => {

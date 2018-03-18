@@ -1,4 +1,5 @@
 import Reservation from '@/types/Reservation'
+import Repeating from '@/types/Repeating'
 
 /* global api */
 const reservationform = {
@@ -44,8 +45,8 @@ const reservationform = {
     updateAppointmentValue(state, payload) {
       state.appointments.find(a => a.id === payload.id)[payload.prop] = payload.value
     },
-    updateInterval(state, payload) {
-      state.appointments.find(a => a.id === payload.id).repeating.interval = payload.value
+    updateRepeatingValue(state, payload) {
+      state.appointments.find(a => a.id === payload.id).repeating[payload.prop] = payload.value
     },
     /** payload: {id: appointmentId, value: repeatType } */
     setRepeatType(state, payload) {
@@ -53,6 +54,9 @@ const reservationform = {
       if (payload.value === null) {
         appointment.repeating = null
       } else {
+        if (!appointment.repeating) {
+          appointment.repeating = Repeating.create(appointment)
+        }
         appointment.repeating.type = payload.value
       }
     },
@@ -63,10 +67,14 @@ const reservationform = {
     delete(state) {
       // TODO: after dialogs are implemented, remove message and uncomment code. Pass PopupContext instead of null
       console.error('delete reservation code is implemented, but won\'t work until dialogs are implemented')
-//      api.getReservationController().deleteReservations(
-//        api.asSet([state.gwtReservation]), null
-//      ).thenRun(() => console.log('hi'))
-//       .exceptionally(console.error)
+      // api.getReservationController().deleteReservations(
+      //   api.asSet([state.gwtReservation]), null
+      // ).thenRun(() => console.log('hi'))
+      //  .exceptionally(console.error)
+    },
+
+    addAppointment(state, payload) {
+      state.appointments.push(payload)
     }
   },
 
@@ -95,6 +103,27 @@ const reservationform = {
 
     delete({commit}) {
       commit('delete')
+    },
+
+    addAppointment({commit, getters, state}, existingAppointmentId) {
+      if (existingAppointmentId) {
+        alert('ASK')
+        // REVIEW: if newAppointmentAsync is called, an Appointment without a reference to the reservation is created
+        // let appointment = getters['appointment'](existingAppointmentId)
+        // api.getFacade().newAppointmentAsync(
+        //   api.createInterval(
+        //     DateTime.toGwtDate(appointment.start),
+        //     DateTime.toGwtDate(appointment.end)
+        //   ))
+        //   .thenAccept(a => {
+        //     a.setParent(state.gwtReservation)
+        //     console.log(a.getReservation())
+        //     // commit('addAppointment', Appointment.fromGwt(a))
+        //   })
+        //   .exceptionally(console.error)
+      } else {
+        // create with default
+      }
     }
   }
 }

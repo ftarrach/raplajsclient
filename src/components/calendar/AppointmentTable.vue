@@ -21,7 +21,6 @@
 <script>
 
 import JoinedList from '@/components/util/JoinedList'
-import DateTime from '@/types/util/DateTime'
 
 export default {
   components: {

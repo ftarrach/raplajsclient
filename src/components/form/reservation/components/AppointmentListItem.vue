@@ -1,11 +1,12 @@
 <template lang="pug">
-  option(:value="appointment.id")
+  option.item(:value="appointment.id")
     p(v-for="line in label")
       | {{ line }}
 </template>
 
 <script>
 import Appointment from '@/types/Appointment'
+import { sameDay } from '@/types/util/DateTime'
 
 export default {
 
@@ -73,9 +74,25 @@ export default {
 
     timespan(appointment) {
       let formatTime = this.$store.getters['locale/formatTime']
-      return this.appointment.isWholeDay ? '' : `${formatTime(this.appointment.start)}-${formatTime(this.appointment.end)}`
+      let formatDateTime = this.$store.getters['locale/formatDateTime']
+      if (sameDay(this.appointment.start, this.appointment.end)) {
+        return this.appointment.isWholeDay
+          ? ''
+          : `${formatTime(this.appointment.start)}-${formatTime(this.appointment.end)}`
+      } else {
+        return this.appointment.isWholeDay
+          ? `${formatTime(this.appointment.start)}-${formatTime(this.appointment.end)}`
+          : `${formatDateTime(this.appointment.start, 'short')} - ${formatDateTime(this.appointment.start, 'short')}`
+      }
     }
   }
 
 }
 </script>
+
+<style scoped>
+  .item {
+    display: block;
+    line-break: normal
+  }
+</style>

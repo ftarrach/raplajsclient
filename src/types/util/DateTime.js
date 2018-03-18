@@ -86,3 +86,9 @@ export default class DateTime {
     )
   }
 }
+
+const sameDay = function(one, other) {
+  return one.year === other.year && one.months === other.months && one.date === other.date
+}
+
+export { sameDay }

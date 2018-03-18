@@ -1,4 +1,5 @@
 import BButton from '@/ui/BButton'
+import BDateTimepicker from '@/ui/BDateTimepicker'
 import BDropdown from '@/ui/BDropdown'
 import BDropdownItem from '@/ui/BDropdownItem'
 import BDatepicker from '@/ui/BDatepicker'
@@ -13,6 +14,7 @@ import FaIcon from '@/ui/FaIcon'
 
 const components = {
   BButton,
+  BDateTimepicker,
   BDropdown,
   BDropdownItem,
   BDatepicker,

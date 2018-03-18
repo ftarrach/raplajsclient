@@ -13,7 +13,7 @@ class Repeating {
   }
 
   static fromGwt(gwtRepeating) {
-    if (gwtRepeating === null) {
+    if (!gwtRepeating) {
       return null
     }
     let exceptions = gwtRepeating.getExceptions()
@@ -27,6 +27,17 @@ class Repeating {
       gwtRepeating.getNumber(),
       api.toArray(gwtRepeating.getWeekdays()).map(w => parseInt(w.toString()) - 1),
       exceptions
+    )
+  }
+
+  static create(appointment) {
+    return new Repeating(
+      'weekly',
+      1,
+      null,
+      -1,
+      [ parseInt(DateTime.toMoment(appointment.start).format('d')) ],
+      []
     )
   }
 }

@@ -1,3 +1,5 @@
+/* global api */
+
 import moment from 'moment'
 import DateTime from '@/types/util/DateTime'
 
@@ -12,7 +14,7 @@ const Api = {
       if (result) {
         return result
       }
-      console.warn(`WARN: no string for key ${value} found`)
+      api.warn(`no string for key ${value} found`)
     }
     return `»${value}«`
   },
@@ -23,7 +25,7 @@ const Api = {
       if (result) {
         return result
       }
-      console.warn(`WARN: no string for key ${key} found`)
+      api.warn(`no string for key ${key} found`)
     }
     return `»${key}(${parameters.join()})«`
   },
@@ -54,7 +56,7 @@ const Api = {
       } else if (!len || len === 'long') {
         return locale.getWeekdayName(weekdayNr)
       } else {
-        console.warn(`unknown length '${len}' in GwtLocale.formatWeekday`)
+        api.warn(`unknown length '${len}' in GwtLocale.formatWeekday`)
         return ''
       }
     }
@@ -78,7 +80,7 @@ const Api = {
       } else if (len === 'long') {
         return locale.formatDateLong(raplaDate)
       } else {
-        console.warn(`unknown length '${len}' in GwtLocale.formatDate`)
+        api.warn(`unknown length '${len}' in GwtLocale.formatDate`)
         return ''
       }
     } else {
@@ -99,7 +101,7 @@ const Api = {
 
 const Plugin = {
   install(Vue, options) {
-    console.log('installing Vue GwtLocale')
+    api.debug('installing Vue GwtLocale')
     if (options.api) {
       i18n = options.api.getI18n()
       locale = options.api.getRaplaLocale()

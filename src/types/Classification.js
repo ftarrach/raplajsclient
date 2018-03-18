@@ -1,3 +1,5 @@
+/* global api */
+
 import DynamicType from './DynamicType'
 
 let parseGwtAttributeValue = function(gwtClassification, gwtAttribute) {
@@ -15,7 +17,7 @@ let parseGwtAttributeValue = function(gwtClassification, gwtAttribute) {
     } else if (type === 'BOOLEAN') {
       return value.toString() === 'true'
     }
-    console.error(`${JSON.stringify(value)} ${type}`)
+    api.error(`${JSON.stringify(value)} ${type}`)
   }
   return value
 }

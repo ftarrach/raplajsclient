@@ -50,7 +50,7 @@ export default {
   methods: {
 
     add() {
-      alert('AppointmentList.add')
+      this.$store.dispatch('reservationform/addAppointment', this.value)
     },
 
     remove() {

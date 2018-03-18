@@ -82,7 +82,7 @@ const facade = {
     },
 
     refresh({commit}) {
-      console.log('refreshing facade data')
+      api.debug('refreshing facade data')
       commit('setReservationTypes',
         api.getFacade().getDynamicTypes('reservation').reduce((acc, a) => reduceToIdDictionary(acc, DynamicType.fromGwt(a)), {}))
       commit('setAllocatables',
@@ -96,7 +96,7 @@ const facade = {
 
       commit('setCategories', Category.fromGwt(api.getFacade().getSuperCategory()))
 
-      console.log('refreshed facade data')
+      api.debug('refreshed facade data')
     }
   }
 }

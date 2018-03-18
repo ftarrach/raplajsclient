@@ -10,7 +10,7 @@ const locale = {
       if (api) {
         let str = api.getI18n().getString(localeKey)
         if (!str) {
-          console.warn(`no resource string found for ${localeKey}`)
+          api.warn(`no resource string found for ${localeKey}`)
         }
         return str
       }
@@ -18,7 +18,7 @@ const locale = {
 
     format: state => (key, parameters) => {
       if (!parameters) {
-        console.warn(`called ${key} with locale/format with no arguments. You may want to use locale/localize`)
+        api.warn(`called ${key} with locale/format with no arguments. You may want to use locale/localize`)
         return ''
       }
       if (api) {
@@ -26,10 +26,18 @@ const locale = {
       }
     },
 
-    formatDateTime: state => date => {
+    formatDateTime: state => (date, len = 'normal') => {
       if (api) {
-        // TODO: use rapla here. Build together
-        return DateTime.toMoment(date).format('DD.MM.YYYY (dd) HH:mm')
+        if (len === 'normal') {
+          return DateTime.toMoment(date).format('DD.MM.YYYY (dd) HH:mm')
+        } else if (len === 'short') {
+          let rapladate = DateTime.toGwtDate(date)
+          let locale = api.getRaplaLocale()
+          let weekday = locale.getWeekday(rapladate)
+          let datef = locale.formatDate(rapladate)
+          let time = locale.formatTime(rapladate)
+          return `${weekday} ${datef} ${time}`
+        }
       }
     },
 
@@ -43,7 +51,7 @@ const locale = {
         } else if (!len || len === 'long') {
           return api.getRaplaLocale().getWeekdayName(weekdayNr)
         } else {
-          console.warn(`unknown length '${len}' in GwtLocale.formatWeekday`)
+          api.warn(`unknown length '${len}' in GwtLocale.formatWeekday`)
           return ''
         }
       }
@@ -65,7 +73,7 @@ const locale = {
         } else if (len === 'long') {
           return locale.formatDateLong(raplaDate)
         } else {
-          console.warn(`unknown length '${len}' in GwtLocale.formatDate`)
+          api.warn(`unknown length '${len}' in GwtLocale.formatDate`)
           return ''
         }
       }
