@@ -1,6 +1,5 @@
 /* global api */
 
-import moment from 'moment'
 import DateTime from '@/types/util/DateTime'
 
 let i18n = null
@@ -9,24 +8,20 @@ let locale = null
 const Api = {
 
   localize(value) {
-    if (i18n) {
-      let result = i18n.getString(value)
-      if (result) {
-        return result
-      }
-      api.warn(`no string for key ${value} found`)
+    let result = i18n.getString(value)
+    if (result) {
+      return result
     }
+    api.warn(`no string for key ${value} found`)
     return `»${value}«`
   },
 
   format(key, parameters) {
-    if (i18n) {
-      let result = i18n.format(key, ...parameters)
-      if (result) {
-        return result
-      }
-      api.warn(`no string for key ${key} found`)
+    let result = i18n.format(key, ...parameters)
+    if (result) {
+      return result
     }
+    api.warn(`no string for key ${key} found`)
     return `»${key}(${parameters.join()})«`
   },
 
@@ -34,36 +29,24 @@ const Api = {
     if (!date) {
       return ''
     }
-    if (locale) {
-      // REVIEW: Where is this Date Format in Rapla?
-      // TODO: einfach zusammenbauen date + time
-      return DateTime.toMoment(date).format('DD.MM.YYYY (dd) HH:mm')
-    } else {
-      return DateTime.toMoment(date).format('DD.MM.YYYY (dd) HH:mm')
-    }
+    // TODO: gwt: einfach zusammenbauen über date + time + formatWeekday?
+    return DateTime.toMoment(date).format('DD.MM.YYYY (dd) HH:mm')
   },
 
   formatWeekday(weekdayNr, len) {
-    if (weekdayNr === undefined || weekdayNr === null) {
+    if (!weekdayNr) {
       return ''
     }
-    if (locale) {
-      if (++weekdayNr > 7) {
-        weekdayNr -= 7
-      }
-      if (len === 'short') {
-        return locale.getWeekdayNameShort(weekdayNr)
-      } else if (!len || len === 'long') {
-        return locale.getWeekdayName(weekdayNr)
-      } else {
-        api.warn(`unknown length '${len}' in GwtLocale.formatWeekday`)
-        return ''
-      }
+    if (++weekdayNr > 7) {
+      weekdayNr -= 7
     }
     if (len === 'short') {
-      return moment().isoWeekday(weekdayNr).format('dd')
+      return locale.getWeekdayNameShort(weekdayNr)
     } else if (!len || len === 'long') {
-      return moment().isoWeekday(weekdayNr).format('dddd')
+      return locale.getWeekdayName(weekdayNr)
+    } else {
+      api.warn(`unknown length '${len}' in GwtLocale.formatWeekday`)
+      return ''
     }
   },
 
@@ -71,20 +54,16 @@ const Api = {
     if (!date) {
       return ''
     }
-    if (locale) {
-      let raplaDate = locale.toRaplaDate(date.years, date.months, date.date)
-      if (len === 'short') {
-        return locale.formatDateShort(raplaDate)
-      } else if (!len || len === 'medium') {
-        return locale.formatDate(raplaDate)
-      } else if (len === 'long') {
-        return locale.formatDateLong(raplaDate)
-      } else {
-        api.warn(`unknown length '${len}' in GwtLocale.formatDate`)
-        return ''
-      }
+    let raplaDate = locale.toRaplaDate(date.years, date.months, date.date)
+    if (len === 'short') {
+      return locale.formatDateShort(raplaDate)
+    } else if (!len || len === 'medium') {
+      return locale.formatDate(raplaDate)
+    } else if (len === 'long') {
+      return locale.formatDateLong(raplaDate)
     } else {
-      return DateTime.toMoment(date).format('DD.MM.YYYY')
+      api.warn(`unknown length '${len}' in GwtLocale.formatDate`)
+      return ''
     }
   },
 
@@ -92,10 +71,7 @@ const Api = {
     if (!date) {
       return ''
     }
-    if (locale) {
-      return locale.formatTime(locale.toTime(date.hours, date.minutes, date.seconds))
-    }
-    return DateTime.toMoment(date).format('HH:mm')
+    return locale.formatTime(locale.toTime(date.hours, date.minutes, date.seconds))
   }
 }
 
