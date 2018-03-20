@@ -4,12 +4,12 @@
     .column.is-half
       label.label {{ "reservation.appointments" | gwt-localize }}
       appointment-list(v-model="selectedAppointmentId")
-    .columns.is-size-7
     //- Appointment edit
     .column.is-half
       label.label &nbsp;
       appointment-detail(:id="selectedAppointmentId")
     .column.is-half
+      label.label {{ "reservation.allocations" | gwt-localize }}
       resource-list(:appointment-id="selectedAppointmentId")
 </template>
 
