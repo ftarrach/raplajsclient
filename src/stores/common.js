@@ -1,4 +1,3 @@
-/* global api */
 
 const common = {
   namespaced: true,

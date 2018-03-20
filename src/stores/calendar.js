@@ -1,4 +1,3 @@
-/* global api */
 
 import moment from 'moment'
 import DateTime from '@/types/util/DateTime'

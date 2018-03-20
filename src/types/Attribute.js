@@ -1,4 +1,3 @@
-/* global api */
 
 class Attribute {
   constructor(id, key, name, type, constraints, annotations) {

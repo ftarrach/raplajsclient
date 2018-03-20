@@ -43,7 +43,6 @@ export default class DateTime {
 
   static fromGwtDate(gwtDate) {
     if (gwtDate) {
-      /* global api */
       return DateTime.fromJs(api.toJsDate(gwtDate))
     }
     return gwtDate
@@ -56,7 +55,6 @@ export default class DateTime {
   }
 
   static toGwtDate({ years, months, date, hours, minutes, seconds }) {
-    /* global api */
     const locale = api.getRaplaLocale()
     const rapladate = locale.toRaplaDate(years, months, date)
     const raplatime = locale.toTime(hours, minutes, seconds)

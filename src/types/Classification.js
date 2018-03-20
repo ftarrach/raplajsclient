@@ -1,4 +1,3 @@
-/* global api */
 
 import DynamicType from './DynamicType'
 

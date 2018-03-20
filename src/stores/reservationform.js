@@ -1,7 +1,6 @@
 import Reservation from '@/types/Reservation'
 import Repeating from '@/types/Repeating'
 
-/* global api */
 const reservationform = {
   namespaced: true,
 
@@ -91,7 +90,6 @@ const reservationform = {
     },
 
     create({commit, dispatch}, typeId) {
-      /* global api */
       let newReservation =
         api.getFacade().newReservation(
           api.getFacade().getDynamicTypes('reservation').find(r => r.getId() === typeId).newClassification(),

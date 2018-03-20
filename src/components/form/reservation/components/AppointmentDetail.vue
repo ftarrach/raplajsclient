@@ -20,13 +20,19 @@
 <script>
 
 import AppointmentDetailSingle from './AppointmentDetailSingle'
-import AppointmentDetailWeek from './AppointmentDetailWeek'
+import AppointmentDetailDaily from './AppointmentDetailDaily'
+import AppointmentDetailWeekly from './AppointmentDetailWeekly'
+import AppointmentDetailMonthly from './AppointmentDetailMonthly'
+import AppointmentDetailYearly from './AppointmentDetailYearly'
 
 export default {
 
   components: {
     AppointmentDetailSingle,
-    AppointmentDetailWeek
+    AppointmentDetailDaily,
+    AppointmentDetailWeekly,
+    AppointmentDetailMonthly,
+    AppointmentDetailYearly
   },
 
   props: {
@@ -62,10 +68,15 @@ export default {
       }
       switch (this.appointment.repeating.type) {
         case 'weekly':
-          return AppointmentDetailWeek
+          return AppointmentDetailWeekly
         case 'daily':
+          return AppointmentDetailDaily
         case 'monthly':
+          return AppointmentDetailMonthly
         case 'yearly':
+          return AppointmentDetailYearly
+        default:
+          api.warn(`unknown repeating type: ${JSON.stringify(this.appointment.repeating)}`)
           return null
       }
     }

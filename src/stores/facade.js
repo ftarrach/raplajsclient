@@ -1,4 +1,4 @@
-/* global api */
+
 import Allocatable from '@/types/Allocatable'
 import DynamicType from '@/types/DynamicType'
 import Category from '@/types/Category'

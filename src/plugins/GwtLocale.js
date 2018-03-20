@@ -1,4 +1,3 @@
-/* global api */
 
 import DateTime from '@/types/util/DateTime'
 
