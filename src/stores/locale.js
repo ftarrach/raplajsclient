@@ -27,10 +27,9 @@ const locale = {
       } else if (len === 'short') {
         let rapladate = DateTime.toGwtDate(date)
         let locale = api.getRaplaLocale()
-        let weekday = locale.getWeekday(rapladate)
         let datef = locale.formatDate(rapladate)
         let time = locale.formatTime(rapladate)
-        return `${weekday} ${datef} ${time}`
+        return `${datef} ${time}`
       }
     },
 

@@ -95,6 +95,7 @@ export default {
         let startdate = DateTime.clone(this.start)
         startdate.hours = parseInt(newVal.split(':')[0])
         startdate.minutes = parseInt(newVal.split(':')[1])
+        // TODO: if startdate > enddate, startdate = enddate
         this.$store.commit('reservationform/updateAppointmentValue', {
           id: this.id,
           prop: 'start',
@@ -108,13 +109,13 @@ export default {
         return this.$store.getters['locale/formatTime'](this.appointment.end)
       },
       set(newVal) {
-        let startdate = DateTime.clone(this.end)
-        startdate.hours = parseInt(newVal.split(':')[0])
-        startdate.minutes = parseInt(newVal.split(':')[1])
+        let enddate = DateTime.clone(this.end)
+        enddate.hours = parseInt(newVal.split(':')[0])
+        enddate.minutes = parseInt(newVal.split(':')[1])
         this.$store.commit('reservationform/updateAppointmentValue', {
           id: this.id,
           prop: 'end',
-          value: startdate
+          value: enddate
         })
       }
     },

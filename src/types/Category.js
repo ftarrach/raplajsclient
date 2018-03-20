@@ -7,12 +7,12 @@ class Category {
     this.subcategories = subcategories
   }
 
-  static fromGwt({ getId, getKey, getName, getCategories }) {
+  static fromGwt(gwtCategory) {
     return new Category(
-      getId(),
-      getKey(),
-      getName(),
-      getCategories().map(c => Category.fromGwt(c))
+      gwtCategory.getId(),
+      gwtCategory.getKey(),
+      gwtCategory.getName(),
+      gwtCategory.getCategories().map(c => Category.fromGwt(c))
     )
   }
 }

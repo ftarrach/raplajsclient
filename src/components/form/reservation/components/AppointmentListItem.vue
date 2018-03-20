@@ -72,17 +72,21 @@ export default {
       return until.join(' ')
     },
 
+    sameDay() {
+      return sameDay(this.appointment.start, this.appointment.end)
+    },
+
     timespan(appointment) {
       let formatTime = this.$store.getters['locale/formatTime']
       let formatDateTime = this.$store.getters['locale/formatDateTime']
-      if (sameDay(this.appointment.start, this.appointment.end)) {
+      if (this.sameDay) {
         return this.appointment.isWholeDay
           ? ''
           : `${formatTime(this.appointment.start)}-${formatTime(this.appointment.end)}`
       } else {
         return this.appointment.isWholeDay
           ? `${formatTime(this.appointment.start)}-${formatTime(this.appointment.end)}`
-          : `${formatDateTime(this.appointment.start, 'short')} - ${formatDateTime(this.appointment.start, 'short')}`
+          : `${formatDateTime(this.appointment.start, 'short')} - ${formatDateTime(this.appointment.end, 'short')}`
       }
     }
   },
