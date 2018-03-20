@@ -36,7 +36,7 @@ export default {
   },
 
   methods: {
-    toggleBurgerMenu(event) {
+    toggleBurgerMenu() {
       this.sidemenuOpen = !this.sidemenuOpen
     }
   }

@@ -20,8 +20,7 @@
 </template>
 
 <script>
-// TODO: externalize label methods to ReservationFormAppointmentlistItem
-import SingleMultiSelect from '@/components/widgets/SingleMultiSelect'
+
 import AppointmentListItem from './AppointmentListItem'
 
 export default {

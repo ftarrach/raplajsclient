@@ -162,10 +162,11 @@ export default {
     endtimetype: {
       get() {
         return 'same-day'
-        // return this.appointment.time ? this.appointment.time.endtype : ''
+        // same-day: uhrzeit bezieht sich auf selben Tag
+        // next-day: uhrzeit bezieht sich auf nächsten Tag
+        // x-day: uhrzeit bezieht sich auf nächsten x-ten tag
       },
       set(newVal) {
-        // this.appointment.time.endtype = newVal
       }
     },
 
@@ -175,6 +176,9 @@ export default {
         if (this.appointment.maxEnd === null) {
           return 'infinity'
         }
+        // until: end on specific date
+        // x-times: reservation repeats x times
+        // infinity: forever
       },
       set(newVal) {
         // this.appointment.enddatetype = newVal
@@ -184,7 +188,7 @@ export default {
     // TODO: implement it
     times: {
       get() {
-        // return this.appointment.number
+        // if endtype === x-times, this is the input number
       },
       set(newVal) {
         // this.$store.commit('reservationform/updateAppointmentValue', {
@@ -198,7 +202,7 @@ export default {
     // TODO: implement it
     xDay: {
       get() {
-        // return this.appointment.number
+        // if endtype === x until, this is the date input
       },
       set(newVal) {
         // this.$store.commit('reservationform/updateAppointmentValue', {

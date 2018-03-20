@@ -101,6 +101,10 @@ const reservationform = {
       dispatch('editReservation', Reservation.fromGwt(newReservation))
     },
 
+    save({commit}) {
+      alert('reservationform/save is not yet implemented')
+    },
+
     delete({commit}) {
       commit('delete')
     },

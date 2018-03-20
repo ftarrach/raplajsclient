@@ -133,7 +133,7 @@ export default {
     previousStep() { this.step = this.$options.steps[this.stepNr - 1].id },
 
     save() {
-      alert('save')
+      this.$store.dispatch('reservationform/save')
     },
 
     remove() {

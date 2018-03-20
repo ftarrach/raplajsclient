@@ -10,14 +10,14 @@ export default class DateTime {
     this.seconds = seconds
   }
 
-  static clone(datetime) {
+  static clone({ years, months, date, hours, minutes, seconds }) {
     return new DateTime(
-      datetime.years,
-      datetime.months,
-      datetime.date,
-      datetime.hours,
-      datetime.minutes,
-      datetime.seconds
+      years,
+      months,
+      date,
+      hours,
+      minutes,
+      seconds
     )
   }
 
@@ -44,8 +44,7 @@ export default class DateTime {
   static fromGwtDate(gwtDate) {
     if (gwtDate) {
       /* global api */
-      // HACK: works, but is inperformant. Better try direct parsing
-      return DateTime.fromMoment(moment(api.toJsDate(gwtDate)))
+      return DateTime.fromJs(api.toJsDate(gwtDate))
     }
     return gwtDate
   }
@@ -56,12 +55,12 @@ export default class DateTime {
     )
   }
 
-  static toGwtDate(datetime) {
+  static toGwtDate({ years, months, date, hours, minutes, seconds }) {
     /* global api */
-    let locale = api.getRaplaLocale()
-    let date = locale.toRaplaDate(datetime.years, datetime.months, datetime.date)
-    let time = locale.toTime(datetime.hours, datetime.minutes, datetime.seconds)
-    return locale.toDate(date, time)
+    const locale = api.getRaplaLocale()
+    const rapladate = locale.toRaplaDate(years, months, date)
+    const raplatime = locale.toTime(hours, minutes, seconds)
+    return locale.toDate(rapladate, raplatime)
   }
 
   static fromJs(jsdate) {
