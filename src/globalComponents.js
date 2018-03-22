@@ -3,6 +3,7 @@ import BDateTimepicker from '@/ui/BDateTimepicker'
 import BDropdown from '@/ui/BDropdown'
 import BDropdownItem from '@/ui/BDropdownItem'
 import BDatepicker from '@/ui/BDatepicker'
+import BFab from '@/ui/BFab'
 import BToggleButton from '@/ui/BToggleButton'
 import BSteps from '@/ui/BSteps'
 import BDrilldown from '@/ui/BDrilldown'
@@ -18,6 +19,7 @@ const components = {
   BDropdown,
   BDropdownItem,
   BDatepicker,
+  BFab,
   BToggleButton,
   BSteps,
   BDrilldown,

@@ -19,6 +19,7 @@
                               :value="item.label"
                               :icon="item.icon"
                               @click="() => item.onClick(event)")
+    b-fab(icon="plus" @click="newReservation" bottom left)
 </template>
 
 <script>
@@ -109,6 +110,12 @@ export default {
 
     cut() {
       alert('cut')
+    },
+
+    newReservation() {
+      this.$router.push({
+        name: 'NewReservation'
+      })
     }
   }
 }
