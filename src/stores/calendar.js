@@ -60,7 +60,7 @@ const calendar = {
     },
 
     /* WARNING: returns plain GWT Objects */
-    loadAppointmentBlocks() {
+    loadAppointmentBlocks({getters}) {
       api.debug('load appointments')
       return new Promise((resolve, reject) => {
         api.getCalendarModel().queryBlocks(api.getCalendarModel().getTimeIntervall())

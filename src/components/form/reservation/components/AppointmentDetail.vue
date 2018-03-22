@@ -9,10 +9,12 @@
                         @click="setRepeat")
     .columns.is-gapless
       .column
-        button.button.is-size-7.is-fullwidth.is-outlined(:disabled="appointment.enddatetype === 'infinity'")
+        b-button.is-size-7.is-fullwidth.is-outlined(:disabled="convertInSingleDisabled"
+                                                         @click="convertInSingle")
           | {{ "appointment.convert" | gwt-localize }}
       .column
-        button.button.is-size-7.is-fullwidth.is-danger(@click="exceptionClick")
+        button.button.is-size-7.is-fullwidth.is-danger(:disabled="cannotContainExceptions"
+                                                       @click="showExceptions")
           | {{ "appointment.exceptions" | gwt-localize }} (0)
     component(:is="repeatType" :id="id")
 </template>
@@ -47,6 +49,14 @@ export default {
       return this.id
         ? this.$store.state.reservationform.appointments.find(a => a.id === this.id)
         : false
+    },
+
+    cannotContainExceptions() {
+      return this.appointment.repeating === null
+    },
+
+    convertInSingleDisabled() {
+      return !this.appointment.repeating || this.appointment.repeating.number !== -1
     },
 
     repeatOptions() {
@@ -90,8 +100,13 @@ export default {
       })
     },
 
-    exceptionClick() {
-      alert('exceptionClick()')
+    convertInSingle() {
+      // TODO: implement me
+      alert('AppointmentDetail.convertInSingle')
+    },
+
+    showExceptions() {
+      alert('AppointmentDetail.showExceptions()')
     }
   }
 }

@@ -9,7 +9,6 @@
 <script>
 // THINK: Show Button, open Dialog containing drilldown
 
-import DateTime from '@/types/util/DateTime'
 import ClassificationInput from '../components/ClassificationInput'
 
 export default {
@@ -39,9 +38,6 @@ export default {
 
   methods: {
     setClassificationValue(key, value) {
-      if (value._isAMomentObject) {
-        value = DateTime.fromMoment(value)
-      }
       this.$store.commit('reservationform/updateClassificationValue', { key, value })
     }
   }

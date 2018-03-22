@@ -61,6 +61,10 @@ export default class DateTime {
     return locale.toDate(rapladate, raplatime)
   }
 
+  static now() {
+    return DateTime.fromJs(new Date())
+  }
+
   static fromJs(jsdate) {
     return new DateTime(
       jsdate.getFullYear(),

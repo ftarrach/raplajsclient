@@ -13,6 +13,7 @@
 </template>
 
 <script>
+// TODO: this is a TextDialog. Name it accordingly
 export default {
   name: 'rapla-dialog',
 
@@ -31,15 +32,19 @@ export default {
   },
 
   methods: {
-    openDialog(params) {
-      this.title = params.title
-      this.text = params.text
-      this.options = params.options
+    openDialog(vueDialogInterface) {
+      console.log(vueDialogInterface)
+      this.title = vueDialogInterface.getTitle()
+      const content = vueDialogInterface.getContent()
+      console.log(content)
+      if (content.getDialogType() === 'Text') {
+        this.text = content.getWarnings().join('\n')
+      }
+      this.$options.gwtPromise = vueDialogInterface.getPromise()
       this.open = true
-      this.$options.di = params.di
     },
     closeDialog() {
-      this.$options.di.onChoose(-1)
+      // this.$options.gwtPromise.complete(-1)
       this.open = false
     },
     selected(index) {

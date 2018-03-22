@@ -49,7 +49,7 @@ export default {
   methods: {
 
     add() {
-      this.$store.dispatch('reservationform/addAppointment', this.value)
+      this.$store.dispatch('reservationform/cloneAppointment', this.value)
     },
 
     remove() {

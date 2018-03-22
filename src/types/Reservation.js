@@ -25,7 +25,7 @@ class Reservation {
       DynamicType.fromGwt(gwtReservation.getClassification().getType()),
       Classification.fromGwt(gwtReservation.getClassification()),
       gwtReservation.getAllocatables().map(Allocatable.fromGwt),
-      gwtReservation.getAppointments().map(Appointment.fromGwt),
+      api.toArray(gwtReservation.getSortedAppointments()).map(Appointment.fromGwt),
       [ /* TODO: permissions (current: Collection, array needed) */ ],
       DateTime.fromGwtDate(gwtReservation.getCreateDate()),
       DateTime.fromGwtDate(gwtReservation.getLastChanged()),

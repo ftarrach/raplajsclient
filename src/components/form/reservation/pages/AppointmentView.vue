@@ -4,10 +4,11 @@
     .column.is-half
       label.label {{ "reservation.appointments" | gwt-localize }}
       appointment-list(v-model="selectedAppointmentId")
-    //- Appointment edit
+    //- Appointment Edit
     .column.is-half
       label.label &nbsp;
       appointment-detail(:id="selectedAppointmentId")
+    //- allocatables
     .column.is-half
       label.label {{ "reservation.allocations" | gwt-localize }}
       resource-list(:appointment-id="selectedAppointmentId")

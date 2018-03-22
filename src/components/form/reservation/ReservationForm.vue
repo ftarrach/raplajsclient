@@ -25,8 +25,8 @@
               component(:is="stepComponent")
       footer
         .card-footer
-          a.card-footer-item(@click.prevent="remove") {{ "delete" | gwt-localize }}
-          a.card-footer-item(@click.prevent="previousStep", :class="{'disabled': isFirstStep}")
+          a.card-footer-item(@click.prevent="remove" :class="{'disabled': !isPersistent}") {{ "delete" | gwt-localize }}
+          a.card-footer-item(@click.prevent="previousStep" :class="{'disabled': isFirstStep}")
             fa-icon(icon="arrow-left")
           a.card-footer-item(@click.prevent="nextStep" :class="{'disabled': isLastStep}")
             fa-icon(icon="arrow-right")
@@ -37,9 +37,6 @@
 
 import ReservationTypeChooser from '@/components/widgets/ReservationTypeChooser'
 import AppointmentView from './pages/AppointmentView'
-// import ReservationFormResource from './ReservationFormResource'
-// import ReservationFormPermission from './ReservationFormPermission'
-// import ReservationFormAttributes from './ReservationFormAttributes'
 import ClassificationView from './pages/ClassificationView'
 import AdditionalClassificationView from './pages/AdditionalClassificationView'
 
@@ -50,9 +47,6 @@ export default {
     ClassificationView,
     AdditionalClassificationView,
     AppointmentView
-    // ReservationFormResource,
-    // ReservationFormPermission,
-    // ReservationFormAttributes
   },
 
   props: {
@@ -63,7 +57,7 @@ export default {
   },
 
   steps: [
-    // { id: 'attributes', icon: 'align-justify', component: ClassificationView },
+    { id: 'attributes', icon: 'align-justify', component: ClassificationView },
     { id: 'appointment', icon: 'calendar-alt', component: AppointmentView },
     // { id: 'permission', icon: 'lock', component: [ReservationFormPermission] },
     { id: 'moreAttributes', icon: 'info-circle', component: AdditionalClassificationView }
@@ -87,10 +81,14 @@ export default {
     },
 
     // Reservation
+    isPersistent() {
+      return this.$store.getters['reservationform/isNew']
+    },
+
     type: {
       get() { return this.$store.state.reservationform.type },
       set(newVal) {
-        if (this.$store.getters['reservationform/isNew']) {
+        if (this.isPersistent) {
           this.$store.dispatch('reservationform/create', newVal.id)
         } else {
           this.$store.commit('setType', newVal)
@@ -169,6 +167,6 @@ export default {
   }
 
   .card-content {
-    min-height: 43em;
+    min-height: 25em;
   }
 </style>
