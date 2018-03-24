@@ -1,23 +1,27 @@
 import GwtLocale from './GwtLocale'
 
-require('./gwtEvents.js')
-
-let api = null
-
 function setupGwtCallback(options) {
   window.rapla = {
     RaplaCallback: function() {
       this.gwtLoaded = (starter) => {
+        console.log('gwtloaded')
         let registerAction = () => {
+          console.log('registeraction')
           let loginToken = starter.getValidToken()
+          console.log(`loginToken: ${loginToken}`)
           if (loginToken != null) {
-            starter.registerApi(loginToken.getAccessToken()).thenAccept((_api) => {
-              api = _api
-              window.api = _api
-              options.apiAvailable()
-            }).exceptionally(e => {
-              console.error(e)
-            })
+            let accessToken = loginToken.getAccessToken()
+            console.log(`accessToken: ${accessToken}`)
+            let p = starter.registerApi(accessToken)
+            console.log(p)
+            p
+              .thenAccept((_api) => {
+                console.log('registerapi')
+                window.api = _api
+                options.apiAvailable()
+              }).exceptionally(e => {
+                console.error(e)
+              })
           } else {
             window.location = '../rapla/login?url=' + window.location
           }
@@ -32,19 +36,12 @@ function setupGwtCallback(options) {
 
 export default {
   install(Vue, options) {
-    if (options.standaloneMode) {
-      console.debug('starting Vue Client in Standalone Mode')
-      Vue.use(GwtLocale.Plugin, { api })
-      options.onLoad()
-    } else {
-      console.debug('starting Vue Client in GWT Mode')
-      console.debug('installing Vue RaplaGwtPlugin')
-      setupGwtCallback({
-        apiAvailable() {
-          Vue.use(GwtLocale.Plugin, { api })
-          options.onLoad()
-        }
-      })
-    }
+    console.debug('installing Vue RaplaGwtPlugin')
+    setupGwtCallback({
+      apiAvailable() {
+        Vue.use(GwtLocale.Plugin, { api: window.api })
+        options.onLoad()
+      }
+    })
   }
 }

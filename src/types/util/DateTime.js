@@ -28,9 +28,6 @@ export default class DateTime {
   }
 
   static toMoment(datetime) {
-    if (!datetime) {
-      return
-    }
     return moment.utc(moment({
       years: datetime.years,
       months: datetime.months - 1,
@@ -89,7 +86,22 @@ export default class DateTime {
 }
 
 const sameDay = function(one, other) {
-  return one.year === other.year && one.months === other.months && one.date === other.date
+  return one.years === other.years && one.months === other.months && one.date === other.date
 }
 
-export { sameDay }
+const _MS_PER_DAY = 1000 * 60 * 60 * 24
+const daysDifference = function(minor, major) {
+  const a = DateTime.toJs(minor)
+  const b = DateTime.toJs(major)
+  var utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate())
+  var utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate())
+  return Math.floor((utc2 - utc1) / _MS_PER_DAY)
+}
+
+const tomorrow = function(today) {
+  console.log(today)
+  let tomorrow = DateTime.toMoment(today)
+  return tomorrow
+}
+
+export { sameDay, daysDifference, tomorrow }

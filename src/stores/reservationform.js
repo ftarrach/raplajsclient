@@ -1,7 +1,6 @@
 import Appointment from '@/types/Appointment'
 import Reservation from '@/types/Reservation'
-import Repeating from '@/types/Repeating'
-import DateTime from '@/types/util/DateTime'
+import DateTime, { tomorrow } from '@/types/util/DateTime'
 
 let gwtReservation = null
 
@@ -46,7 +45,6 @@ const reservationform = {
     },
     /** payload: {id: appointmentId, prop: nameOfChangedProperty, value: newValue} */
     updateAppointmentValue(state, payload) {
-      // REVIEW: where are the setters in an appointment?
       // gwtReservation.getAppointments().find(a => a.getId() === payload.id)
       window.reservation = gwtReservation
       state.appointments.find(a => a.id === payload.id)[payload.prop] = payload.value
@@ -68,9 +66,11 @@ const reservationform = {
       let appointment = state.appointments.find(a => a.id === payload.id)
       if (payload.value === null) {
         appointment.repeating = null
+        // TODO: gwtAppointment.setRepeatingEnabled(false)
       } else {
         if (!appointment.repeating) {
-          appointment.repeating = Repeating.create(appointment)
+          // TODO: gwtAppointment.setRepeatingEnabled(true)
+          // appointment.repeating = gwtAppointment.getRepeating()
         }
         appointment.repeating.type = payload.value
       }
@@ -81,14 +81,36 @@ const reservationform = {
     delete(state) {
       // TODO: after dialogs are implemented, remove message and uncomment code. Pass PopupContext instead of null
       console.error('delete reservation code is implemented, but won\'t work until dialogs are implemented')
-      // api.getReservationController().deleteReservations(
-      //   api.asSet([state.gwtReservation]), null
-      // ).thenRun(() => console.log('hi'))
-      //  .exceptionally(console.error)
+      api.getReservationController().deleteReservations(
+        api.asSet([state.gwtReservation]), null
+      ).thenRun(() => console.log('hi'))
+        .exceptionally(console.error)
     },
 
     addAppointment(state, payload) {
       state.appointments.push(payload)
+    },
+
+    /** payload: {id: appointmentid, value: new endtimetype} */
+    setEndtimeType(state, payload) {
+      let appointment = state.appointments.find(a => a.id === payload.id)
+      // TODO: send to gwt
+      switch (payload.value) {
+        case 'same-day':
+          appointment.end.years = appointment.repeating.start.years
+          appointment.end.months = appointment.repeating.start.months
+          appointment.end.date = appointment.repeating.start.date
+          break
+        case 'next-day':
+        case 'x-day':
+          const { nYear, nMonth, nDate } = tomorrow(appointment.start)
+          appointment.end.years = nYear
+          appointment.end.months = nMonth
+          appointment.end.date = nDate
+          break
+        default:
+          console.error(`unknown endtimetype: ${payload}`)
+      }
     }
   },
 
@@ -132,8 +154,13 @@ const reservationform = {
         .thenApply(dialog => {
           console.log(dialog)
           alert('hi')
+          raplaVue.$emit('gwt-dialog-close')
+          raplaVue.$router.go(-1)
         })
-        .exceptionally(console.error)
+        .exceptionally(
+          raplaVue.$emit('gwt-dialog-close')
+          // TODO: (Hr. Kohlhaas): auf abort prüfen
+        )
     },
 
     delete({commit}) {

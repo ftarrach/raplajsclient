@@ -43,7 +43,7 @@
 
 <script>
 
-import DateTime from '@/types/util/DateTime'
+import DateTime, { sameDay, daysDifference } from '@/types/util/DateTime'
 import WeekdayChooser from '@/components/widgets/WeekdayChooser'
 import AppointmentEndtimeDayChooser from '@/components/widgets/AppointmentEndtimeDayChooser'
 import AppointmentEndtimeDateChooser from '@/components/widgets/AppointmentEndtimeDateChooser'
@@ -162,12 +162,21 @@ export default {
     // TODO: implement it
     endtimetype: {
       get() {
-        return 'same-day'
+        if (sameDay(this.start, this.end)) {
+          return 'same-day'
+        }
+        const diff = daysDifference(this.appointment.start, this.appointment.end)
+        console.log(diff)
+        return diff === 1 ? 'next-day' : 'x-day'
         // same-day: uhrzeit bezieht sich auf selben Tag
         // next-day: uhrzeit bezieht sich auf nächsten Tag
         // x-day: uhrzeit bezieht sich auf nächsten x-ten tag
       },
       set(newVal) {
+        this.$store.commit('reservationform/setEndtimeType', {
+          id: this.id,
+          value: newVal
+        })
       }
     },
 

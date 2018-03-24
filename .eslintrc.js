@@ -10,7 +10,9 @@ module.exports = {
     browser: true,
   },
   globals: {
-    "api": true
+    "api": true,
+    "java": true,
+    "raplaVue": true
   },
   // https://github.com/standard/standard/blob/master/docs/RULES-en.md
   extends: 'standard',

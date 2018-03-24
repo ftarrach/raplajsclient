@@ -4,10 +4,12 @@
     .modal-card
       header.modal-card-head
         p.modal-card-title {{ title }}
-        button.delete(@click="closeDialog")
-      section.modal-card-body {{ text }}
+        button.delete(@click="requestClose")
+      section.modal-card-body
+        fa-icon(v-if="faIcon" :icon="faIcon")
+        span {{ text }}
       footer.modal-card-foot
-        button.button(v-for="(button, index) in options"
+        button.button(v-for="(button, index) in buttons"
                       @click="selected(index)")
           | {{ button }}
 </template>
@@ -22,7 +24,8 @@ export default {
       open: false,
       title: '',
       text: '',
-      options: []
+      icon: '',
+      buttons: []
     }
   },
 
@@ -31,24 +34,37 @@ export default {
     this.$root.$on('gwt-dialog-close', this.closeDialog)
   },
 
+  computed: {
+    faIcon() {
+      switch (this.icon) {
+        // TODO: id => font awesome icon here
+        default: return null
+      }
+    }
+  },
+
   methods: {
-    openDialog(vueDialogInterface) {
-      console.log(vueDialogInterface)
-      this.title = vueDialogInterface.getTitle()
-      const content = vueDialogInterface.getContent()
-      console.log(content)
+    openDialog(vueDialog) {
+      this.title = vueDialog.getTitle()
+      const content = vueDialog.getContent()
       if (content.getDialogType() === 'Text') {
         this.text = content.getWarnings().join('\n')
       }
-      this.$options.gwtPromise = vueDialogInterface.getPromise()
+      this.buttons = vueDialog.getButtonStrings()
+      this.$options.gwtPromise = vueDialog.getPromise()
       this.open = true
     },
+
+    requestClose() {
+      this.$options.gwtPromise.complete(api.toInteger(-1))
+    },
+
     closeDialog() {
-      // this.$options.gwtPromise.complete(-1)
       this.open = false
     },
+
     selected(index) {
-      this.$options.di.onChoose(index)
+      this.$options.gwtPromise.complete(api.toInteger(index))
     }
   }
 
