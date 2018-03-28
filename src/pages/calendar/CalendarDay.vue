@@ -1,32 +1,23 @@
 <template lang="pug">
-  //-.container.calendar-day
+  .container.calendar-day
     date-and-calendar-chooser(step="day")
     .flex
-      calendar-day-legend
-      div
-      calendar-day-view(:date="day" :reservations="reservations")
+      calendar-legend
+      day-appointments
 </template>
 
 <script>
-import CalendarDayLegend from '@/components/calendar/calendarview/CalendarDayLegend'
-import CalendarDayView from '@/components/calendar/calendarview/CalendarDayView'
+import CalendarLegend from '@/components/calendar/CalendarLegend'
+import DayAppointments from '@/components/calendar/DayAppointments'
 import DateAndCalendarChooser from '@/components/widgets/DateAndCalendarChooser'
 
 export default {
   components: {
-    CalendarDayLegend,
-    CalendarDayView,
+    CalendarLegend,
+    DayAppointments,
     DateAndCalendarChooser
-  },
-
-  computed: {
-  //   day() {
-  //     return this.$store.state.user.date
-  //   },
-  //   reservations() {
-  //     return this.$store.getters.reservationsOnDate
-  //   }
   }
+
 }
 </script>
 

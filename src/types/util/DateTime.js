@@ -99,9 +99,7 @@ const daysDifference = function(minor, major) {
 }
 
 const tomorrow = function(today) {
-  console.log(today)
-  let tomorrow = DateTime.toMoment(today)
-  return tomorrow
+  return DateTime.fromMoment(DateTime.toMoment(today).add(1, 'day'))
 }
 
 export { sameDay, daysDifference, tomorrow }

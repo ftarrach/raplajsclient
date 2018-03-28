@@ -22,7 +22,7 @@ class Appointment {
       Repeating.fromGwt(gwtAppointment.getRepeating()),
       gwtAppointment.isWholeDaysSet(),
       gwtAppointment.getReservation().getId(),
-      gwtAppointment.getReservation().getAllocatablesFor(gwtAppointment).map(a => a.getId())
+      api.streamToArray(gwtAppointment.getReservation().getAllocatablesFor(gwtAppointment)).map(a => a.getId())
     )
   }
 }

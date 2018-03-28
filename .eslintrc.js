@@ -12,7 +12,8 @@ module.exports = {
   globals: {
     "api": true,
     "java": true,
-    "raplaVue": true
+    "raplaVue": true,
+    "openErrorDialog": true
   },
   // https://github.com/standard/standard/blob/master/docs/RULES-en.md
   extends: 'standard',

@@ -1,6 +1,6 @@
 <template lang="pug">
   .container.date-and-calendar-chooser
-    //- .columns
+    .columns
       .column
         calendar-chooser(title='Kalender'
                          v-model='calendar')
@@ -38,10 +38,10 @@ export default {
   computed: {
     date: {
       get() {
-        // return this.$store.state.user.date
+        return this.$store.state.calendar.startDate
       },
       set(newValue) {
-        // return this.$store.commit('updateDate', newValue)
+        return this.$store.dispatch('calendar/setSelectedDate', newValue)
       }
     }
   }

@@ -1,5 +1,6 @@
 import DateTime from './util/DateTime'
 
+// FIXME: currently this class is nowhere needed
 class AppointmentBlock {
   constructor(name, start, end, resources, persons) {
     this.name = name
@@ -11,13 +12,15 @@ class AppointmentBlock {
 
   static fromGwt(gwtBlock) {
     const appointment = gwtBlock.getAppointment()
-    const allocatables = appointment.getReservation().getAllocatablesFor(appointment)
-
-    const [ resources, persons ] =
-      allocatables.reduce((acc, a) => {
-        acc[a.isPerson() ? 1 : 0].push(a.getName())
-        return acc
-      }, [[], []])
+    const { resources, persons } = [] // TODO: does not work, since getAllocatablesFor returns a Java Stream
+    // console.log(appointment.getReservation().getAllocatablesFor(appointment))
+    //    const allocatables = appointment.getReservation().getAllocatablesFor(appointment)
+    //
+    //    const [ resources, persons ] =
+    //      allocatables.reduce((acc, a) => {
+    //        acc[a.isPerson() ? 1 : 0].push(a.getName())
+    //        return acc
+    //      }, [[], []])
 
     return new AppointmentBlock(
       appointment.getReservation().getName(),

@@ -14,7 +14,6 @@ export default {
 
   props: {
     reservation: {
-      // NOTE: type reservation[]
       required: true
     },
     isNew: {
@@ -30,17 +29,19 @@ export default {
         return this.reservation.persons.map(p => p.name)
       }
     },
+
     resources() {
       if (this.reservation.resources) {
         return this.reservation.resources.map(r => r.name)
       }
     },
+
     time() {
       if (this.reservation.begin) {
-        let locale = this.$rapla.locale
-        return `${locale.formatTime(this.reservation.begin)} - ${locale.formatTime(this.reservation.end)}`
+        return `${this.$store.getters['locale/formatTime'](this.reservation.begin)} - ${this.$store.getters['locale/formatTime'](this.reservation.end)}`
       }
     },
+
     style() {
       if (this.reservation.begin) {
         let start = this.reservation.begin.hours + this.reservation.begin.minutes / 60

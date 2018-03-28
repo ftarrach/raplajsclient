@@ -12,6 +12,7 @@ import BDrilldownContainer from '@/ui/BDrilldownContainer'
 import BSpinner from '@/ui/BSpinner'
 import BTimepicker from '@/ui/BTimepicker'
 import FaIcon from '@/ui/FaIcon'
+import BLabel from '@/ui/BLabel'
 
 const components = {
   BButton,
@@ -27,7 +28,8 @@ const components = {
   BDrilldownContainer,
   BSpinner,
   BTimepicker,
-  FaIcon
+  FaIcon,
+  BLabel
 }
 
 const plugin = {

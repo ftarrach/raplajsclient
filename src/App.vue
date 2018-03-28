@@ -3,20 +3,20 @@
     the-header
     router-view.maincontent
     rapla-dialog
+    error-dialog
 </template>
 
 <script>
 
-// TODO: externalize modal component
-// THINK: folder gwtComponents for Components which high gwt interactions like modal
-
 import TheHeader from './components/header/TheHeader'
-import RaplaDialog from './gwtcomponents/Dialog'
+import RaplaDialog from './dialogs/RaplaDialog'
+import ErrorDialog from './dialogs/ErrorDialog'
 
 export default {
   components: {
     TheHeader,
-    RaplaDialog
+    RaplaDialog,
+    ErrorDialog
   },
 
   created() {

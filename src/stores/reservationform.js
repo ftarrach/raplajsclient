@@ -8,6 +8,8 @@ const reservationform = {
   namespaced: true,
 
   state: {
+    persistent: {}, // state of the reservation in the Beginning of editing it
+
     type: {
       attributes: []
     },
@@ -21,12 +23,16 @@ const reservationform = {
   getters: {
     isNew: state => state.new,
     hasType: state => state.type && Boolean(state.type.id),
-    appointment: state => id => state.appointments.find(a => a.id === id)
+    appointment: state => id => state.appointments.find(a => a.id === id),
+    persistent: state => state.persistent
   },
 
   mutations: {
     reset(state, type) {
       Object.assign(state, JSON.parse(defaultState))
+    },
+    setPersistent(state, per) {
+      state.persistent = per
     },
     setType(state, type) {
       state.type = type
@@ -65,7 +71,6 @@ const reservationform = {
     setRepeatType(state, payload) {
       let appointment = state.appointments.find(a => a.id === payload.id)
       if (payload.value === null) {
-        appointment.repeating = null
         // TODO: gwtAppointment.setRepeatingEnabled(false)
       } else {
         if (!appointment.repeating) {
@@ -80,11 +85,10 @@ const reservationform = {
 
     delete(state) {
       // TODO: after dialogs are implemented, remove message and uncomment code. Pass PopupContext instead of null
-      console.error('delete reservation code is implemented, but won\'t work until dialogs are implemented')
       api.getReservationController().deleteReservations(
         api.asSet([state.gwtReservation]), null
       ).thenRun(() => console.log('hi'))
-        .exceptionally(console.error)
+        .exceptionally(openErrorDialog)
     },
 
     addAppointment(state, payload) {
@@ -122,11 +126,12 @@ const reservationform = {
 
     editReservation({commit}, reservation) {
       new Promise((resolve, reject) => {
-        api.getCalendarModel().queryBlocks(api.getCalendarModel().getTimeIntervall())
+        api.getCalendarModel().queryReservations(api.getCalendarModel().getTimeIntervall())
           .thenAccept(b => {
             gwtReservation = api.getFacade().edit(
-              api.toArray(b).find(b => b.getAppointment().getReservation().getId() === reservation.id).getAppointment().getReservation()
+              api.toArray(b).find(r => r.getId() === reservation.id)
             )
+            commit('setPersistent', JSON.parse(JSON.stringify(reservation)))
             commit('setType', reservation.type)
             commit('setClassifications', reservation.classifications)
             commit('setAppointments', reservation.appointments)
@@ -186,7 +191,7 @@ const reservationform = {
           gwtReservation.addAppointment(a)
           commit('addAppointment', Appointment.fromGwt(a))
         })
-        .exceptionally(console.error)
+        .exceptionally(openErrorDialog)
     },
 
     cloneAppointment({commit, getters}, existingAppointmentId) {
@@ -201,7 +206,7 @@ const reservationform = {
           gwtReservation.addAppointment(a)
           commit('addAppointment', Appointment.fromGwt(a))
         })
-        .exceptionally(console.error)
+        .exceptionally(openErrorDialog)
     }
   }
 }

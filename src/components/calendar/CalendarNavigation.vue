@@ -3,7 +3,7 @@
     nav.tabs.is-fullwidth.hero.is-link.is-boxed
       .container
         ul
-          li(v-for='element in elements') 
+          li(v-for='element in elements')
             router-link.navbar-item.is-tab(:to='{ name: element.route }'
                                            active-class="is-active"
                                            exact)

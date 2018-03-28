@@ -1,16 +1,14 @@
 <template lang="pug">
   .calendar-week
     date-and-calendar-chooser
-    calendar-week-view
+    p CalendarWeek
 </template>
 
 <script>
-import CalendarWeekView from '@/components/calendar/calendarview/CalendarWeekView'
 import DateAndCalendarChooser from '@/components/widgets/DateAndCalendarChooser'
 
 export default {
   components: {
-    CalendarWeekView,
     DateAndCalendarChooser
   }
 }

@@ -57,7 +57,7 @@ export default {
   },
 
   steps: [
-    // { id: 'attributes', icon: 'align-justify', component: ClassificationView },
+    { id: 'attributes', icon: 'align-justify', component: ClassificationView },
     { id: 'appointment', icon: 'calendar-alt', component: AppointmentView },
     // { id: 'permission', icon: 'lock', component: [ReservationFormPermission] },
     { id: 'moreAttributes', icon: 'info-circle', component: AdditionalClassificationView }
@@ -82,7 +82,7 @@ export default {
 
     // Reservation
     isPersistent() {
-      return this.$store.getters['reservationform/isNew']
+      return !this.$store.getters['reservationform/isNew']
     },
 
     type: {
@@ -91,7 +91,7 @@ export default {
         if (this.isPersistent) {
           this.$store.dispatch('reservationform/create', newVal.id)
         } else {
-          this.$store.commit('setType', newVal)
+          this.$store.commit('reservationform/setType', newVal)
         }
       }
     },
@@ -116,7 +116,7 @@ export default {
 
     persistent() {
       if (this.id) {
-        return this.$store.getters['calendar/reservation'](this.id)
+        return this.$store.getters['reservationform/persistent']
       } else {
         return null
       }

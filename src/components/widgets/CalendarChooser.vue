@@ -30,10 +30,12 @@ export default {
 
   computed: {
     calendars() {
-      return this.$store.getters['common/allCalendars']
+      let calendars = [...this.$store.getters['common/allCalendars']]
+      calendars.unshift('Default')
+      return calendars
     },
     selectedCalendarName() {
-      return this.value ? this.value : ''
+      return this.value ? this.value : 'Default'
     }
   },
 
@@ -65,6 +67,9 @@ export default {
     },
     choose(calendar) {
       this.open = false
+      if (calendar === 'Default') {
+        calendar = null
+      }
       this.$emit('input', calendar)
     },
     chooseFirst() {

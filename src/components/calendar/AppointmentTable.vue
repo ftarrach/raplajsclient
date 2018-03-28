@@ -34,26 +34,11 @@ export default {
   },
 
   created() {
-    this.$store.dispatch('calendar/loadAppointmentBlocks')
+    this.$store.dispatch('calendar/loadAppointmentTable')
       .then(blocks => {
         this.appointments = blocks
       })
-      .catch(console.error)
-  },
-
-  methods: {
-    findReservation(id) {
-      return this.$store.getters['calendar/reservation'](id)
-    },
-
-    findAllocatable(id) {
-      return this.$store.getters['facade/allocatable'](id)
-    },
-
-    list(allocatables) {
-      if (!allocatables) return ''
-      return allocatables.map(id => this.findAllocatable(id).name)
-    }
+      .catch(openErrorDialog)
   }
 }
 </script>

@@ -7,11 +7,13 @@
 
 <script>
 
+import DateTime from '@/types/util/DateTime'
+
 export default {
   props: {
     date: {
-      // type moment
-      required: true
+      required: true,
+      type: DateTime
     }
   },
   data() {
@@ -21,10 +23,10 @@ export default {
   },
   computed: {
     weekday() {
-      return this.date.format('dd')
+      return DateTime.toMoment(this.date).format('dd')
     },
     day() {
-      return this.date.format('DD')
+      return DateTime.toMoment(this.date).format('DD')
     }
   }
 }

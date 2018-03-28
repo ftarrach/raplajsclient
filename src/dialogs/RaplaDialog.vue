@@ -7,7 +7,7 @@
         button.delete(@click="requestClose")
       section.modal-card-body
         fa-icon(v-if="faIcon" :icon="faIcon")
-        span {{ text }}
+        div(ref="content")
       footer.modal-card-foot
         button.button(v-for="(button, index) in buttons"
                       @click="selected(index)")
@@ -15,7 +15,9 @@
 </template>
 
 <script>
-// TODO: this is a TextDialog. Name it accordingly
+
+import { createDynamic } from './RaplaDialogDynamic'
+
 export default {
   name: 'rapla-dialog',
 
@@ -23,7 +25,7 @@ export default {
     return {
       open: false,
       title: '',
-      text: '',
+      content: null,
       icon: '',
       buttons: []
     }
@@ -46,10 +48,8 @@ export default {
   methods: {
     openDialog(vueDialog) {
       this.title = vueDialog.getTitle()
-      const content = vueDialog.getContent()
-      if (content.getDialogType() === 'Text') {
-        this.text = content.getWarnings().join('\n')
-      }
+      let root = vueDialog.getContent()
+      this.$refs.content.appendChild(createDynamic(root).$el)
       this.buttons = vueDialog.getButtonStrings()
       this.$options.gwtPromise = vueDialog.getPromise()
       this.open = true

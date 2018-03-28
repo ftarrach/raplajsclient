@@ -25,24 +25,13 @@
     p.hour 23:00
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-
-    }
-  }
-}
-</script>
-
 <style scoped>
-  
   .rapla-calendar-legend {
     padding: 8.3em .5em 0 .25em;
     text-align: right;
     font-size: 0.75em;
   }
-  
+
   .hour {
     line-height: 4em;
   }

@@ -4,24 +4,17 @@ function setupGwtCallback(options) {
   window.rapla = {
     RaplaCallback: function() {
       this.gwtLoaded = (starter) => {
-        console.log('gwtloaded')
         let registerAction = () => {
-          console.log('registeraction')
           let loginToken = starter.getValidToken()
-          console.log(`loginToken: ${loginToken}`)
           if (loginToken != null) {
             let accessToken = loginToken.getAccessToken()
-            console.log(`accessToken: ${accessToken}`)
             let p = starter.registerApi(accessToken)
-            console.log(p)
-            p
-              .thenAccept((_api) => {
-                console.log('registerapi')
-                window.api = _api
-                options.apiAvailable()
-              }).exceptionally(e => {
-                console.error(e)
-              })
+            p.thenAccept((_api) => {
+              window.api = _api
+              options.apiAvailable()
+            }).exceptionally(e => {
+              console.error(e)
+            })
           } else {
             window.location = '../rapla/login?url=' + window.location
           }

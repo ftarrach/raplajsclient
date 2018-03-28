@@ -3,15 +3,14 @@
     table.table.is-hoverable.is-fullwidth
       thead
         tr
-          th {{ "name" | gwt-localize }}
-          th {{ "start_date" | gwt-localize }}
-          th.is-hidden-mobile {{ "last_changed" | gwt-localize }}
+          th(v-for="column in columns")
+            | {{ column.name }}
           th
       tbody
-        tr(v-for='event in events' @dblclick="edit(event)")
-          td {{ event.name }}
-          td {{ event.firstDate | gwt-formatDateTime }}
-          td.is-hidden-mobile {{ event.lastChange | gwt-formatDateTime }}
+        //- TODO: I need an id for a row
+        tr(v-for='(row, index) in rows' @dblclick="edit(index)")
+          td(v-for="(element) in row")
+            | {{ element }}
           td
             b-dropdown(is-right)
               b-dropdown-item(v-for="item in dropdownitems"
@@ -26,11 +25,14 @@
 
 export default {
 
-  computed: {
-    events() {
-      return this.$store.state.calendar.reservations
-    },
+  data() {
+    return {
+      columns: [],
+      rows: []
+    }
+  },
 
+  computed: {
     dropdownitems() {
       return [
         {
@@ -68,7 +70,16 @@ export default {
   },
 
   created() {
-    this.$store.dispatch('calendar/loadReservations')
+    this.$nextTick(() => {
+      this.$store.dispatch('calendar/loadReservations')
+        .then(result => {
+          console.log('reservations loaded')
+          this.columns = result.columns
+          this.rows = result.rows
+          this.$options.gwtObjects = result.gwtObjects
+        })
+        .catch(openErrorDialog)
+    })
   },
 
   methods: {
@@ -81,21 +92,15 @@ export default {
     },
 
     remove() {
-      // DEBUG: only for demonstration purposes
-      // eslint-disable-next-line
-      gwtEvents.dialogUiFactoryInterface
-        .create(null, null, 'Löschen', 'wirklich löschen?', ['Ja', 'Nein'])
-        .start()
-        .thenApply(function(resultInt) {
-          alert('user has chosen button nr ' + resultInt)
-        })
+      alert('todo') // TODO: implement me
     },
 
-    edit(event) {
+    edit(rowIndex) {
+      console.log(this.$options.gwtObjects)
       this.$router.push({
         name: 'EditReservation',
         params: {
-          id: event.id
+          id: this.$options.gwtObjects[rowIndex].getId()
         }
       })
     },
