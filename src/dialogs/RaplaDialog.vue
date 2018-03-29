@@ -7,7 +7,7 @@
         button.delete(@click="requestClose")
       section.modal-card-body
         fa-icon(v-if="faIcon" :icon="faIcon")
-        div(ref="content")
+        rapla-dialog-dynamic(ref="dyn")
       footer.modal-card-foot
         button.button(v-for="(button, index) in buttons"
                       @click="selected(index)")
@@ -16,16 +16,19 @@
 
 <script>
 
-import { createDynamic } from './RaplaDialogDynamic'
+import RaplaDialogDynamic from './RaplaDialogDynamic'
 
 export default {
   name: 'rapla-dialog',
+
+  components: {
+    RaplaDialogDynamic
+  },
 
   data() {
     return {
       open: false,
       title: '',
-      content: null,
       icon: '',
       buttons: []
     }
@@ -48,8 +51,8 @@ export default {
   methods: {
     openDialog(vueDialog) {
       this.title = vueDialog.getTitle()
-      let root = vueDialog.getContent()
-      this.$refs.content.appendChild(createDynamic(root).$el)
+      // this.$refs.content.appendChild(createDynamic(root).$el)
+      this.$refs.dyn.initialize(vueDialog.getContent())
       this.buttons = vueDialog.getButtonStrings()
       this.$options.gwtPromise = vueDialog.getPromise()
       this.open = true

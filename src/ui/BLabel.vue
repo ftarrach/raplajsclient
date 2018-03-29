@@ -1,5 +1,5 @@
 <template lang="pug">
-  p {{ text }}
+  p(:class="classes") {{ text }}
 </template>
 
 <script>
@@ -11,6 +11,17 @@ export default {
     text: {
       type: String,
       required: true
+    },
+
+    color: {
+      required: false,
+      default: () => null
+    }
+  },
+
+  computed: {
+    classes() {
+      return this.color
     }
   }
 

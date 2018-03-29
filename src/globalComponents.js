@@ -13,6 +13,7 @@ import BSpinner from '@/ui/BSpinner'
 import BTimepicker from '@/ui/BTimepicker'
 import FaIcon from '@/ui/FaIcon'
 import BLabel from '@/ui/BLabel'
+import VerticalFlex from '@/ui/VerticalFlex'
 
 const components = {
   BButton,
@@ -29,7 +30,8 @@ const components = {
   BSpinner,
   BTimepicker,
   FaIcon,
-  BLabel
+  BLabel,
+  VerticalFlex
 }
 
 const plugin = {
