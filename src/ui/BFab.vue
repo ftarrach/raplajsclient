@@ -1,5 +1,5 @@
 <template lang="pug">
-  button.button.floating-action-button(:class="classes" @click="onClick")
+  button.button.is-borderless.floating-action-button(:class="classes" @click="onClick")
     fa-icon(:icon="icon" small)
 </template>
 
@@ -43,16 +43,10 @@ export default {
   computed: {
     classes() {
       const classes = [
-        this.bulmaColor,
+        this.color,
         `is-${this.position}`
       ]
       return classes
-    },
-
-    bulmaColor() {
-      switch (this.color) {
-        case 'green': return 'is-success'
-      }
     },
 
     position() {
@@ -71,11 +65,16 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+  @import '../assets/sass/bulma.scss';
+
   button.floating-action-button {
     position: fixed;
     border-radius: 100%;
     width: 3em;
     height: 3em;
+    color: $white !important;
+    border: 0 !important;
 
     &.is-top-left {
       top: 4em;
@@ -96,5 +95,15 @@ export default {
       bottom: 2em;
       right: 2em;
     }
-}
+  }
+
+  .green { background: $green; }
+  .red { background: $red; }
+  .yellow { background: $yellow; }
+  .purple { background: $purple; }
+  .orange { background: $orange; }
+  .turquoise { background: $turquoise; }
+  .cyan { background: $cyan; }
+  .blue { background: $blue; }
+
 </style>

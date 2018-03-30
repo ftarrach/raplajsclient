@@ -1,8 +1,11 @@
 import Vue from 'vue'
 import BLabel from '@/ui/BLabel'
 
+const renderChildren = (children, createElement) => {
+  return children.map(g => renderDynamicComponent(g, createElement))
+}
+
 const renderDynamicComponent = (gwtVueComponent, createElement) => {
-  console.log(`uiae ${gwtVueComponent.name()}`)
   const component = Vue.component(gwtVueComponent.name())
   switch (gwtVueComponent.name()) {
     case 'BLabel':
@@ -16,7 +19,7 @@ const renderDynamicComponent = (gwtVueComponent, createElement) => {
       return createElement(component, {
         scopedSlots: {
           default(props) {
-            return gwtVueComponent.children().map(g => renderDynamicComponent(g, createElement))
+            return renderChildren(gwtVueComponent.children(), createElement)
           }
         }
       })
@@ -45,11 +48,7 @@ const RaplaDialogDynamic = {
       })
     }
     if (this.gwtComponent) {
-      console.log('gwt:')
-      console.log(this.gwtComponent)
-      let root = renderDynamicComponent(this.gwtComponent, createElement)
-      console.log(root)
-      return root
+      return renderDynamicComponent(this.gwtComponent, createElement)
     }
     return createElement('p')
   },

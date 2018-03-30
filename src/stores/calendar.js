@@ -63,27 +63,14 @@ const calendar = {
 
     loadAppointmentTable({getters}) {
       // TODO: implement me
-      // NEU
-      // api.getCalendarModel().load(null)
-      api.getCalendarModel().setViewId('table_appointments')
-      api.loadTableModel(api.getCalendarModel())
-        .thenAccept(table => {
-          console.log(table.getColumns().map(c => c.getColumnName()))
-          console.log(table.getColumnClass(0))
-          console.log(table.getAllRows())
-        })
-        .exceptionally(openErrorDialog)
-
-      // api.debug('load appointments')
-      // return new Promise((resolve, reject) => {
-      //   api.getCalendarModel().queryBlocks(api.getCalendarModel().getTimeIntervall())
-      //     .thenAccept(b => {
-      //       let blocks = api.toArray(b)
-      //       let parsed = blocks.map(b => AppointmentBlock.fromGwt(b))
-      //       resolve(parsed)
-      //     })
-      //     .exceptionally(reject)
-      // })
+      // api.getCalendarModel().setViewId('table_appointments')
+      // api.loadTableModel(api.getCalendarModel())
+      //   .thenAccept(table => {
+      //     console.log(table.getColumns().map(c => c.getColumnName()))
+      //     console.log(table.getColumnClass(0))
+      //     console.log(table.getAllRows())
+      //   })
+      //   .exceptionally(openErrorDialog)
     },
 
     loadReservations({commit}) {
@@ -96,19 +83,22 @@ const calendar = {
               name: c.getColumnName(),
               type: c.getType().name()
             }))
-            const rows = table.getAllRows().map(row => {
+            const rows = table.getAllRows().map((row, index) => {
               let n = Array(table.getColumnCount())
               row.forEach((val, c) => {
                 if (columns[c].type === 'DATE') {
-                  n[c] = (`${api.getRaplaLocale().getWeekday(val)} ${api.getRaplaLocale().formatDateLong(val)} ${api.getRaplaLocale().formatTime(val)}`)
+                  n[c] = `${api.getRaplaLocale().getWeekday(val)} ${api.getRaplaLocale().formatDateLong(val)} ${api.getRaplaLocale().formatTime(val)}`
                 } else {
                   n[c] = val
                 }
               })
-              return n
+              return {
+                id: table.getObjectAt(index).getId(),
+                data: n
+              }
             })
             const gwtObjects = [...Array(table.getRowCount()).keys()].map(i => table.getObjectAt(i))
-            console.log(gwtObjects)
+
             resolve({ columns, rows, gwtObjects })
           }).exceptionally(reject)
       })

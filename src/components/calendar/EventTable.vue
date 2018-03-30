@@ -3,22 +3,26 @@
     table.table.is-hoverable.is-fullwidth
       thead
         tr
+          th
           th(v-for="column in columns")
             | {{ column.name }}
           th
       tbody
         //- TODO: I need an id for a row
-        tr(v-for='(row, index) in rows' @dblclick="edit(index)")
-          td(v-for="(element) in row")
+        tr(v-for='(row, index) in rows' :class="{'selected': selectedIds.includes(row.id)}" :key="row.id")
+          td
+            input(type="checkbox" :value="row.id" v-model="selectedIds")
+          td(v-for="(element) in row.data" @dblclick="edit(index)")
             | {{ element }}
           td
-            b-dropdown(is-right)
+            //- b-dropdown(is-right v-show="selectedIds.length == 0")
               b-dropdown-item(v-for="item in dropdownitems"
                               :key="item.label"
                               :value="item.label"
                               :icon="item.icon"
                               @click="() => item.onClick(event)")
-    b-fab(icon="plus" @click="newReservation" bottom left)
+    b-fab(icon="plus" @click="create" bottom left)
+    b-fab(icon="bars" @click="openMenu" v-show="selectedIds.length > 0" color="orange" bottom right)
 </template>
 
 <script>
@@ -28,7 +32,8 @@ export default {
   data() {
     return {
       columns: [],
-      rows: []
+      rows: [],
+      selectedIds: []
     }
   },
 
@@ -83,8 +88,15 @@ export default {
   },
 
   methods: {
+
+    openMenu() {
+      api.getMenuFactory()
+    },
+
     create() {
-      alert('create')
+      this.$router.push({
+        name: 'NewReservation'
+      })
     },
 
     changeOwner() {
@@ -96,7 +108,6 @@ export default {
     },
 
     edit(rowIndex) {
-      console.log(this.$options.gwtObjects)
       this.$router.push({
         name: 'EditReservation',
         params: {
@@ -115,23 +126,29 @@ export default {
 
     cut() {
       alert('cut')
-    },
-
-    newReservation() {
-      this.$router.push({
-        name: 'NewReservation'
-      })
     }
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+
+  @import '../../assets/sass/bulma.scss';
+
   .table tbody tr {
     cursor: pointer
   }
 
   .table td {
     user-select: none;
+  }
+
+  .selected {
+    background: $cyan !important;
+    color: $white;
+
+    td {
+      border-color: darken($cyan, 10%);
+    }
   }
 </style>

@@ -2,11 +2,9 @@
   div
     .columns.is-gapless.is-mobile
       .column.is-2-mobile.is-2-tablet
-        a.button.is-fullwidth.is-success(@click="add")
-          fa-icon(icon="plus")
+        b-button(@click="add" fill icon="plus" no-text).is-success
       .column.is-2-mobile.is-2-tablet
-        a.button.is-fullwidth.is-danger(@click="remove")
-          fa-icon(icon="trash-alt")
+        b-button(@click="remove" fill icon="trash-alt" no-text).is-danger
       .column.is-8
         a.button.is-fullwidth {{ "appointment.search_free" | gwt-localize }}
     .columns.is-gapless
