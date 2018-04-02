@@ -8,21 +8,19 @@
             | {{ column.name }}
           th
       tbody
-        //- TODO: I need an id for a row
         tr(v-for='(row, index) in rows' :class="{'selected': selectedIds.includes(row.id)}" :key="row.id")
           td
             input(type="checkbox" :value="row.id" v-model="selectedIds")
           td(v-for="(element) in row.data" @dblclick="edit(index)")
             | {{ element }}
           td
-            //- b-dropdown(is-right v-show="selectedIds.length == 0")
-              b-dropdown-item(v-for="item in dropdownitems"
-                              :key="item.label"
-                              :value="item.label"
-                              :icon="item.icon"
-                              @click="() => item.onClick(event)")
-    b-fab(icon="plus" @click="create" bottom left)
-    b-fab(icon="bars" @click="openMenu" v-show="selectedIds.length > 0" color="orange" bottom right)
+    b-fab-menu(icon="bars"
+               color="orange"
+               bottom right
+               v-if="selectedIds.length > 0"
+               :items="menuItems"
+               @opened="menuOpened"
+               @selected="menuSelected")
 </template>
 
 <script>
@@ -33,7 +31,8 @@ export default {
     return {
       columns: [],
       rows: [],
-      selectedIds: []
+      selectedIds: [],
+      menuItems: []
     }
   },
 
@@ -76,7 +75,7 @@ export default {
 
   created() {
     this.$nextTick(() => {
-      this.$store.dispatch('calendar/loadReservations')
+      this.$store.dispatch('calendar/loadReservationTable')
         .then(result => {
           console.log('reservations loaded')
           this.columns = result.columns
@@ -89,44 +88,35 @@ export default {
 
   methods: {
 
-    openMenu() {
-      api.getMenuFactory()
+    menuOpened() {
+      const gwtReservations = this.selectedIds.map(id => this.$options.gwtObjects.find(r => r.getId() === id))
+      console.log('gwtReservations:')
+      const context = new org.rapla.client.menu.SelectionMenuContext(
+        null, // focused
+        null // popupcontext
+      )
+      context.setSelectedObjects(api.asSet(gwtReservations))
+      const menu = api.getMenuFactory().addObjectMenu(
+        new org.rapla.client.menu.gwt.VueMenu(),
+        context,
+        null
+      )
+      this.$options.currentMenu = menu
+      this.menuItems = menu.getItems().map(i => (
+        {
+          id: i.getId(),
+          label: i.getLabel(),
+          icon: i.getIcon(),
+          action: i.getAction()
+        }))
+      this.openMenu = true
     },
 
-    create() {
-      this.$router.push({
-        name: 'NewReservation'
-      })
-    },
-
-    changeOwner() {
-      alert('changeOwner')
-    },
-
-    remove() {
-      alert('todo') // TODO: implement me
-    },
-
-    edit(rowIndex) {
-      this.$router.push({
-        name: 'EditReservation',
-        params: {
-          id: this.$options.gwtObjects[rowIndex].getId()
-        }
-      })
-    },
-
-    show(event) {
-      alert('show')
-    },
-
-    copy() {
-      alert('copy')
-    },
-
-    cut() {
-      alert('cut')
+    menuSelected(selectedId) {
+      console.log(this.menuItems.find(i => i.id === selectedId))
+      this.menuItems.find(i => i.id === selectedId).action(null /* popupcontext */)
     }
+
   }
 }
 </script>

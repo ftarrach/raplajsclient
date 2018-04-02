@@ -1,5 +1,5 @@
 <template lang="pug">
-  button.button.is-borderless.floating-action-button(:class="classes" @click="onClick")
+  button.button.is-borderless.floating-action-button.fixed-corner(:class="classes" @click="onClick")
     fa-icon(:icon="icon" small)
 </template>
 
@@ -26,7 +26,7 @@ export default {
 
     bottom: {
       type: Boolean,
-      default: () => true
+      default: () => false
     },
 
     left: {
@@ -36,7 +36,7 @@ export default {
 
     right: {
       type: Boolean,
-      default: () => true
+      default: () => false
     }
   },
 
@@ -69,32 +69,11 @@ export default {
   @import '../assets/sass/bulma.scss';
 
   button.floating-action-button {
-    position: fixed;
     border-radius: 100%;
     width: 3em;
     height: 3em;
     color: $white !important;
     border: 0 !important;
-
-    &.is-top-left {
-      top: 4em;
-      left: 2em;
-    }
-
-    &.is-top-right {
-      top: 4em;
-      right: 2em;
-    }
-
-    &.is-bottom-left {
-      bottom: 2em;
-      left: 2em;
-    }
-
-    &.is-bottom-right {
-      bottom: 2em;
-      right: 2em;
-    }
   }
 
   .green { background: $green; }

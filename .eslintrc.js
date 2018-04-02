@@ -12,6 +12,7 @@ module.exports = {
   globals: {
     "api": true,
     "java": true,
+    "org": true,
     "raplaVue": true,
     "openErrorDialog": true
   },

@@ -157,15 +157,12 @@ const reservationform = {
       api.getReservationController()
         .saveReservation(null, gwtReservation)
         .thenApply(dialog => {
-          console.log(dialog)
-          alert('hi')
-          raplaVue.$emit('gwt-dialog-close')
-          raplaVue.$router.go(-1)
+          // console.log(dialog)
+          // alert('hi')
+          // raplaVue.$emit('gwt-dialog-close')
+          // raplaVue.$router.go(-1)
         })
-        .exceptionally(
-          raplaVue.$emit('gwt-dialog-close')
-          // TODO: (Hr. Kohlhaas): auf abort prüfen
-        )
+        .exceptionally(console.warn)
     },
 
     delete({commit}) {

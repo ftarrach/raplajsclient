@@ -59,7 +59,7 @@ export default {
     },
 
     requestClose() {
-      this.$options.gwtPromise.complete(api.toInteger(-1))
+      this.selected(-1)
     },
 
     closeDialog() {
@@ -67,6 +67,7 @@ export default {
     },
 
     selected(index) {
+      this.closeDialog()
       this.$options.gwtPromise.complete(api.toInteger(index))
     }
   }

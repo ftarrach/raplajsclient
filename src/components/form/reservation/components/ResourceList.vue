@@ -1,5 +1,5 @@
 <template lang="pug">
-  b-drilldown(:items="resources" :value="selectedResources")
+  b-drilldown(:items="resources" :value="selectedResources" nullable)
     b-drilldown-container(slot="node"
                           slot-scope="{ item, selected }"
                           :item="item"

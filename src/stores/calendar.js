@@ -73,7 +73,7 @@ const calendar = {
       //   .exceptionally(openErrorDialog)
     },
 
-    loadReservations({commit}) {
+    loadReservationTable({commit}) {
       api.debug('load reservations')
       return new Promise((resolve, reject) => {
         api.getCalendarModel().setViewId('table_events')
@@ -98,7 +98,6 @@ const calendar = {
               }
             })
             const gwtObjects = [...Array(table.getRowCount()).keys()].map(i => table.getObjectAt(i))
-
             resolve({ columns, rows, gwtObjects })
           }).exceptionally(reject)
       })

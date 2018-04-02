@@ -18,3 +18,24 @@
     height: 24em;
   }
 }
+
+.fixed-corner {
+  position: fixed;
+
+  &.is-top-left {
+    top: 4em;
+    left: 2em;
+  }
+  &.is-top-right {
+    top: 4em;
+    right: 2em;
+  }
+  &.is-bottom-left {
+    bottom: 2em;
+    left: 2em;
+  }
+  &.is-bottom-right {
+    bottom: 2em;
+    right: 2em;
+  }
+}

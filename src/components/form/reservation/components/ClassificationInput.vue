@@ -24,6 +24,7 @@
         b-drilldown(:items="drilldownCategories(attribute)"
                     :value="value"
                     selectable-container
+                    nullable
                     @input="fire($event)")
           b-drilldown-container(slot="node"
                                 slot-scope="{ item, selected }"

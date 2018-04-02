@@ -1,6 +1,6 @@
 <template lang="pug">
   .drilldown
-    .drilldown-menu
+    .drilldown-menu(v-show="!noMenu")
         span.path {{ readablePath }}
         .actions
           b-button(icon="home" no-text :disabled="notHome" @click="home")
@@ -11,7 +11,7 @@
           slot(name="node" :item="item" :selected="safeValue.includes(item.id)")
         span(v-else @click="clickOnItem(item)")
           slot(name="leaf" :item="item" :selected="safeValue.includes(item.id)")
-    .drilldown-menu2
+    .drilldown-footer(v-show="nullable")
       b-button(fill @click="setNull") {{ "nothing_selected" | gwt-localize }}
 </template>
 
@@ -27,10 +27,22 @@ export default {
       required: true
     },
 
+    noMenu: {
+      type: Boolean,
+      required: false,
+      default: () => false
+    },
+
     value: {
       type: Array, // Array of selected IDs
       required: false,
       default: () => []
+    },
+
+    nullable: {
+      type: Boolean,
+      required: false,
+      default: () => false
     },
 
     multiSelect: {
@@ -92,6 +104,7 @@ export default {
     },
 
     notHome() { return this.path.length === 0 },
+
     readablePath() {
       let level = this.items
       let path = ''
