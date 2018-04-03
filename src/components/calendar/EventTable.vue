@@ -89,31 +89,43 @@ export default {
   methods: {
 
     menuOpened() {
-      const gwtReservations = this.selectedIds.map(id => this.$options.gwtObjects.find(r => r.getId() === id))
-      console.log('gwtReservations:')
-      const context = new org.rapla.client.menu.SelectionMenuContext(
-        null, // focused
-        null // popupcontext
-      )
-      context.setSelectedObjects(api.asSet(gwtReservations))
-      const menu = api.getMenuFactory().addObjectMenu(
-        new org.rapla.client.menu.gwt.VueMenu(),
-        context,
-        null
-      )
-      this.$options.currentMenu = menu
-      this.menuItems = menu.getItems().map(i => (
-        {
-          id: i.getId(),
-          label: i.getLabel(),
-          icon: i.getIcon(),
-          action: i.getAction()
-        }))
+      const DEBUG = false
+      let menu = []
+      if (!DEBUG) {
+        const gwtReservations = this.selectedIds.map(id => this.$options.gwtObjects.find(r => r.getId() === id))
+        const focused = this.selectedIds.length === 1 ? this.selectedIds[0] : null
+        const context = new org.rapla.client.menu.SelectionMenuContext(
+          this.$options.gwtObjects[0], // focused
+          null // popupcontext
+        )
+        context.setSelectedObjects(api.asSet(gwtReservations))
+        menu = api.getMenuFactory().addObjectMenu(
+          new org.rapla.client.menu.gwt.VueMenu(),
+          context,
+          null // afterId
+        )
+        this.$options.currentMenu = menu
+      } else {
+        // DEBUG: calls api.testMenu() instead of real one
+        menu = api.testMenu()
+      }
+      this.menuItems = menu.getItems().map(i => {
+        if (i.getId().startsWith('SEPERATOR-')) {
+          return {seperator: true}
+        } else {
+          return {
+            id: i.getId(),
+            label: i.getLabel(),
+            icon: i.getIcon(),
+            action: i.getAction()
+          }
+        }
+      })
+      console.log(menu)
       this.openMenu = true
     },
 
     menuSelected(selectedId) {
-      console.log(this.menuItems.find(i => i.id === selectedId))
       this.menuItems.find(i => i.id === selectedId).action(null /* popupcontext */)
     }
 

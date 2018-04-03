@@ -4,9 +4,9 @@
     .fixed-corner(:class="classes" v-show="showMenu")
       .menu
         b-drilldown(:items="items" no-menu @input="selected")
-          b-drilldown-menu-item(slot="leaf"
-                                slot-scope="{ item }"
-                                :item="item")
+          div(slot="leaf" slot-scope="{ item }")
+            .seperator(v-if="item.seperator")
+            b-drilldown-menu-item(:item="item" v-else)
 </template>
 
 <script>
@@ -88,8 +88,10 @@ export default {
 
   methods: {
     toggleMenu() {
-      this.$emit('opened')
       this.showMenu = !this.showMenu
+      if (this.showMenu) {
+        this.$emit('opened')
+      }
     },
 
     selected(selectedId) {
@@ -120,6 +122,11 @@ export default {
   .menu .drilldown {
     min-width: 5em;
     background: white;
+  }
+
+  .seperator {
+    height: 0.05em;
+    background: #dbdbdb;
   }
 
 </style>
