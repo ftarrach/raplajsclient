@@ -3,7 +3,7 @@
     b-fab(@click.stop="toggleMenu" :icon="icon" :color="color" :top="top" :left="left" :bottom="bottom" :right="right")
     .fixed-corner(:class="classes" v-show="showMenu")
       .menu
-        b-drilldown(:items="items" no-menu @input="selected")
+        b-drilldown(:items="items" no-menu dynamic-height @input="selected")
           div(slot="leaf" slot-scope="{ item }")
             .seperator(v-if="item.seperator")
             b-drilldown-menu-item(:item="item" v-else)

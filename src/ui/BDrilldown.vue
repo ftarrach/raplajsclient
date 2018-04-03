@@ -1,5 +1,5 @@
 <template lang="pug">
-  .drilldown
+  .drilldown(:class="{'dynamic-height': this.dynamicHeight}")
     .drilldown-menu(v-show="!noMenu")
         span.path {{ readablePath }}
         .actions
@@ -52,6 +52,12 @@ export default {
     },
 
     selectableContainer: {
+      type: Boolean,
+      required: false,
+      default: () => false
+    },
+
+    dynamicHeight: {
       type: Boolean,
       required: false,
       default: () => false

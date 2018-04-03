@@ -12,7 +12,7 @@
 @import '~bulma-steps-component/bulma-steps';
 
 /* override variables here */
-.drilldown {
+.drilldown:not(.dynamic-height) {
   height: 16em;
   @include mobile {
     height: 24em;
