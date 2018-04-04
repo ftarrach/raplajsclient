@@ -51,7 +51,6 @@ export default {
   methods: {
     openDialog(vueDialog) {
       this.title = vueDialog.getTitle()
-      // this.$refs.content.appendChild(createDynamic(root).$el)
       this.$refs.dyn.initialize(vueDialog.getContent())
       this.buttons = vueDialog.getButtonStrings()
       this.$options.gwtPromise = vueDialog.getPromise()

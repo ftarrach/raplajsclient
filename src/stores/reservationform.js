@@ -157,9 +157,7 @@ const reservationform = {
       api.getReservationController()
         .saveReservation(null, gwtReservation)
         .thenApply(dialog => {
-          // console.log(dialog)
-          // alert('hi')
-          // raplaVue.$emit('gwt-dialog-close')
+          alert('reservationform.save(): not yet implemented')
           // raplaVue.$router.go(-1)
         })
         .exceptionally(console.warn)

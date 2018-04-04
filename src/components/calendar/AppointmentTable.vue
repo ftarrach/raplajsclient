@@ -22,6 +22,7 @@
 
 import JoinedList from '@/components/util/JoinedList'
 
+// TODO: remove me, EventTable => RaplaTable and use it
 export default {
   components: {
     JoinedList

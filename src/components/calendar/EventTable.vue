@@ -19,7 +19,7 @@
                bottom right
                v-if="selectedIds.length > 0"
                :items="menuItems"
-               @opened="menuOpened"
+               @opened="onMenuOpen"
                @selected="menuSelected")
 </template>
 
@@ -33,43 +33,6 @@ export default {
       rows: [],
       selectedIds: [],
       menuItems: []
-    }
-  },
-
-  computed: {
-    dropdownitems() {
-      return [
-        {
-          label: this.$store.getters['locale/localize']('new'),
-          icon: 'user',
-          onClick: this.create
-        },
-        {
-          label: this.$store.getters['locale/localize']('edit'),
-          icon: 'edit',
-          onClick: this.edit
-        },
-        {
-          label: this.$store.getters['locale/localize']('delete'),
-          icon: 'trash-alt',
-          onClick: this.remove
-        },
-        {
-          label: this.$store.getters['locale/localize']('view'),
-          icon: 'info-circle',
-          onClick: this.show
-        },
-        {
-          label: this.$store.getters['locale/localize']('copy'),
-          icon: 'clipboard',
-          onClick: this.copy
-        },
-        {
-          label: this.$store.getters['locale/localize']('cut'),
-          icon: 'cut',
-          onClick: this.cut
-        }
-      ]
     }
   },
 
@@ -88,27 +51,35 @@ export default {
 
   methods: {
 
-    menuOpened() {
+    onMenuOpen() {
       const DEBUG = false
       let menu = []
       if (!DEBUG) {
-        const gwtReservations = this.selectedIds.map(id => this.$options.gwtObjects.find(r => r.getId() === id))
-        const focused = this.selectedIds.length === 1 ? this.selectedIds[0] : null
-        const context = new org.rapla.client.menu.SelectionMenuContext(
-          this.$options.gwtObjects[0], // focused
-          null // popupcontext
-        )
-        context.setSelectedObjects(api.asSet(gwtReservations))
-        menu = api.getMenuFactory().addObjectMenu(
-          new org.rapla.client.menu.gwt.VueMenu(),
-          context,
-          null // afterId
-        )
+        menu = this.createMenuFromGwt()
         this.$options.currentMenu = menu
       } else {
-        // DEBUG: calls api.testMenu() instead of real one
-        menu = api.testMenu()
+        menu = api.testMenu() // DEBUG: calls api.testMenu() instead of real one
       }
+      this.showMenu()
+    },
+
+    createMenuFromGwt() {
+      const gwtReservations = this.selectedIds.map(id => this.$options.gwtObjects.find(r => r.getId() === id))
+      const context = new org.rapla.client.menu.SelectionMenuContext(
+        this.focusedGwtObject(),
+        null // popupcontext
+      )
+      context.setSelectedObjects(api.asSet(gwtReservations))
+      const menu = api.getMenuFactory().addObjectMenu(
+        new org.rapla.client.menu.gwt.VueMenu(),
+        context,
+        null // afterId
+      )
+      this.createMenuItemsFor(menu)
+      return menu
+    },
+
+    createMenuItemsFor(menu) {
       this.menuItems = menu.getItems().map(i => {
         if (i.getId().startsWith('SEPERATOR-')) {
           return {seperator: true}
@@ -120,13 +91,22 @@ export default {
             action: i.getAction()
           }
         }
+        // TODO: add submenues
       })
-      console.log(menu)
+    },
+
+    showMenu() {
       this.openMenu = true
     },
 
     menuSelected(selectedId) {
       this.menuItems.find(i => i.id === selectedId).action(null /* popupcontext */)
+    },
+
+    focusedGwtObject(id) {
+      return this.selectedIds.length === 1
+        ? this.$options.gwtObjects.find(i => i.getId() === this.selectedIds[0])
+        : null
     }
 
   }

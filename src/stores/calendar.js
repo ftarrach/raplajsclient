@@ -87,7 +87,7 @@ const calendar = {
               let n = Array(table.getColumnCount())
               row.forEach((val, c) => {
                 if (columns[c].type === 'DATE') {
-                  n[c] = `${api.getRaplaLocale().getWeekday(val)} ${api.getRaplaLocale().formatDateLong(val)} ${api.getRaplaLocale().formatTime(val)}`
+                  n[c] = `${api.getRaplaLocale().getWeekday(val)}. ${api.getRaplaLocale().formatDateLong(val)} ${api.getRaplaLocale().formatTime(val)}`
                 } else {
                   n[c] = val
                 }

@@ -17,6 +17,7 @@
 
 <script>
 // TODO: Split selected into selected and selectedChildren for containers
+// TODO: mayor cleanup needed here. Split drillldown core and drilldown-headier stuff
 export default {
 
   name: 'BDrilldown',
