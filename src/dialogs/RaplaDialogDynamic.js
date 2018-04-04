@@ -9,18 +9,23 @@ const renderDynamicComponent = (gwtVueComponent, createElement) => {
   const component = Vue.component(gwtVueComponent.name())
   switch (gwtVueComponent.name()) {
     case 'BLabel':
-      return createElement(component, {
-        props: {
-          text: gwtVueComponent.text(),
-          color: gwtVueComponent.color()
-        }
-      })
+      console.log(gwtVueComponent)
+      return createElement(component, {props: gwtVueComponent})
     case 'VerticalFlex':
+    case 'HorizontalFlex':
       return createElement(component, {
         scopedSlots: {
           default(props) {
             return renderChildren(gwtVueComponent.children(), createElement)
           }
+        }
+      })
+    case 'BList':
+      let it = gwtVueComponent.getItems().map(i => ({ id: i.getId(), label: i.getLabel() }))
+      return createElement(component, {
+        props: {
+          items: it,
+          value: []
         }
       })
   }
@@ -55,6 +60,8 @@ const RaplaDialogDynamic = {
 
   methods: {
     initialize(gwtVueComponent) {
+      console.log(`initialising dynamic dialog...`)
+      console.log(gwtVueComponent)
       try {
         this.gwtComponent = Object.freeze(gwtVueComponent)
       } catch (e) {

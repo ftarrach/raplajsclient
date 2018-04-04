@@ -69,12 +69,20 @@ export default {
         this.focusedGwtObject(),
         null // popupcontext
       )
+
       context.setSelectedObjects(api.asSet(gwtReservations))
-      const menu = api.getMenuFactory().addObjectMenu(
+      const menu = api.getMenuFactory().addReservationMenu(
         new org.rapla.client.menu.gwt.VueMenu(),
         context,
         null // afterId
       )
+      api.getMenuFactory().addObjectMenu(
+        menu,
+        context,
+        null // afterId
+      )
+
+      console.log(menu)
       this.createMenuItemsFor(menu)
       return menu
     },

@@ -7,6 +7,9 @@
           div(slot="leaf" slot-scope="{ item }")
             .seperator(v-if="item.seperator")
             b-drilldown-menu-item(:item="item" v-else)
+          b-drilldown-container(slot="node"
+                                slot-scope="{ item }"
+                                :item="item")
 </template>
 
 <script>
