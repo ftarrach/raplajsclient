@@ -18,12 +18,15 @@
                color="orange"
                bottom right
                v-if="selectedIds.length > 0"
+               ref="menu"
                :items="menuItems"
                @opened="onMenuOpen"
                @selected="menuSelected")
 </template>
 
 <script>
+
+import uuid from 'uuid/v4'
 
 export default {
 
@@ -71,8 +74,9 @@ export default {
       )
 
       context.setSelectedObjects(api.asSet(gwtReservations))
-      const menu = api.getMenuFactory().addReservationMenu(
-        new org.rapla.client.menu.gwt.VueMenu(),
+      const menu = new org.rapla.client.menu.gwt.VueMenu()
+      api.getMenuFactory().addReservationMenu(
+        menu,
         context,
         null // afterId
       )
@@ -81,26 +85,46 @@ export default {
         context,
         null // afterId
       )
-
       console.log(menu)
-      this.createMenuItemsFor(menu)
+      this.menuItems = this.createMenuItemsFor(menu)
       return menu
     },
 
     createMenuItemsFor(menu) {
-      this.menuItems = menu.getItems().map(i => {
-        if (i.getId().startsWith('SEPERATOR-')) {
-          return {seperator: true}
-        } else {
+      return menu.getItems().map(i => {
+        const id = i.getId()
+        if (id == null) {
+          const backelement = this.createMenuItem(
+            '--BACK--' + uuid(),
+            this.$store.getters['locale/localize']('back'),
+            '',
+            () => this.$refs.menu.back()
+          )
+          backelement.isBack = true
           return {
-            id: i.getId(),
             label: i.getLabel(),
             icon: i.getIcon(),
-            action: i.getAction()
+            children: [
+              backelement, ...this.createMenuItemsFor(i)
+            ]
           }
+        } else if (id.startsWith('SEPERATOR-')) {
+          return {
+            seperator: true
+          }
+        } else {
+          return this.createMenuItem(
+            id,
+            i.getLabel(),
+            i.getIcon(),
+            () => i.fireAction()
+          )
         }
-        // TODO: add submenues
       })
+    },
+
+    createMenuItem(id, label, icon, action) {
+      return { id, label, icon, action }
     },
 
     showMenu() {
@@ -108,7 +132,21 @@ export default {
     },
 
     menuSelected(selectedId) {
-      this.menuItems.find(i => i.id === selectedId).action(null /* popupcontext */)
+      this.findMenuItem(selectedId, this.menuItems).action()
+    },
+
+    findMenuItem(id, menu) {
+      for (let item of menu) {
+        if (item.id && item.id === id) {
+          return item
+        } else if (item.children) {
+          const result = this.findMenuItem(id, item.children)
+          if (result) {
+            return result
+          }
+        }
+      }
+      return false
     },
 
     focusedGwtObject(id) {

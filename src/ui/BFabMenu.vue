@@ -3,13 +3,11 @@
     b-fab(@click.stop="toggleMenu" :icon="icon" :color="color" :top="top" :left="left" :bottom="bottom" :right="right")
     .fixed-corner(:class="classes" v-show="showMenu")
       .menu
-        b-drilldown(:items="items" no-menu dynamic-height @input="selected")
+        b-drilldown(ref="drilldown" :items="items" @input="selected" no-menu dynamic-height)
           div(slot="leaf" slot-scope="{ item }")
             .seperator(v-if="item.seperator")
             b-drilldown-menu-item(:item="item" v-else)
-          b-drilldown-container(slot="node"
-                                slot-scope="{ item }"
-                                :item="item")
+          b-drilldown-container(slot="node" slot-scope="{ item }" :item="item")
 </template>
 
 <script>
@@ -66,14 +64,6 @@ export default {
     }
   },
 
-  created() {
-    document.addEventListener('click', this.clickedOutside)
-  },
-
-  beforeDestroy() {
-    document.removeEventListener('click', this.clickedOutside)
-  },
-
   computed: {
     classes() {
       const classes = [
@@ -93,17 +83,28 @@ export default {
     toggleMenu() {
       this.showMenu = !this.showMenu
       if (this.showMenu) {
+        document.addEventListener('click', this.clickedOutside)
         this.$emit('opened')
       }
     },
 
-    selected(selectedId) {
-      this.$emit('selected', selectedId[0])
+    hideMenu() {
       this.showMenu = false
+      document.removeEventListener('click', this.clickedOutside)
+    },
+
+    back() { this.$refs.drilldown.back() },
+
+    selected(selectedId) {
+      selectedId = selectedId[0]
+      this.$emit('selected', selectedId)
+      if (!selectedId.startsWith('--BACK--')) {
+        this.hideMenu()
+      }
     },
 
     clickedOutside() {
-      this.showMenu = false
+      this.hideMenu()
     }
   }
 

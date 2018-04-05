@@ -122,8 +122,6 @@ export default {
         ]
       }).reduce((acc, arr) => { acc.push(...arr); return acc }, [])
     }
-
   }
-
 }
 </script>

@@ -1,18 +1,18 @@
 <template lang="pug">
   .drilldown(:class="{'dynamic-height': this.dynamicHeight}")
-    .drilldown-menu(v-show="!noMenu")
+    .drilldown-menu(v-if="!noMenu")
         span.path {{ readablePath }}
         .actions
-          b-button(icon="home" no-text :disabled="notHome" @click="home")
-          b-button(icon="arrow-left" no-text :disabled="notHome" @click="back")
+          b-button(icon="home" no-text :disabled="notHome" @click.stop="home")
+          b-button(icon="arrow-left" no-text :disabled="notHome" @click.stop="back")
     ul.drilldown-list
       li.drilldown-list-item(v-for="item in itemsForPath" :key="item.id")
-        span(v-if="item.children" @click="clickOnContainer(item)")
+        span(v-if="item.children" @click.stop="clickOnContainer(item)")
           slot(name="node" :item="item" :selected="safeValue.includes(item.id)")
-        span(v-else @click="clickOnItem(item)")
+        span(v-else @click.stop="clickOnItem(item)")
           slot(name="leaf" :item="item" :selected="safeValue.includes(item.id)")
     .drilldown-footer(v-show="nullable")
-      b-button(fill @click="setNull") {{ "nothing_selected" | gwt-localize }}
+      b-button(fill @click.stop="setNull") {{ "nothing_selected" | gwt-localize }}
 </template>
 
 <script>

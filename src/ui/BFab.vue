@@ -1,5 +1,5 @@
 <template lang="pug">
-  button.button.is-borderless.floating-action-button.fixed-corner(:class="classes" @click="onClick")
+  button.button.is-borderless.floating-action-button.fixed-corner(:class="classes" @click.stop="onClick")
     fa-icon(:icon="icon" small)
 </template>
 
