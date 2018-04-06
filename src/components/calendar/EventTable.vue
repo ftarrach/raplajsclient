@@ -85,7 +85,6 @@ export default {
         context,
         null // afterId
       )
-      console.log(menu)
       this.menuItems = this.createMenuItemsFor(menu)
       return menu
     },
@@ -96,7 +95,7 @@ export default {
         if (id == null) {
           const backelement = this.createMenuItem(
             '--BACK--' + uuid(),
-            this.$store.getters['locale/localize']('back'),
+            `\u25C0 ${this.$store.getters['locale/localize']('back')}`,
             '',
             () => this.$refs.menu.back()
           )

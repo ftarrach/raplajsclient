@@ -9,6 +9,7 @@ import BDrilldown from '@/ui/BDrilldown'
 import BDrilldownItem from '@/ui/BDrilldownItem'
 import BDrilldownContainer from '@/ui/BDrilldownContainer'
 import BDrilldownMenuItem from '@/ui/BDrilldownMenuItem'
+import BDrilldownMenuContainer from '@/ui/BDrilldownMenuContainer'
 import BSpinner from '@/ui/BSpinner'
 import BTimepicker from '@/ui/BTimepicker'
 import FaIcon from '@/ui/FaIcon'
@@ -30,6 +31,7 @@ const components = {
   BDrilldownItem,
   BDrilldownContainer,
   BDrilldownMenuItem,
+  BDrilldownMenuContainer,
   BList,
   BListItem,
   BSpinner,
