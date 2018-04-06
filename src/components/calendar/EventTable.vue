@@ -117,7 +117,7 @@ export default {
             id,
             i.getLabel(),
             i.getIcon(),
-            () => i.fireAction()
+            () => i.onSelect ? i.onSelect() : {}
           )
         }
       })

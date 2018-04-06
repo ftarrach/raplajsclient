@@ -9,8 +9,14 @@ const renderDynamicComponent = (gwtVueComponent, createElement) => {
   const component = Vue.component(gwtVueComponent.name())
   switch (gwtVueComponent.name()) {
     case 'BLabel':
-      console.log(gwtVueComponent)
       return createElement(component, {props: gwtVueComponent})
+    case 'BButton':
+      return createElement(component, {
+        props: gwtVueComponent,
+        on: {
+          click: () => gwtVueComponent.onSelect()
+        }
+      })
     case 'VerticalFlex':
     case 'HorizontalFlex':
       return createElement(component, {
