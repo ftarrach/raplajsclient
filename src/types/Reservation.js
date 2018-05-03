@@ -1,15 +1,15 @@
 import Classification from './Classification'
 import Allocatable from './Allocatable'
-import DateTime from './util/DateTime'
+import DateTime from './DateTime'
 import Appointment from './Appointment'
 import DynamicType from './DynamicType'
 
 class Reservation {
-  constructor(id, name, type, classifications, allocatables, appointments, permissions, createDate, lastChange, firstDate) {
+  constructor(id, name, type, classification, allocatables, appointments, permissions, createDate, lastChange, firstDate) {
     this.id = id
     this.name = name
     this.type = type
-    this.classifications = classifications
+    this.classification = classification
     this.allocatables = allocatables
     this.appointments = appointments
     this.permissions = permissions
@@ -27,9 +27,9 @@ class Reservation {
       gwtReservation.getAllocatables().map(Allocatable.fromGwt),
       api.toArray(gwtReservation.getSortedAppointments()).map(Appointment.fromGwt),
       [ /* TODO: permissions (current: Collection, array needed) */ ],
-      DateTime.fromGwtDate(gwtReservation.getCreateDate()),
-      DateTime.fromGwtDate(gwtReservation.getLastChanged()),
-      DateTime.fromGwtDate(gwtReservation.getFirstDate())
+      DateTime.createFromGwtDate(gwtReservation.getCreateDate()),
+      DateTime.createFromGwtDate(gwtReservation.getLastChanged()),
+      DateTime.createFromGwtDate(gwtReservation.getFirstDate())
     )
   }
 }

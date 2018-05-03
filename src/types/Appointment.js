@@ -1,5 +1,5 @@
-import DateTime from './util/DateTime'
 import Repeating from './Repeating'
+import DateTime from './DateTime'
 
 class Appointment {
   constructor(id, start, end, maxEnd, repeating, isWholeDay, reservationId, allocatables) {
@@ -16,9 +16,9 @@ class Appointment {
   static fromGwt(gwtAppointment) {
     return new Appointment(
       gwtAppointment.getId(),
-      DateTime.fromGwtDate(gwtAppointment.getStart()),
-      DateTime.fromGwtDate(gwtAppointment.getEnd()),
-      DateTime.fromGwtDate(gwtAppointment.getMaxEnd()),
+      DateTime.createFromGwtDate(gwtAppointment.getStart()),
+      DateTime.createFromGwtDate(gwtAppointment.getEnd()),
+      DateTime.createFromGwtDate(gwtAppointment.getMaxEnd()),
       Repeating.fromGwt(gwtAppointment.getRepeating()),
       gwtAppointment.isWholeDaysSet(),
       gwtAppointment.getReservation().getId(),

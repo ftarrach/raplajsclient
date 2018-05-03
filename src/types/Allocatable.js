@@ -1,5 +1,5 @@
 import Classification from './Classification'
-import DateTime from './util/DateTime'
+import DateTime from './DateTime'
 
 class Allocatable {
   constructor(id, name, isPerson, classification, createDate, lastChanged, lastChangedBy, permissions) {
@@ -19,8 +19,8 @@ class Allocatable {
       gwtAllocatable.getName(),
       gwtAllocatable.isPerson(),
       Classification.fromGwt(gwtAllocatable.getClassification()),
-      DateTime.fromGwtDate(gwtAllocatable.getCreateDate()),
-      DateTime.fromGwtDate(gwtAllocatable.getLastChanged()),
+      DateTime.createFromGwtDate(gwtAllocatable.getCreateDate()),
+      DateTime.createFromGwtDate(gwtAllocatable.getLastChanged()),
       [ /* TODO: permissions */ ]
     )
   }

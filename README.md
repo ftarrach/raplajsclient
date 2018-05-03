@@ -1,40 +1,27 @@
-# raplajs
+# raplajs-vuetify
 
-> A Web Interface for the Rapla Event Manager
-
-__Work in progress__
+> A Vue.js project
 
 ## Build Setup
 
-Download and install NodeJS from <a href="https://nodejs.org/en/">https://nodejs.org/en/</a>
-
-then run:
-
 ``` bash
-# installs the yarn dependency management
-npm install -g yarn
-
-# navigate to your cloned repository
-cd .../raplajsclient
-
 # install dependencies
-yarn install
+npm install
 
-# run the dev server
-yarn run dev
+# serve with hot reload at localhost:8080
+npm run dev
 
-# build the site for production usage
-yarn build
+# build for production with minification
+npm run build
 
 # build for production and view the bundle analyzer report
-yarn run build --report
+npm run build --report
 
-# run unit tests (not included yet)
-yarn run unit
+# run unit tests
+npm run unit
 
-# run e2e tests (not included yet)
-yarn run e2e
-
-# run all tests (not included yet)
-yarn test
+# run all tests
+npm test
 ```
+
+For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

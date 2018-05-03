@@ -1,18 +1,21 @@
-
+import DateTime from './DateTime'
 import DynamicType from './DynamicType'
 
-let parseGwtAttributeValue = function(gwtClassification, gwtAttribute) {
-  let type = gwtAttribute.getType().name()
-  let value = gwtClassification.getValue(gwtAttribute.getKey())
+const parseGwtAttributeValue = function(gwtClassification, gwtAttribute) {
+  const type = gwtAttribute.getType().name()
+  if (type === 'CATEGORY') {
+    return api.toArray(gwtClassification.getValues(gwtAttribute)).map(v => v.getKey())
+  } else if (type === 'ALLOCATABLE') {
+    return api.toArray(gwtClassification.getValues(gwtAttribute)).map(v => v.getId())
+  }
+  const value = gwtClassification.getValueForAttribute(gwtAttribute)
   if (value) {
-    if (['CATEGORY', 'ALLOCATABLE'].includes(type)) {
-      return value.getId()
-    } else if (type === 'INT') {
+    if (type === 'INT') {
       return parseInt(value.toString())
     } else if (type === 'STRING') {
       return value.toString()
     } else if (type === 'DATE') {
-      // TODO: parse date
+      return DateTime.createFromGwtDate(value)
     } else if (type === 'BOOLEAN') {
       return value.toString() === 'true'
     }
@@ -22,21 +25,23 @@ let parseGwtAttributeValue = function(gwtClassification, gwtAttribute) {
 }
 
 class Classification {
-  constructor(type, data) {
-    this.type = type
+  constructor(data, type) {
     this.data = data // Allocatable.key => value
+    this.type = type
   }
 
   static fromGwt(gwtClassification) {
     return new Classification(
-      DynamicType.fromGwt(gwtClassification.getType()),
       gwtClassification
         .getAttributes()
-        .reduce((acc, a) =>
-          Object.assign(
-            acc,
-            { [a.getKey()]: parseGwtAttributeValue(gwtClassification, a) }
-          ), {})
+        .reduce(
+          (acc, a) =>
+            Object.assign(acc, {
+              [a.getKey()]: parseGwtAttributeValue(gwtClassification, a)
+            }),
+          {}
+        ),
+      DynamicType.fromGwt(gwtClassification.getType())
     )
   }
 }

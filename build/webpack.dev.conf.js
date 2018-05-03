@@ -7,7 +7,6 @@ const path = require('path')
 const baseWebpackConfig = require('./webpack.base.conf')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
 
@@ -54,16 +53,9 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     new webpack.NoEmitOnErrorsPlugin(),
     // https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
-      title: '[DEV] ',
       filename: 'index.html',
       template: 'index.html',
       inject: true
-    }),
-    new HtmlWebpackIncludeAssetsPlugin({
-      assets: [
-        { path: '../../Rapla/Rapla.nocache.js', type: 'js' }
-      ],
-      append: true
     }),
     // copy custom static assets
     new CopyWebpackPlugin([

@@ -1,0 +1,24 @@
+// disable all transitions to make the app snappy
+// $primary-transition := none
+// $secondary-transition := none
+@import '~vuetify/src/stylus/main'
+
+.dialog
+  transition-duration 0.1s
+
+.list
+  transition-duration 0.1s
+
+.list__group__header--sub-group .list__group__header__prepend-icon
+  padding-left 16px
+  min-width 0
+
+.list__group
+  transition-duration 0.1s
+
+ul.breadcrumbs > li.no-link > a.breadcrumbs__item
+  cursor default
+  color inherit
+
+i.icon
+  cursor default

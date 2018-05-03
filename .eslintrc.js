@@ -33,5 +33,4 @@ module.exports = {
     // allow new
     'no-new': 'off'
   }
-
 }
