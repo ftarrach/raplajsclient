@@ -10,7 +10,7 @@
           flat
           v-for="action in currentWindow.actions"
           :key="action.label"
-          @click="action.action"
+          @click="onAction(action)"
         )
           template(slot="icon")
             v-icon {{ action.icon }}
@@ -118,6 +118,12 @@ export default {
         this.currentId = null
       }
       if (component.closed) this.$nextTick(component.closed)
+    },
+
+    onAction(button) {
+      console.time('action')
+      button.action()
+      console.timeEnd('action')
     }
   }
 }

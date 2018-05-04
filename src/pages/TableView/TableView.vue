@@ -12,11 +12,11 @@
       v-model="selected"
     )
     dynamic-menu(
-      @before-open="loadMenu"
-      :items="menuItems"
       close-on-select
-      @selected="onMenuSelect"
+      :items="menuItems"
       :title="menuTitle"
+      @before-open="loadMenu"
+      @selected="onMenuSelect"
     )
       v-btn(
         slot="activator"
@@ -79,16 +79,6 @@ export default {
     this.$root.$off('gwt-update-view', this.updateView)
   },
 
-  // DEBUG:
-  // mounted() {
-  //   this.loadMenu()
-  //   console.log(this.menuItems[0].items[0].label)
-  //   this.$nextTick(() => {
-  //     this.menuItems[0].items[0].action()
-  //   })
-  // },
-  // END DEBUG:
-
   methods: {
     load() {
       this.selected = []
@@ -96,20 +86,20 @@ export default {
         .then(({ columns, rows, gwtObjects }) => {
           this.columns = columns
           this.rows = rows
-          this.$options.gwtObjects = gwtObjects
+          this.gwtObjects = gwtObjects
         })
         .catch(window.openErrorDialog)
     },
 
     loadMenu() {
       const menu = createMenu(
-        this.$options.gwtObjects,
+        this.gwtObjects,
         this.selected,
         this.focusedGwtObject()
       )
       this.menuTitle = menu.title
       this.menuItems = menu.menuItems
-      this.$options.gwtMenu = menu.gwtMenu
+      this.gwtMenu = menu.gwtMenu
     },
 
     onMenuSelect(item) {
@@ -129,12 +119,12 @@ export default {
 
     focusedGwtObject(id) {
       return this.selected.length === 1
-        ? this.$options.gwtObjects.find(i => i.getId() === this.selected[0])
+        ? this.gwtObjects.find(i => i.getId() === this.selected[0])
         : null
     },
 
     updateView(modificationEvent) {
-      console.log(`updateView(${modificationEvent})`)
+      console.log(`TableView.updateView(${modificationEvent})`)
       this.load()
     }
   },

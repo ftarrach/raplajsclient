@@ -1,14 +1,13 @@
 <template lang="pug">
-  v-layout
+  v-layout(row wrap)
     v-flex(xs12 md4)
-      appointment-list.ma-2(
+      appointment-list.ma-1(
         :appointments="appointments"
-        :gwt-appointments="gwtAppointments"
         :selected-id="selectedAppointmentId"
         @select="selectedAppointmentChanged"
       )
     v-flex(xs12 md8)
-      appointment-detail.ma-2(
+      appointment-detail.ma-1(
         v-if="selectedAppointment"
         :appointment="selectedAppointment"
       )
@@ -28,10 +27,6 @@ export default {
     appointments: {
       type: Array,
       required: true
-    },
-
-    gwtAppointments: {
-      type: Array
     },
 
     selectedAppointmentId: {

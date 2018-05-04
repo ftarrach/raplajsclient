@@ -100,8 +100,8 @@ export default {
         ...window.api.getCalendarNames().map(c => ({ id: c, label: c }))
       ]
       // TODO: load main resource tree
-      // resources = ...
-      this.conflicts = [TreeViewGwt.parseObject(window.api.getAllConflicts().rootNode)]
+      // this.resources = ...
+      this.conflicts = [TreeViewGwt.parseObject(window.api.buildConflictTree().rootNode)]
       this.views = window.api.getViews()
       this.setView('table_events')
     } else {

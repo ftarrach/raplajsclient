@@ -16,14 +16,11 @@
           @input="classificationUpdate"
         )
       v-tab-item
-        v-layout
-          v-flex(xs-12)
-            appointment-edit(
-              :appointments="appointments"
-              :gwt-appointments="gwtAppointments"
-              :selected-appointment-id="selectedAppointmentId"
-              @select="selectAppointment"
-            )
+        appointment-edit(
+          :appointments="appointments"
+          :selected-appointment-id="selectedAppointmentId"
+          @select="selectAppointment"
+        )
       v-tab-item
         v-layout
           v-flex(xs-12)
@@ -31,13 +28,17 @@
       v-tab-item
         v-layout
           v-flex(xs-12)
-            additional-classification-edit
+            additional-classification-edit(
+              :classification="classification"
+              :type="type"
+              @input="classificationUpdate"
+            )
 </template>
 
 <script>
 import ClassificationEdit from '@/components/ClassificationEdit/ClassificationEdit'
+import AdditionalClassificationEdit from '@/components/ClassificationEdit/AdditionalClassificationEdit'
 import AppointmentEdit from '@/components/AppointmentEdit/AppointmentEdit'
-import AdditionalClassificationEdit from '@/components/AdditionalClassificationEdit/AdditionalClassificationEdit'
 import PermissionEdit from '@/components/PermissionEdit/PermissionEdit'
 import Reservation from '@/types/Reservation'
 
@@ -86,14 +87,16 @@ export default {
     this.type = this.reservation.type
     this.classification = this.reservation.classification
     this.appointments = this.reservation.appointments
-    if (this.appointments.length > 0) this.selectedAppointmentId = this.appointments[0].id
+    if (this.appointments.length > 0) {
+      this.selectedAppointmentId = this.appointments[0].id
+    }
   },
 
   methods: {
     classificationUpdate(e) {
       this.classification.data[e.name] = e.newVal
       if (window.api && e.newVal) {
-        const classification = this.gwtReservation.getClassification()
+        const classification = this.gwt.getClassification()
         if (e.type === 'DATE') {
           classification.setValue(e.name, e.newVal.gwtDate())
         } else if (e.type === 'ALLOCATABLE') {
@@ -104,7 +107,6 @@ export default {
               .filter(a => e.newVal.includes(a.getId()))
           )
         } else if (e.type === 'CATEGORY') {
-          console.log('hi')
           classification.setValues(
             e.name,
             e.newVal.map(id =>

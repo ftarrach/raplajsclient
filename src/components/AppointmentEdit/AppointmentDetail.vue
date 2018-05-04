@@ -2,25 +2,17 @@
   v-card
     v-card-title(primary-title)
       h3 &nbsp;
-    v-flex
-      v-tabs(grow v-model="selected")
-        v-tab(ripple) {{ 'no_repeating' | localize }}
-        v-tab(ripple) {{ 'weekly' | localize }}
-        v-tab(ripple) {{ 'daily' | localize }}
-        v-tab(ripple) {{ 'monthly' | localize }}
-        v-tab(ripple) {{ 'yearly' | localize }}
-        v-tab-item
-          //- no repeating
-        v-tab-item
-          appointment-detail-weekly(
-            :appointment="appointment"
-          )
-        v-tab-item
-          //- daily
-        v-tab-item
-          //- monthly
-        v-tab-item
-          //- yearly
+    v-layout(wrap)
+      v-flex(xs12)
+        v-btn-toggle(v-model="selected").repeating-type-toggle
+          v-layout(wrap)
+            v-btn.xs12.sm6.lg2 {{ 'no_repeating' | localize }}
+            v-btn.xs12.sm6.lg2 {{ 'weekly' | localize }}
+            v-btn.xs12.sm6.lg2 {{ 'daily' | localize }}
+            v-btn.xs12.sm6.lg2 {{ 'monthly' | localize }}
+            v-btn.xs12.sm6.lg2 {{ 'yearly' | localize }}
+      v-flex(xs12)
+        component(:is="component" :appointment="appointment")
 </template>
 
 <script>
@@ -39,31 +31,56 @@ export default {
 
   data() {
     return {
-      selected: '1'
+      selected: 0
     }
   },
 
   created() {
     if (this.appointment.repeating === null) {
       this.selected = 0
+    } else {
+      switch (this.appointment.repeating.type) {
+        case 'daily':
+          this.selected = 2
+          break
+        case 'weekly':
+          this.selected = 1
+          break
+        case 'monthly':
+          this.selected = 3
+          break
+        case 'yearly':
+          this.selected = 4
+          break
+      }
     }
   },
 
   computed: {
-    repeatingType() {
+    component() {
       switch (this.selected) {
-        case '1':
-          return 'no-repeat'
-        case '2':
-          return 'weekly'
-        case '3':
-          return 'daily'
-        case '4':
-          return 'monthly'
-        case '5':
-          return 'yearly'
+        case 0:
+          return null
+        case 1:
+          return AppointmentDetailWeekly
+        case 2:
+          return null
+        case 3:
+          return null
+        case 4:
+          return null
       }
     }
   }
 }
 </script>
+
+<style lang="stylus" scoped>
+.repeating-type-toggle
+  box-shadow none !important
+  display flex
+  flex-direction row
+
+  .btn
+    flex-grow: 1
+</style>

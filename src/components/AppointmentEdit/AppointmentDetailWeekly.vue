@@ -1,15 +1,16 @@
 <template lang="pug">
   v-form(v-model="appointment.valid")
     v-container.px-3(grid-list-md)
-      v-layout(column)
-        v-layout(row justify-end)
-          v-flex(xs12 sm3)
-              v-btn(block flat)
-                | {{ "appointment.convert" | localize }}
-          v-flex(xs12 sm3)
-            v-btn(block flat color="red")
-              | {{ "appointment.exceptions" | localize }}
-        v-layout(row wrap)
+      v-layout(row wrap)
+        v-flex(xs12)
+          v-layout(row justify-end wrap)
+            v-flex(xs12 sm6 lg3)
+                v-btn(flat)
+                  | {{ "appointment.convert" | localize }}
+            v-flex(xs12 sm6 lg3)
+              v-btn(flat color="red")
+                | {{ "appointment.exceptions" | localize }}
+        //- v-layout(row wrap)
           v-flex(xs4 sm2)
             v-subheader {{ "repeating.interval.pre" | localize }}
           v-flex(xs8 sm3)

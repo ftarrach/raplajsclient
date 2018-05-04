@@ -33,11 +33,6 @@ export default {
       required: true
     },
 
-    gwtAppointments: {
-      type: Array,
-      required: true
-    },
-
     selectedId: {
       type: String,
       required: true
@@ -70,28 +65,7 @@ export default {
 
   computed: {
     items() {
-      if (this.gwtAppointments.length > 0) {
-        return this.labelsFromGwt
-      } else {
-        return this.labelsStandalone
-      }
-    },
-
-    labelsStandalone() {
-      return this.appointments.map(a => ({
-        id: a.id,
-        title: `${a.start.toString} - ${a.end.toString()}`,
-        subtitle: a.repeating ? a.repeating.interval : 'No Repeating'
-      }))
-    },
-
-    labelsFromGwt() {
-      return this.appointments.map(a => {
-        const gwtAppointment = this.gwtAppointments.find(
-          g => g.getId() === a.id
-        )
-        return Locale.formatAppointment(gwtAppointment)
-      })
+      return this.appointments.map(Locale.formatAppointment)
     }
   },
 

@@ -1,5 +1,4 @@
 import DateTime from './DateTime'
-import DynamicType from './DynamicType'
 
 const parseGwtAttributeValue = function(gwtClassification, gwtAttribute) {
   const type = gwtAttribute.getType().name()
@@ -23,13 +22,14 @@ const parseGwtAttributeValue = function(gwtClassification, gwtAttribute) {
 }
 
 class Classification {
-  constructor(data, type) {
+  constructor(GWT, data) {
+    this.GWT = GWT
     this.data = data // Allocatable.key => value
-    this.type = type
   }
 
   static fromGwt(gwtClassification) {
     return new Classification(
+      gwtClassification,
       gwtClassification
         .getAttributes()
         .reduce(
@@ -38,8 +38,7 @@ class Classification {
               [a.getKey()]: parseGwtAttributeValue(gwtClassification, a)
             }),
           {}
-        ),
-      DynamicType.fromGwt(gwtClassification.getType())
+        )
     )
   }
 }

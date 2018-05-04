@@ -28,30 +28,6 @@ const renderDynamicComponent = (gwtVueComponent, createElement) => {
           }
         }
       })
-    // case 'BButton':
-    //   return createElement(component, {
-    //     props: gwtVueComponent,
-    //     on: {
-    //       click: () => gwtVueComponent.onSelect()
-    //     }
-    //   })
-    // case 'VerticalFlex':
-    // case 'HorizontalFlex':
-    //   return createElement(component, {
-    //     scopedSlots: {
-    //       default(props) {
-    //         return renderChildren(gwtVueComponent.children(), createElement)
-    //       }
-    //     }
-    //   })
-    // case 'BList':
-    //   let it = gwtVueComponent.getItems().map(i => ({ id: i.getId(), label: i.getLabel() }))
-    //   return createElement(component, {
-    //     props: {
-    //       items: it,
-    //       value: []
-    //     }
-    //   })
     default:
       return createElement('p', `unknown element ${name}`)
   }
@@ -72,7 +48,10 @@ export default {
       return createElement('p', this.error)
     }
     if (this.gwtComponent) {
-      return renderDynamicComponent(this.gwtComponent, createElement)
+      console.time('build component tree')
+      const content = renderDynamicComponent(this.gwtComponent, createElement)
+      console.timeEnd('build component tree')
+      return content
     }
     return createElement('p')
   },

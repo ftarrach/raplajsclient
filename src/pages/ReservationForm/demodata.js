@@ -1,6 +1,7 @@
 import DateTime from '@/types/DateTime'
 import Appointment from '@/types/Appointment'
 import Repeating from '@/types/Repeating'
+import Classification from '@/types/Classification'
 
 export default {
   id: 'ec37848c-b4ce-47f6-8328-c194499de926',
@@ -134,8 +135,9 @@ export default {
       }
     ]
   },
-  classification: {
-    data: {
+  classification: new Classification(
+    null,
+    {
       name: 'Bildverarbeitung (AI und MI)',
       nr: 3,
       date: null,
@@ -149,7 +151,7 @@ export default {
       r3: null,
       r4: null
     }
-  },
+  ),
   allocatables: [
     {
       id: 'r23bde82-7c75-42a3-beba-41c506149868',
@@ -391,6 +393,7 @@ export default {
   ],
   appointments: [
     new Appointment(
+      null,
       'a24c6b1d-e16e-43ce-bbba-10a9e6feb92f',
       new DateTime('2017-10-04', '08:30:00'),
       new DateTime('2017-10-04', '11:45:00'),

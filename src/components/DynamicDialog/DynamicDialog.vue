@@ -47,7 +47,7 @@ export default {
       this.icon = icons[vueDialog.getIcon()]
       this.$refs.dyn.initialize(vueDialog.getContent())
       this.buttons = vueDialog.getButtonStrings()
-      this.$options.gwtPromise = vueDialog.getPromise()
+      this.gwtPromise = vueDialog.getPromise()
       this.open = true
     },
 
@@ -61,7 +61,7 @@ export default {
 
     selected(index) {
       this.closeDialog()
-      this.$options.gwtPromise.complete(api.toInteger(index))
+      this.gwtPromise.complete(api.toInteger(index))
     }
   }
 

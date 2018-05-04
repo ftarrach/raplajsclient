@@ -44,7 +44,7 @@ export default {
 
   computed: {
     attributes() {
-      return this.type.attributes.filter(a => a.annotations['edit-view'] !== 'additional-view')
+      return this.type.attributes
     }
   },
 

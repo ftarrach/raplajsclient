@@ -2,7 +2,8 @@ import Repeating from './Repeating'
 import DateTime from './DateTime'
 
 class Appointment {
-  constructor(id, start, end, maxEnd, repeating, isWholeDay, reservationId, allocatables) {
+  constructor(GWT, id, start, end, maxEnd, repeating, isWholeDay, reservationId, allocatables) {
+    this.GWT = GWT
     this.id = id
     this.start = start
     this.end = end
@@ -15,6 +16,7 @@ class Appointment {
 
   static fromGwt(gwtAppointment) {
     return new Appointment(
+      gwtAppointment,
       gwtAppointment.getId(),
       DateTime.createFromGwtDate(gwtAppointment.getStart()),
       DateTime.createFromGwtDate(gwtAppointment.getEnd()),
