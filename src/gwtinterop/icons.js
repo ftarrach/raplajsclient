@@ -1,5 +1,5 @@
 /**
- * a maps with Rapla Icons as keys and material icons as values
+ * a map with Rapla Icons as keys and material icons as values
  */
 const icons = {
   'icon.tree.persons': 'person',
