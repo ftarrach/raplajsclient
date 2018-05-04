@@ -27,10 +27,3 @@ class Allocatable {
 }
 
 export default Allocatable
-
-export function toDrilldownItem(a) {
-  return {
-    id: a.id,
-    label: a.name
-  }
-}

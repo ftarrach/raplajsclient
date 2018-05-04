@@ -69,7 +69,7 @@ export default {
 
   computed: {
     items() {
-      if (window.api && this.gwtAppointments.length > 0) {
+      if (this.gwtAppointments.length > 0) {
         return this.labelsFromGwt
       } else {
         return this.labelsStandalone
@@ -89,7 +89,6 @@ export default {
         const gwtAppointment = this.gwtAppointments.find(
           g => g.getId() === a.id
         )
-        console.log(gwtAppointment)
         return {
           id: a.id,
           title: window.api.appointmentFormater.getSummary(gwtAppointment),

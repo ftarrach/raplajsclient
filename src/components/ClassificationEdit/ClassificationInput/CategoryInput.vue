@@ -5,12 +5,14 @@
       :environment="items"
       :multiSelect="multiSelect"
       title="auswahl"
+      selectable-groups
     )
     p {{ constraints }}
 </template>
 
 <script>
 import TreeSelect from '@/ui/TreeSelect'
+import demodata from './demodata'
 
 export default {
   components: {
@@ -67,6 +69,8 @@ export default {
         } else {
           this.treeFromAllCategories()
         }
+      } else {
+        this.items = demodata.categories
       }
     },
 

@@ -24,7 +24,6 @@
 <script>
 
 import ClassificationInput from './ClassificationInput/ClassificationInput'
-// import DynamicType from '@/types/DynamicType'
 
 export default {
 

@@ -1,4 +1,6 @@
 import DateTime from '@/types/DateTime'
+import Appointment from '@/types/Appointment'
+import Repeating from '@/types/Repeating'
 
 export default {
   id: 'ec37848c-b4ce-47f6-8328-c194499de926',
@@ -388,22 +390,22 @@ export default {
     }
   ],
   appointments: [
-    {
-      id: 'a24c6b1d-e16e-43ce-bbba-10a9e6feb92f',
-      start: new DateTime('2017-10-04', '08:30:00'),
-      end: new DateTime('2017-10-04', '11:45:00'),
-      maxEnd: null,
-      repeating: {
-        type: 'weekly',
-        interval: 1,
-        end: null,
-        number: -1,
-        weekdays: [3],
-        exceptions: []
-      },
-      isWholeDay: false,
-      reservationId: 'ec37848c-b4ce-47f6-8328-c194499de926',
-      allocatables: [
+    new Appointment(
+      'a24c6b1d-e16e-43ce-bbba-10a9e6feb92f',
+      new DateTime('2017-10-04', '08:30:00'),
+      new DateTime('2017-10-04', '11:45:00'),
+      null,
+      new Repeating(
+        'weekly',
+        1,
+        null,
+        -1,
+        [3],
+        []
+      ),
+      false,
+      'ec37848c-b4ce-47f6-8328-c194499de926',
+      [
         'r23bde82-7c75-42a3-beba-41c506149868',
         'rea93226-47cb-420e-af61-a17be98279c2',
         'r6c430ec-909f-46f3-9b8a-3a27ee16ad52',
@@ -411,7 +413,7 @@ export default {
         'raf5e051-c054-4561-9ff2-9260273fac5a',
         'r2ad7cf2-3345-4f54-9c11-5f2bd4a5fff1'
       ]
-    }
+    )
   ],
   permissions: [],
   createDate: new DateTime('2017-11-24', '17:41:55'),

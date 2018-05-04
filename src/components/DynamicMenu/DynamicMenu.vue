@@ -25,7 +25,11 @@
                 v-icon.mr-2(:color="item.icon ? 'inherit' : 'transparent'") {{ item.icon ? item.icon : 'play_arrow'}}
                 span(:class="{'white--text': selected.includes(item.id)}") {{ item.label }}
                 v-spacer
-                v-icon(v-if="item.items" @click.stop="openGroup(item)") play_arrow
+                v-icon(
+                  v-if="item.items"
+                  @click.stop="openGroup(item)"
+                  :dark="selected.includes(item.id)"
+                ) play_arrow
 </template>
 
 <script>
