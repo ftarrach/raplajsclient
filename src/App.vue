@@ -48,8 +48,6 @@ import TreeView from './components/TreeView/TreeView'
 import TreeViewGwt from './components/TreeView/parseGwt'
 import Test from './pages/Test'
 
-// import Vue from 'vue'
-
 export default {
   name: 'App',
 
@@ -115,6 +113,10 @@ export default {
     this.$root.$on('gwt-debug', obj => console.log(`gwt-debug: ${obj}`))
 
     this.$root.$on('gwt-init', this.gwtInit)
+
+    this.$root.$on('update-main-conflicts', (conflicts) => {
+      this.conflicts = TreeViewGwt.parseChildren(conflicts.children())
+    })
   },
 
   methods: {

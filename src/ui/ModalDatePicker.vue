@@ -30,7 +30,6 @@ export default {
     },
 
     formattedDate() {
-      // TODO: to gwt
       let s = this.date.split('-')
       return `${s[2]}.${s[1]}.${s[0]}`
     }

@@ -57,7 +57,6 @@ export default {
     },
 
     formattedTime() {
-      // TODO: to gwt
       let s = this.time.split(':')
       return `${s[0]}:${s[1]}`
     },

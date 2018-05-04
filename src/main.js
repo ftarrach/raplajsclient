@@ -1,7 +1,6 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import Vuex from 'vuex'
 import App from './App'
 import Vuetify from 'vuetify'
 import Locale from './locale'
@@ -11,7 +10,6 @@ import Rx from 'rxjs'
 
 window.Rx = Rx
 
-Vue.use(Vuex)
 Vue.use(Vuetify, {
   theme: {
     primary: '#1867c0',
@@ -32,8 +30,8 @@ if (STANDALONE) {
 } else {
   console.log('starting in gwt mode')
   window.rapla = {
-    RaplaCallback: function() {
-      this.gwtLoaded = starter => {
+    RaplaCallback: class {
+      gwtLoaded(starter) {
         let registerAction = () => {
           let loginToken = starter.getValidToken()
           if (loginToken != null) {
@@ -45,9 +43,7 @@ if (STANDALONE) {
                 startVue()
                 api.application.start(true, () => {})
               })
-              .exceptionally(e => {
-                console.error(e)
-              })
+              .exceptionally(console.error)
           } else {
             window.location = '../rapla/login?url=' + window.location
           }
@@ -67,9 +63,6 @@ function startVue() {
     el: '#app',
     components: { App },
     template: '<App/>',
-    store: new Vuex.Store({
-      modules: {}
-    }),
 
     // these Methods can be called from GWT and return a value
     methods: {
@@ -79,5 +72,6 @@ function startVue() {
     }
   })
   window.openErrorDialog = e => raplaVue.$emit('open-error-dialog', e)
+  window.onerror = e => raplaVue.$emit('open-error-dialog', e) // so müsste es klappen, tut es aber nicht :/
   window.raplaVue = raplaVue
 }

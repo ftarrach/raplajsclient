@@ -102,18 +102,13 @@ export default {
         } else if (e.type === 'ALLOCATABLE') {
           classification.setValues(
             e.name,
-            window.api.facade
-              .getAllocatables()
-              .filter(a => e.newVal.includes(a.getId()))
+            window.api.findAllocatableById(e.id)
           )
         } else if (e.type === 'CATEGORY') {
           classification.setValues(
             e.name,
             e.newVal.map(id =>
-              window.api.findCategoryById(
-                id,
-                window.api.facade.getSuperCategory()
-              )
+              window.api.findCategoryById(id)
             )
           )
         } else {
