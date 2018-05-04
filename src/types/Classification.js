@@ -3,9 +3,7 @@ import DynamicType from './DynamicType'
 
 const parseGwtAttributeValue = function(gwtClassification, gwtAttribute) {
   const type = gwtAttribute.getType().name()
-  if (type === 'CATEGORY') {
-    return api.toArray(gwtClassification.getValues(gwtAttribute)).map(v => v.getKey())
-  } else if (type === 'ALLOCATABLE') {
+  if (type === 'ALLOCATABLE' || type === 'CATEGORY') {
     return api.toArray(gwtClassification.getValues(gwtAttribute)).map(v => v.getId())
   }
   const value = gwtClassification.getValueForAttribute(gwtAttribute)

@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import Locale from '@/locale'
 
 export default {
   props: {
@@ -89,11 +90,7 @@ export default {
         const gwtAppointment = this.gwtAppointments.find(
           g => g.getId() === a.id
         )
-        return {
-          id: a.id,
-          title: window.api.appointmentFormater.getSummary(gwtAppointment),
-          subtitle: window.api.appointmentFormater.getSummaryOfRepeating(gwtAppointment.getRepeating())
-        }
+        return Locale.formatAppointment(gwtAppointment)
       })
     }
   },

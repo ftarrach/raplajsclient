@@ -8,7 +8,6 @@ import Locale from './locale'
 import './assets/vuetify-config.styl'
 import 'mdi/css/materialdesignicons.min.css'
 import Rx from 'rxjs'
-import Reservation from '@/types/Reservation'
 
 window.Rx = Rx
 
@@ -34,32 +33,33 @@ if (STANDALONE) {
   console.log('starting in gwt mode')
   window.rapla = {
     RaplaCallback: function() {
-      this.gwtLoaded = (starter) => {
+      this.gwtLoaded = starter => {
         let registerAction = () => {
           let loginToken = starter.getValidToken()
           if (loginToken != null) {
             let accessToken = loginToken.getAccessToken()
-            let p = starter.registerApi(accessToken)
-            p.thenAccept((_api) => {
-              window.api = _api
-              startVue()
-              api.application.start(true, () => {})
-            }).exceptionally(e => {
-              console.error(e)
-            })
+            starter
+              .registerApi(accessToken)
+              .thenAccept(_api => {
+                window.api = _api
+                startVue()
+                api.application.start(true, () => {})
+              })
+              .exceptionally(e => {
+                console.error(e)
+              })
           } else {
             window.location = '../rapla/login?url=' + window.location
           }
         }
-        starter.initLocale('de_DE') // TODO: move this to locale store and save the current locale key as a state?
+        starter
+          .initLocale('de_DE') // TODO: move this to locale store and save the current locale key as a state?
           .thenRun(registerAction)
           .exceptionally(console.warn)
       }
     }
   }
 }
-
-window.Reservation = Reservation
 
 function startVue() {
   Locale.setup()
@@ -73,7 +73,9 @@ function startVue() {
 
     // these Methods can be called from GWT and return a value
     methods: {
-      hasWindow(options) { return this.$children[0].hasWindow(options) }
+      hasWindow(options) {
+        return this.$children[0].hasWindow(options)
+      }
     }
   })
   window.openErrorDialog = e => raplaVue.$emit('open-error-dialog', e)

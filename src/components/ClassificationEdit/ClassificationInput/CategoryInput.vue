@@ -1,13 +1,11 @@
 <template lang="pug">
-  div
-    tree-select(
-      v-model="val"
-      :environment="items"
-      :multiSelect="multiSelect"
-      title="auswahl"
-      selectable-groups
-    )
-    p {{ constraints }}
+  tree-select(
+    v-model="val"
+    :environment="items"
+    :multiSelect="multiSelect"
+    title="auswahl"
+    selectable-groups
+  )
 </template>
 
 <script>

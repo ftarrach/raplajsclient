@@ -64,7 +64,6 @@ export default {
           case 'ReservationForm':
             component = ReservationForm
             props.reservation = Reservation.fromGwt(gwtWindow.reservation)
-            props.gwtReservation = gwtWindow.reservation
             break
         }
         this.openWindow(

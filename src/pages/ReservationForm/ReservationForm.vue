@@ -39,8 +39,6 @@ import ClassificationEdit from '@/components/ClassificationEdit/ClassificationEd
 import AppointmentEdit from '@/components/AppointmentEdit/AppointmentEdit'
 import AdditionalClassificationEdit from '@/components/AdditionalClassificationEdit/AdditionalClassificationEdit'
 import PermissionEdit from '@/components/PermissionEdit/PermissionEdit'
-// import demodata from './demodata'
-// import store from './store'
 import Reservation from '@/types/Reservation'
 
 export default {
@@ -56,10 +54,6 @@ export default {
   props: {
     reservation: {
       type: [Object, Reservation]
-      // default: () => demodata
-    },
-    gwtReservation: {
-      type: Object
     },
     gwtWindow: {
       type: Object
@@ -88,7 +82,7 @@ export default {
   },
 
   created() {
-    this.gwt = this.gwtReservation
+    this.gwt = this.reservation.GWT
     this.type = this.reservation.type
     this.classification = this.reservation.classification
     this.appointments = this.reservation.appointments

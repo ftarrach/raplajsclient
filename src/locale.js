@@ -181,15 +181,15 @@ function formatDateTime(datetime, len = 'normal') {
 }
 
 function formatAppointment(appointment) {
-  if (window.api) {
-    console.log(window.api.getAppointmentFormater())
-    return window.api.getAppointmentFormater().getSummary(appointment)
-    // return {
-    //   id: 'bla',
-    //   title: 'Hallo',
-    //   subtitle: 'Welt'
-    // }
+  if (window.api && appointment.getId) {
+    // assume parameter is GWT appointment
+    return {
+      id: appointment.getId(),
+      title: window.api.appointmentFormater.getSummary(appointment),
+      subtitle: window.api.appointmentFormater.getSummaryOfRepeating(appointment.getRepeating())
+    }
   } else {
+    // assume parameter is JS-class appointment
     const getRepeatEndtype = appointment => {
       if (
         appointment.repeating.end === null &&

@@ -5,7 +5,8 @@ import Appointment from './Appointment'
 import DynamicType from './DynamicType'
 
 class Reservation {
-  constructor(id, name, type, classification, allocatables, appointments, permissions, createDate, lastChange, firstDate) {
+  constructor(GWT, id, name, type, classification, allocatables, appointments, permissions, createDate, lastChange, firstDate) {
+    this.GWT = GWT
     this.id = id
     this.name = name
     this.type = type
@@ -20,6 +21,7 @@ class Reservation {
 
   static fromGwt(gwtReservation) {
     return new Reservation(
+      gwtReservation,
       gwtReservation.getId(),
       gwtReservation.getName(),
       DynamicType.fromGwt(gwtReservation.getClassification().getType()),
