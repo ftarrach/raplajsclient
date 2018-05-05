@@ -7,6 +7,7 @@ import Locale from './locale'
 import './assets/vuetify-config.styl'
 import 'mdi/css/materialdesignicons.min.css'
 import Rx from 'rxjs'
+import EventBus from './EventBus'
 
 window.Rx = Rx
 
@@ -59,7 +60,7 @@ if (STANDALONE) {
 
 function startVue() {
   Locale.setup()
-  const raplaVue = new Vue({
+  new Vue({
     el: '#app',
     components: { App },
     template: '<App/>',
@@ -71,6 +72,7 @@ function startVue() {
       }
     }
   })
+  window.raplaVue = EventBus
   window.openErrorDialog = e => raplaVue.$emit('open-error-dialog', e)
   window.onerror = e => raplaVue.$emit('open-error-dialog', e) // so müsste es klappen, tut es aber nicht :/
   window.raplaVue = raplaVue

@@ -25,6 +25,7 @@ import ReservationForm from '@/pages/ReservationForm/ReservationForm'
 import Window from './Window'
 import ResponsiveButton from '../ResponsiveButton/ResponsiveButton'
 import Reservation from '@/types/Reservation'
+import EventBus from '@/EventBus'
 
 export default {
   name: 'WindowManager',
@@ -54,7 +55,7 @@ export default {
 
   created() {
     if (window.api) {
-      this.$root.$on('gwt-open-window', openWindow => {
+      EventBus.$on('gwt-open-window', openWindow => {
         const gwtWindow = openWindow.window
         let title = openWindow.title
         let component = null
@@ -77,7 +78,7 @@ export default {
           })
         )
       })
-      this.$root.$on('gwt-remove-window', applicationEvent =>
+      EventBus.$on('gwt-remove-window', applicationEvent =>
         this.closeWindow(applicationEvent.getInfo())
       )
     }

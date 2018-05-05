@@ -34,6 +34,7 @@
 <script>
 import CalendarChooser from './CalendarChooser'
 import ViewChooser from './ViewChooser'
+import EventBus from '@/EventBus'
 
 export default {
   components: {
@@ -65,11 +66,11 @@ export default {
   },
 
   created() {
-    this.$root.$on('gwt-show-status-message', this.setStatus)
+    EventBus.$on('gwt-show-status-message', this.setStatus)
   },
 
   beforeDestroy() {
-    this.$root.$off('gwt-show-status-message', this.setStatus)
+    EventBus.$off('gwt-show-status-message', this.setStatus)
   },
 
   methods: {

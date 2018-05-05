@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import EventBus from '@/EventBus'
+
 export default {
   data() {
     return {
@@ -18,11 +20,11 @@ export default {
   },
 
   created() {
-    this.$root.$on('open-error-dialog', this.openDialog)
+    EventBus.$on('open-error-dialog', this.openDialog)
   },
 
   beforeDestroy() {
-    this.$root.$off('open-error-dialog', this.openDialog)
+    EventBus.$off('open-error-dialog', this.openDialog)
   },
 
   methods: {

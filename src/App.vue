@@ -47,6 +47,7 @@ import WindowManager from './components/WindowManager/WindowManager'
 import TreeView from './components/TreeView/TreeView'
 import TreeViewGwt from './components/TreeView/parseGwt'
 import Test from './pages/Test'
+import EventBus from '@/EventBus'
 
 export default {
   name: 'App',
@@ -110,11 +111,11 @@ export default {
       this.setView('week')
     }
 
-    this.$root.$on('gwt-debug', obj => console.log(`gwt-debug: ${obj}`))
+    EventBus.$on('gwt-debug', obj => console.log(`gwt-debug: ${obj}`))
 
-    this.$root.$on('gwt-init', this.gwtInit)
+    EventBus.$on('gwt-init', this.gwtInit)
 
-    this.$root.$on('update-main-conflicts', (conflicts) => {
+    EventBus.$on('update-main-conflicts', (conflicts) => {
       this.conflicts = TreeViewGwt.parseChildren(conflicts.children())
     })
   },

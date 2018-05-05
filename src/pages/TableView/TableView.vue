@@ -34,6 +34,7 @@ import DialogDatePicker from '@/ui//DialogDatePicker'
 import createMenu from './createMenu'
 import createTable from './createTable'
 import DateTime from '@/types/DateTime'
+import EventBus from '@/EventBus'
 
 export default {
   components: {
@@ -64,7 +65,7 @@ export default {
   created() {
     if (window.api) {
       this.loadPeriodFromGwt()
-      this.$root.$on('gwt-update-view', this.updateView)
+      EventBus.$on('gwt-update-view', this.updateView)
     } else {
       // NOTE: standalone data
       this.start = DateTime.createFromJsDate(new Date())
@@ -76,7 +77,7 @@ export default {
   },
 
   beforeDestroy() {
-    this.$root.$off('gwt-update-view', this.updateView)
+    EventBus.$off('gwt-update-view', this.updateView)
   },
 
   methods: {

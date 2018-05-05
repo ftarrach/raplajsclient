@@ -19,6 +19,7 @@
 
 import DialogDynamic from './DialogDynamic'
 import { icons } from '@/gwtinterop/icons'
+import EventBus from '@/EventBus'
 
 export default {
   name: 'DynamicDialog',
@@ -37,8 +38,8 @@ export default {
   },
 
   created() {
-    this.$root.$on('gwt-dialog-open', this.openDialog)
-    this.$root.$on('gwt-dialog-close', this.closeDialog)
+    EventBus.$on('gwt-dialog-open', this.openDialog)
+    EventBus.$on('gwt-dialog-close', this.closeDialog)
   },
 
   methods: {

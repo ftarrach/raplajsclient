@@ -1,25 +1,24 @@
 <template lang="pug">
-  div
+  //-   div
     //- p {{ debug }}
-    reservation-form(:reservation="reservation" :gwt-reservation="gwtReservation" v-if="reservation")
+  reservation-form(:reservation="reservation" :gwt-reservation="gwtReservation" v-if="reservation")
   //- v-container
-  //-   tree-view
-    //- v-subheader multiselect
-    //- tree-select(
-    //-   v-model="value"
-    //-   :environment="items"
-    //-   elementName="label"
-    //-   multi-select
-    //- )
-    //- v-subheader multiselect selectable groups
-    //- tree-select(
-    //-   v-model="value2"
-    //-   :environment="items"
-    //-   elementName="label"
-    //-   multi-select
-    //-   selectable-groups
-    //- )
-    //- r-spinner(v-model="number")
+    tree-view
+    v-subheader multiselect
+    tree-select(
+      v-model="value"
+      :environment="items"
+      elementName="label"
+      multi-select
+    )
+    v-subheader multiselect selectable groups
+    tree-select(
+      v-model="value2"
+      :environment="items"
+      elementName="label"
+      multi-select
+      selectable-groups
+    )
 </template>
 
 <script>
