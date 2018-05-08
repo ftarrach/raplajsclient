@@ -1,11 +1,11 @@
 <template lang="pug">
   v-menu(:disabled="disabled")
     template(slot='activator')
-      v-btn(flat).hidden-sm-and-down(:disabled="disabled")
+      v-btn(flat :disabled="disabled").hidden-sm-and-down
         v-icon(small left) mdi-presentation
         span {{ label }}
         v-icon arrow_drop_down
-      v-btn(icon).hidden-md-and-up(:disabled="disabled")
+      v-btn(icon :disabled="disabled").hidden-md-and-up
         v-icon mdi-presentation
     v-list
       template(v-for="view in views")

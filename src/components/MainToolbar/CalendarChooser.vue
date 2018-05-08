@@ -1,11 +1,11 @@
 <template lang="pug">
   v-menu(:disabled="disabled")
     template(slot='activator')
-      v-btn(flat).hidden-sm-and-down(:disabled="disabled")
+      v-btn(flat :disabled="disabled").hidden-sm-and-down
         v-icon(small left) mdi-calendar-text
         span {{ label }}
         v-icon arrow_drop_down
-      v-btn(icon).hidden-md-and-up(:disabled="disabled")
+      v-btn(icon :disabled="disabled").hidden-md-and-up
         v-icon mdi-calendar-text
     v-list
       template(v-for="calendar in calendars")

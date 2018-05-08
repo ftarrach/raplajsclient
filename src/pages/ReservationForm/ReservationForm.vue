@@ -102,14 +102,12 @@ export default {
         } else if (e.type === 'ALLOCATABLE') {
           classification.setValues(
             e.name,
-            window.api.findAllocatableById(e.id)
+            e.newVal.map(id => window.api.findAllocatableById(id))
           )
         } else if (e.type === 'CATEGORY') {
           classification.setValues(
             e.name,
-            e.newVal.map(id =>
-              window.api.findCategoryById(id)
-            )
+            e.newVal.map(id => window.api.findCategoryById(id))
           )
         } else {
           classification.setValue(e.name, e.newVal)
