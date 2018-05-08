@@ -23,6 +23,7 @@ Vue.use(Vuetify, {
   }
 })
 Vue.config.productionTip = false
+Vue.config.errorHandler = (err, vm, info) => raplaVue.$emit('open-error-dialog', err)
 
 const STANDALONE = false
 
@@ -72,8 +73,8 @@ function startVue() {
       }
     }
   })
+
   window.raplaVue = EventBus
   window.openErrorDialog = e => raplaVue.$emit('open-error-dialog', e)
-  window.onerror = e => raplaVue.$emit('open-error-dialog', e) // so müsste es klappen, tut es aber nicht :/
   window.raplaVue = raplaVue
 }

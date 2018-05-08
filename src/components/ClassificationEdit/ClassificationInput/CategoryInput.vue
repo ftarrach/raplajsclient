@@ -74,22 +74,14 @@ export default {
 
     treeFromCategory(id) {
       this.items = window.api.treeFactory
-        .createModel(
-          api.asSet([
-            window.api.findCategoryById(
-              id,
-              window.api.facade.getSuperCategory()
-            )
-          ]),
-          true
-        )
+        .createModel(window.api.findCategoryById(id), null)
         .children()
         .map(this.parseFromGwt)
     },
 
     treeFromAllCategories() {
       this.items = window.api.treeFactory
-        .createModel(api.asSet([api.facade.getSuperCategory()]), true)
+        .createModel(api.facade.getSuperCategory(), null)
         .children()
         .map(this.parseFromGwt)
     },
