@@ -129,7 +129,7 @@ export default {
       width $legend-width
 
 .calendar-wrap
-  height 25.25em * $hour-height
+  height 24em * $hour-height
   overflow hidden
 
 .clock

@@ -60,7 +60,7 @@ if (STANDALONE) {
 
 function startVue() {
   Locale.setup()
-  new Vue({
+  window.raplaClient = new Vue({
     el: '#app',
     components: { App },
     template: '<App/>',
