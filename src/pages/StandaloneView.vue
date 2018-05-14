@@ -7,14 +7,14 @@
     v-subheader multiselect
     tree-select(
       v-model="value"
-      :environment="items"
+      :items="items"
       elementName="label"
       multi-select
     )
     v-subheader multiselect selectable groups
     tree-select(
       v-model="value2"
-      :environment="items"
+      :items="items"
       elementName="label"
       multi-select
       selectable-groups
@@ -41,7 +41,7 @@ export default {
     return {
       value: [],
       value2: [],
-      environment: [],
+      items: [],
       number: 0,
       debug: '',
       reservation: null,
@@ -53,15 +53,15 @@ export default {
     // this.reservation = demodata
     if (window.api) {
       // DEBUG: load first reservation
-      api.facade
+      window.api.facade
         .getReservationsAsync(
-          api.getUser(),
-          api.calendarModel.getStartDate(),
-          api.calendarModel.getEndDate(),
+          window.api.getUser(),
+          window.api.calendarModel.getStartDate(),
+          window.api.calendarModel.getEndDate(),
           null
         )
         .thenApply(r => {
-          const res = api.toArray(r)[0]
+          const res = window.api.toArray(r)[0]
           this.gwtReservation = res
           this.reservation = Reservation.fromGwt(res)
         })

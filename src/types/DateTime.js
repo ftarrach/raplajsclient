@@ -102,7 +102,7 @@ class DateTime {
   gwtTime() {
     const time = this.timeObject()
     if (window.api) {
-      return api.locale.toTime(time.hours, time.minutes, time.seconds)
+      return window.api.locale.toTime(time.hours, time.minutes, time.seconds)
     } else {
       throw Error(
         'called gwtTime() in standalone mode. Please check first if window.api is available'
@@ -114,7 +114,7 @@ class DateTime {
     if (window.api) {
       const date = this.gwtDate()
       const time = this.gwtTime()
-      return api.locale.toDate(date, time)
+      return window.api.locale.toDate(date, time)
     } else {
       throw Error(
         'called gwtDateTime() in standalone mode. Please check first if window.api is available'

@@ -10,11 +10,6 @@ module.exports = {
     browser: true,
   },
   globals: {
-    "api": true,
-    "java": true,
-    "org": true,
-    "raplaVue": true,
-    "openErrorDialog": true
   },
   // https://github.com/standard/standard/blob/master/docs/RULES-en.md
   extends: 'standard',
@@ -29,8 +24,6 @@ module.exports = {
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     // no space between function name and brackets
-    'space-before-function-paren': 'off',
-    // allow new
-    'no-new': 'off'
+    'space-before-function-paren': 'off'
   }
 }

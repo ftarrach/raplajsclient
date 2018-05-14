@@ -3,7 +3,6 @@
     ref="dialog"
     v-model="dialog"
     lazy
-    full-width
     width="290px"
     :return-value.sync="date"
   )
@@ -20,7 +19,7 @@
       v-spacer
       v-btn(
         flat
-        color="secondary"
+        color="primary"
         @click="emitNull"
       )
 </template>

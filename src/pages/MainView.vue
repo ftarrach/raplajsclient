@@ -3,20 +3,13 @@
 </template>
 
 <script>
-
 import TableView from './TableView/TableView'
 import CalendarPage from './CalendarPage/CalendarPage'
+import StandaloneView from './StandaloneView'
 
 export default {
-
   components: {
     TableView
-  },
-
-  data() {
-    return {
-      api: null
-    }
   },
 
   props: {
@@ -28,6 +21,14 @@ export default {
 
   computed: {
     view() {
+      if (window.api) {
+        return this.showView
+      } else {
+        return this.showStandaloneView
+      }
+    },
+
+    showView() {
       if (this.viewId.startsWith('table_')) {
         return TableView
       }
@@ -36,12 +37,11 @@ export default {
         case 'week':
           return CalendarPage
       }
+    },
+
+    showStandaloneView() {
+      return StandaloneView
     }
-  },
-
-  created() {
-    this.api = window.api
   }
-
 }
 </script>

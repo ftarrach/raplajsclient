@@ -23,7 +23,7 @@
 <script>
 import ReservationForm from '@/pages/ReservationForm/ReservationForm'
 import Window from './Window'
-import ResponsiveButton from '../ResponsiveButton/ResponsiveButton'
+import ResponsiveButton from '@/ui/ResponsiveButton'
 import Reservation from '@/types/Reservation'
 import EventBus from '@/EventBus'
 

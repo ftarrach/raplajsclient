@@ -35,9 +35,9 @@ function parseConstraint(key, constraint, gwtAttr) {
   if (constraint.getId) {
     return constraint.getId()
   }
-  api.error(`unknown type for constraint ${gwtAttr.getName()}->${key} found. Value is: (see next line)`)
-  api.error(constraint)
-  api.error(`${key} ${gwtAttr.getName()}`)
+  window.api.error(`unknown type for constraint ${gwtAttr.getName()}->${key} found. Value is: (see next line)`)
+  window.api.error(constraint)
+  window.api.error(`${key} ${gwtAttr.getName()}`)
   return null
 }
 

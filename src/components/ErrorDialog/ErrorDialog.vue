@@ -1,7 +1,7 @@
 <template lang="pug">
   v-dialog(v-model="open" persistent max-width="780px")
     v-card
-      v-card-title.headline Fehler
+      v-card-title.headline {{ "error" | localize }}
       v-card-text.red--text {{ text }}
       v-card-actions
         v-layout(justify-end)

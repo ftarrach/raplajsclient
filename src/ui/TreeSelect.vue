@@ -1,7 +1,7 @@
 <template lang="pug">
-  dynamic-menu(
+  popup-menu(
     :selected="safeValue"
-    :items="environment"
+    :items="items"
     @selected="onSelect"
     :selectable-groups="selectableGroups"
   )
@@ -9,13 +9,13 @@
 </template>
 
 <script>
-import DynamicMenu from '../components/DynamicMenu/DynamicMenu'
+import PopupMenu from './PopupMenu'
 
 export default {
   name: 'TreeSelect',
 
   components: {
-    DynamicMenu
+    PopupMenu
   },
 
   props: {
@@ -25,7 +25,7 @@ export default {
       default: () => []
     },
 
-    environment: {
+    items: {
       type: Array,
       required: false,
       default: () => []
@@ -71,7 +71,7 @@ export default {
       }
       if (this.value.length > 0) {
         if (this.elementName) {
-          return this.safeValue.map(e => this.find(e, this.environment)[this.elementName]).join(', ')
+          return this.safeValue.map(e => this.find(e, this.items)[this.elementName]).join(', ')
         }
         return this.safeValue.join()
       }

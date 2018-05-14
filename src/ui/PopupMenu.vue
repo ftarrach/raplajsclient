@@ -1,6 +1,13 @@
 <template lang="pug">
-  v-dialog(v-model="visible" max-width="600px" :fullscreen="$vuetify.breakpoint.xsOnly")
-    slot(slot="activator" name="activator")
+  v-dialog(
+    v-model="visible"
+    max-width="600px"
+    :fullscreen="$vuetify.breakpoint.xsOnly"
+  )
+    slot(
+      slot="activator"
+      name="activator"
+    )
     v-card
       v-toolbar(color="primary" dark)
         v-toolbar-title {{ title }}

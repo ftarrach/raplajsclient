@@ -1,7 +1,7 @@
 <template lang="pug">
   tree-select(
     v-model="val"
-    :environment="items"
+    :items="items"
     :multiSelect="multiSelect"
     title="auswahl"
   )
@@ -70,8 +70,8 @@ export default {
 
     treeFromDynamicType(id) {
       let dynamictypes = [
-        ...api.facade.getDynamicTypes('resource'),
-        ...api.facade.getDynamicTypes('person')
+        ...window.api.facade.getDynamicTypes('resource'),
+        ...window.api.facade.getDynamicTypes('person')
       ]
       this.items = window.api.treeFactory
         .createAllocatableModel([
@@ -86,8 +86,8 @@ export default {
     },
 
     treeFromAllAllocatables() {
-      this.items = api.treeFactory
-        .createClassifiableModel(api.facade.getAllocatables())
+      this.items = window.api.treeFactory
+        .createClassifiableModel(window.api.facade.getAllocatables())
         .children()
         .map(this.parseFromGwt)
     },

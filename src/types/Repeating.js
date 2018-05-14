@@ -24,7 +24,7 @@ class Repeating {
       gwtRepeating.getInterval(),
       null, // DateTime.createFromGwtDate(gwtRepeating.getEnd()),
       gwtRepeating.getNumber(),
-      api.toArray(gwtRepeating.getWeekdays()).map(w => parseInt(w.toString()) - 1),
+      window.api.toArray(gwtRepeating.getWeekdays()).map(w => parseInt(w.toString()) - 1),
       exceptions
     )
   }

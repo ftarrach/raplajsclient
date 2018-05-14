@@ -23,9 +23,8 @@ Vue.use(Vuetify, {
   }
 })
 Vue.config.productionTip = false
-Vue.config.errorHandler = (err, vm, info) => raplaVue.$emit('open-error-dialog', err)
 
-const STANDALONE = false
+const STANDALONE = true
 
 if (STANDALONE) {
   startVue()
@@ -43,7 +42,7 @@ if (STANDALONE) {
               .thenAccept(_api => {
                 window.api = _api
                 startVue()
-                api.application.start(true, () => {})
+                window.api.application.start(true, () => {})
               })
               .exceptionally(console.error)
           } else {
@@ -75,6 +74,6 @@ function startVue() {
   })
 
   window.raplaVue = EventBus
-  window.openErrorDialog = e => raplaVue.$emit('open-error-dialog', e)
-  window.raplaVue = raplaVue
+  window.openErrorDialog = e => EventBus.$emit('open-error-dialog', e)
+  Vue.config.errorHandler = (err, vm, info) => EventBus.$emit('open-error-dialog', err)
 }

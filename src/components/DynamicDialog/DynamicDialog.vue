@@ -62,7 +62,7 @@ export default {
 
     selected(index) {
       this.closeDialog()
-      this.gwtPromise.complete(api.toInteger(index))
+      this.gwtPromise.complete(window.api.toInteger(index))
     }
   }
 

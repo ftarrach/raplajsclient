@@ -29,7 +29,6 @@
       @viewChosen="setView"
     )
     v-content
-      //- test
       main-view(:view-id="currentView")
       window-manager(ref="windowManager")
       dynamic-dialog
@@ -46,7 +45,6 @@ import DynamicDialog from './components/DynamicDialog/DynamicDialog'
 import WindowManager from './components/WindowManager/WindowManager'
 import TreeView from './components/TreeView/TreeView'
 import TreeViewGwt from './components/TreeView/parseGwt'
-import Test from './pages/Test'
 import EventBus from '@/EventBus'
 
 export default {
@@ -59,9 +57,7 @@ export default {
     MainView,
     DynamicDialog,
     WindowManager,
-    TreeView,
-
-    Test
+    TreeView
   },
 
   data() {

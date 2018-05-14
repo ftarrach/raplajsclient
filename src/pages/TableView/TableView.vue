@@ -11,7 +11,7 @@
       :columns="columns"
       v-model="selected"
     )
-    dynamic-menu(
+    popup-menu(
       close-on-select
       :items="menuItems"
       :title="menuTitle"
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import DynamicMenu from '@/components/DynamicMenu/DynamicMenu'
+import PopupMenu from '@/ui/PopupMenu'
 import DynamicTable from '@/components/DynamicTable/DynamicTable'
 import DialogDatePicker from '@/ui//DialogDatePicker'
 import createMenu from './createMenu'
@@ -39,7 +39,7 @@ import EventBus from '@/EventBus'
 export default {
   components: {
     DynamicTable,
-    DynamicMenu,
+    PopupMenu,
     DialogDatePicker
   },
 
@@ -111,10 +111,10 @@ export default {
 
     loadPeriodFromGwt() {
       this.start = DateTime.createFromJsDate(
-        api.toJsDate(window.api.calendarModel.getStartDate())
+        window.api.toJsDate(window.api.calendarModel.getStartDate())
       )
       this.end = DateTime.createFromJsDate(
-        api.toJsDate(window.api.calendarModel.getEndDate())
+        window.api.toJsDate(window.api.calendarModel.getEndDate())
       )
     },
 

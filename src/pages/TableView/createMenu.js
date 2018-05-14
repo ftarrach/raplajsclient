@@ -2,7 +2,7 @@ import { icons } from '@/gwtinterop/icons'
 
 const createMenu = (gwtObjects, selectedIds, focusedGwtObject) => {
   if (window.api) {
-    const context = new org.rapla.client.menu.SelectionMenuContext(
+    const context = new window.org.rapla.client.menu.SelectionMenuContext(
       focusedGwtObject,
       null // popupcontext
     )
@@ -11,8 +11,8 @@ const createMenu = (gwtObjects, selectedIds, focusedGwtObject) => {
         selectedIds.map(id => gwtObjects.find(r => r.getId() === id))
       )
     )
-    const menu = new org.rapla.client.menu.gwt.VueMenu()
-    api.menuFactory.addEventMenu(
+    const menu = new window.org.rapla.client.menu.gwt.VueMenu()
+    window.api.menuFactory.addEventMenu(
       menu,
       context,
       null, // afterId

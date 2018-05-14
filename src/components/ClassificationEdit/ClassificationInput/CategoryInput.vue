@@ -1,7 +1,7 @@
 <template lang="pug">
   tree-select(
     v-model="val"
-    :environment="items"
+    :items="items"
     :multiSelect="multiSelect"
     title="auswahl"
     selectable-groups
@@ -81,7 +81,7 @@ export default {
 
     treeFromAllCategories() {
       this.items = window.api.treeFactory
-        .createModel(api.facade.getSuperCategory(), null)
+        .createModel(window.api.facade.getSuperCategory(), null)
         .children()
         .map(this.parseFromGwt)
     },

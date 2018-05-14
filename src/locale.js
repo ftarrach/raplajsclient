@@ -154,7 +154,7 @@ function formatTime(datetime) {
     return ''
   }
   if (window.api) {
-    return api.locale.formatTime(datetime.gwtTime())
+    return window.api.locale.formatTime(datetime.gwtTime())
   } else {
     return datetime.time
   }
