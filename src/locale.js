@@ -163,8 +163,8 @@ function formatTime(datetime) {
 /**
  * localizes all parts of the datetime object
  *
- * @param {DateTime} a DateTime Object
- * @param {len} length {'short', 'normal'}, default is 'normal'
+ * @param {DateTime} datetime - a DateTime Object
+ * @param {String} len - length {'short', 'normal'}, default is 'normal'
  */
 function formatDateTime(datetime, len = 'normal') {
   if (!(datetime instanceof DateTime)) {
@@ -180,6 +180,12 @@ function formatDateTime(datetime, len = 'normal') {
   }
 }
 
+/**
+ * returns the description of the appointment shown in the AppointmentList Component.
+ * in Standalone Mode, it returns a overview with the state keys
+ *
+ * @param {Appointment} appointment - an JavaScript-Appointment Object.
+ */
 function formatAppointment(appointment) {
   if (appointment.GWT) {
     const repeating = appointment.GWT.getRepeating()
@@ -201,24 +207,13 @@ function formatAppointment(appointment) {
         return 'end-date'
       }
     }
-    let until = ''
-    switch (getRepeatEndtype(appointment)) {
-      case 'forever':
-        until = 'Kein Ende'
-        break
-      case 'n-times':
-        until = `${appointment.repeating.number} Mal`
-        break
-      case 'end-date':
-        until = `bis zum ${appointment.repeating.end.date}`
-    }
     return {
       id: appointment.id,
       title: `${formatWeekday(appointment.repeating.weekdays)}
       ${formatTime(appointment.start.time)}-${formatTime(appointment.end.time)}
       ${localize(appointment.repeating.type.toLowerCase())}
     `,
-      subtitle: `ab dem 05.10.17 ${until}`
+      subtitle: `ab dem ${appointment.start.date} ${getRepeatEndtype(appointment)}`
     }
   }
 }

@@ -24,7 +24,7 @@ Vue.use(Vuetify, {
 })
 Vue.config.productionTip = false
 
-const STANDALONE = true
+const STANDALONE = false
 
 if (STANDALONE) {
   startVue()

@@ -63,7 +63,6 @@ export default {
   data() {
     return {
       showResourceTree: false,
-      undoredo: false,
 
       currentView: 'table_events',
 
@@ -75,15 +74,7 @@ export default {
       selectedResources: [],
       resources: [],
 
-      dialogs: [],
-
       conflicts: []
-    }
-  },
-
-  computed: {
-    dialogTitles() {
-      return this.dialogs.map(d => d._props.title)
     }
   },
 
