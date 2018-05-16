@@ -7,7 +7,7 @@
           v-icon close
       v-card-text
         v-icon(v-if="icon" :icon="icon")
-        dialog-dynamic(ref="dyn")
+        dynamic-dialog-content(ref="dyn")
       v-card-actions
         v-btn(flat
               v-for="(button, index) in buttons"
@@ -17,7 +17,7 @@
 
 <script>
 
-import DialogDynamic from './DialogDynamic'
+import DynamicDialogContent from './DynamicDialogContent'
 import { icons } from '@/gwtinterop/icons'
 import EventBus from '@/EventBus'
 
@@ -25,7 +25,7 @@ export default {
   name: 'DynamicDialog',
 
   components: {
-    DialogDynamic
+    DynamicDialogContent
   },
 
   data() {
