@@ -1,3 +1,4 @@
+import DateTime from './DateTime'
 
 class Repeating {
   constructor(type, interval, end, number, weekdays, exceptions) {
@@ -16,15 +17,15 @@ class Repeating {
     let exceptions = gwtRepeating.getExceptions()
     if (exceptions.length > 0) {
       exceptions = exceptions.map(e =>
-        null // DateTime.createFromGwtDate(e)
+        DateTime.createFromGwtDate(e)
       )
     }
     return new Repeating(
       gwtRepeating.getType().toString(),
       gwtRepeating.getInterval(),
-      null, // DateTime.createFromGwtDate(gwtRepeating.getEnd()),
+      DateTime.createFromGwtDate(gwtRepeating.getEnd()),
       gwtRepeating.getNumber(),
-      window.api.toArray(gwtRepeating.getWeekdays()).map(w => parseInt(w.toString()) - 1),
+      window.api.toArray(gwtRepeating.getWeekdays()).map(w => w.toString()),
       exceptions
     )
   }

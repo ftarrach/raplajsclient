@@ -10,104 +10,101 @@
             v-flex(xs12 sm6 lg3)
               v-btn(flat color="red")
                 | {{ "appointment.exceptions" | localize }}
-        //- v-layout(row wrap)
-          v-flex(xs4 sm2)
+        v-layout(row wrap)
+          v-flex(xs6 sm4)
             v-subheader {{ "repeating.interval.pre" | localize }}
-          v-flex(xs8 sm3)
+          v-flex(xs6 sm8)
             v-text-field(
-              v-model="appointment.repeating.interval"
+              ref="interval"
+              v-model="interval"
               :rules="rules.positiveNumber"
             )
-          v-flex(xs1)
+          v-flex(xs3)
             v-checkbox(
               label="Mo"
-              v-model="appointment.repeating.weekdays"
-              value="1"
-            )
-          v-flex(xs1)
-            v-checkbox(
-              label="Di"
-              v-model="appointment.repeating.weekdays"
+              v-model="weekdays"
               value="2"
             )
-          v-flex(xs1)
+          v-flex(xs3)
             v-checkbox(
-              label="Mi"
-              v-model="appointment.repeating.weekdays"
+              label="Di"
+              v-model="weekdays"
               value="3"
             )
-          v-flex(xs1)
+          v-flex(xs3)
             v-checkbox(
-              label="Do"
-              v-model="appointment.repeating.weekdays"
+              label="Mi"
+              v-model="weekdays"
               value="4"
             )
-          v-flex(xs1)
+          v-flex(xs3)
             v-checkbox(
-              label="Fr"
-              v-model="appointment.repeating.weekdays"
+              label="Do"
+              v-model="weekdays"
               value="5"
             )
-          v-flex(xs1)
+          v-flex(xs3)
             v-checkbox(
-              label="Sa"
-              v-model="appointment.repeating.weekdays"
+              label="Fr"
+              v-model="weekdays"
               value="6"
             )
-          v-flex(xs1)
+          v-flex(xs3)
             v-checkbox(
-              label="So"
-              v-model="appointment.repeating.weekdays"
+              label="Sa"
+              v-model="weekdays"
               value="7"
             )
-        v-layout
-          v-flex(xs6)
-            dialog-time-picker(
-              :label="'start_time' | localize"
-              :disabled="appointment.allDay"
-              v-model="appointment.start.time"
-            )
-          v-flex(xs6)
+          v-flex(xs3)
             v-checkbox(
-              :label="'all-day' | localize"
-              v-model="appointment.end.time"
+              label="So"
+              v-model="weekdays"
+              value="1"
             )
-        v-layout(row)
-          v-flex(xs6)
-            dialog-time-picker(
-              :label="'end_time' | localize"
-              :disabled="appointment.isWholeDay"
-              v-model="appointment.end.time"
-            )
-          v-flex(xs6)
-            v-select(
-              :items="endtimeTypeItems"
-              :disabled="appointment.allDay"
-              v-model="endtimeType"
-            )
-        v-layout(row)
-          v-flex(xs6)
-            dialog-date-picker(
-              :label="lblStartDate"
-              v-model="appointment.start.date"
-            )
-        v-layout(row)
-          v-flex(xs6)
-            v-select(
-              v-model="repeatEndtype"
-              :items="repeatEndtypeItems"
-            )
-          v-flex(xs6)
-            v-text-field(
-              v-model="appointment.repeating.number"
-              :rules="rules.positiveNumber"
-              v-show="repeatEndtype === 'n-times'"
-            )
-            dialog-date-picker(
-              v-if="appointment.repeating.end"
-              v-model="appointment.repeating.end.date"
-              v-show="repeatEndtype === 'end-date'"
-            )
+        v-flex(xs6)
+          dialog-time-picker(
+            :label="'start_time' | localize"
+            :disabled="appointment.allDay"
+            v-model="starttime"
+          )
+        v-flex(xs6)
+          v-checkbox(
+            :label="'all-day' | localize"
+            v-model="appointment.end.time"
+          )
+        v-flex(xs6)
+          dialog-time-picker(
+            :label="'end_time' | localize"
+            :disabled="appointment.isWholeDay"
+            v-model="appointment.end.time"
+          )
+        v-flex(xs6)
+          v-select(
+            :items="endtimeTypeItems"
+            :disabled="appointment.allDay"
+            v-model="endtimeType"
+          )
+        v-flex(xs6)
+          dialog-date-picker(
+            :label="lblStartDate"
+            v-model="appointment.start.date"
+          )
+        v-flex(xs6)
+          v-select(
+            v-model="repeatEndtype"
+            :items="repeatEndtypeItems"
+          )
+        v-flex(xs6)
+          v-text-field(
+            v-model="appointment.repeating.number"
+            :rules="rules.positiveNumber"
+            v-show="repeatEndtype === 'n-times'"
+          )
+          dialog-date-picker(
+            v-if="appointment.repeating.end"
+            v-model="appointment.repeating.end.date"
+            v-show="repeatEndtype === 'end-date'"
+          )
 </template>
 
 <script>
@@ -151,6 +148,32 @@ export default {
   },
 
   computed: {
+    interval: {
+      get() {
+        return this.appointment.repeating.interval
+      },
+      set(newVal) {
+        if (this.$refs.interval.validate()) {
+          this.$emit('input', {
+            name: 'repeating-interval',
+            value: parseInt(newVal)
+          })
+        }
+      }
+    },
+
+    weekdays: {
+      get() {
+        return this.appointment.repeating.weekdays
+      },
+      set(newVal) {
+        return this.$emit('input', {
+          name: 'repeating-weekdays',
+          value: newVal
+        })
+      }
+    },
+
     endtimeType() {
       if (this.appointment.start.date === this.appointment.end.date) {
         return 'same-day'
@@ -161,6 +184,7 @@ export default {
       }
       return 'x-day'
     },
+
     repeatEndtype: {
       get() {
         return getRepeatEndtype(this.appointment)
@@ -174,6 +198,30 @@ export default {
       return `${this.localize('weekly')} ${this.localize(
         'repeating.start_date'
       )}`
+    },
+
+    starttime: {
+      get() {
+        return this.appointment.start.time
+      },
+      set(newVal) {
+        this.$emit('input', {
+          name: 'starttime',
+          value: newVal
+        })
+      }
+    },
+
+    endtime: {
+      get() {
+        return this.appointment.end.time
+      },
+      set(newVal) {
+        this.$emit('input', {
+          name: 'endtime',
+          value: newVal
+        })
+      }
     }
   },
 

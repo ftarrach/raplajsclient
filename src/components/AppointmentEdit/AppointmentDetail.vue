@@ -12,7 +12,11 @@
             v-btn.xs12.sm6.lg2 {{ 'monthly' | localize }}
             v-btn.xs12.sm6.lg2 {{ 'yearly' | localize }}
       v-flex(xs12)
-        component(:is="component" :appointment="appointment")
+        component(
+          :is="component"
+          :appointment="appointment"
+          @input="reemit"
+        )
 </template>
 
 <script>
@@ -70,6 +74,12 @@ export default {
         case 4:
           return null
       }
+    }
+  },
+
+  methods: {
+    reemit(value) {
+      return this.$emit('input', value)
     }
   }
 }

@@ -10,6 +10,7 @@
       appointment-detail.ma-1(
         v-if="selectedAppointment"
         :appointment="selectedAppointment"
+        @input="reemit"
       )
 </template>
 
@@ -43,6 +44,10 @@ export default {
   methods: {
     selectedAppointmentChanged(newVal) {
       this.$emit('select', newVal)
+    },
+
+    reemit(value) {
+      this.$emit('input', value)
     }
   }
 }

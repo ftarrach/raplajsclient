@@ -1,6 +1,6 @@
 <template lang="pug">
   div.pa-2
-    v-tabs
+    v-tabs(value="1")
       v-tab(ripple)
         v-icon info_outline
       v-tab(ripple)
@@ -20,6 +20,7 @@
           :appointments="appointments"
           :selected-appointment-id="selectedAppointmentId"
           @select="selectAppointment"
+          @input="appointmentUpdate"
         )
       v-tab-item
         v-layout
@@ -79,6 +80,14 @@ export default {
     gwtAppointments() {
       if (this.gwt) return this.gwt.getAppointments()
       else return []
+    },
+
+    selectedAppointment() {
+      return this.appointments.find(a => a.id === this.selectedAppointmentId)
+    },
+
+    selectedGwtAppointment() {
+      return this.selectedAppointment.GWT
     }
   },
 
@@ -117,6 +126,37 @@ export default {
 
     selectAppointment(appointmentId) {
       // TODO: notify gwt
+    },
+
+    appointmentUpdate({ name, value }) {
+      switch (name) {
+        case 'repeating-interval':
+          this.selectedAppointment.repeating.interval = value
+          if (this.selectedGwtAppointment) {
+            this.selectedGwtAppointment.getRepeating().setInterval(value)
+          }
+          break
+        case 'repeating-weekdays':
+          this.selectedAppointment.repeating.weekdays = value
+          if (this.selectedGwtAppointment) {
+            this.selectedGwtAppointment
+              .getRepeating()
+              .setWeekdays(window.api.asSet(value))
+          }
+          break
+        case 'starttime':
+          this.selectedAppointment.start.time = value
+          if (this.selectedGwtAppointment) {
+            // TODO: set gwt date
+          }
+          break
+        case 'endtime':
+          this.selectedAppointment.start.time = value
+          if (this.selectedGwtAppointment) {
+            // TODO: set gwt date
+          }
+          break
+      }
     }
   }
 }

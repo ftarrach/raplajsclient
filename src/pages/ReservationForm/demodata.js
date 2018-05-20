@@ -403,7 +403,7 @@ export default {
         1,
         null,
         -1,
-        [3],
+        ['3'],
         []
       ),
       false,

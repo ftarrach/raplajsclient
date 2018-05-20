@@ -209,7 +209,7 @@ function formatAppointment(appointment) {
     }
     return {
       id: appointment.id,
-      title: `${formatWeekday(appointment.repeating.weekdays)}
+      title: `${appointment.repeating.weekdays.map(formatWeekday).sort().join(', ')}
       ${formatTime(appointment.start.time)}-${formatTime(appointment.end.time)}
       ${localize(appointment.repeating.type.toLowerCase())}
     `,

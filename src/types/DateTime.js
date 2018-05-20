@@ -51,7 +51,7 @@ class DateTime {
 
   /**
    * calculates the difference time between this and another datetime object.
-   * There is no Date-checking whether ore not the given DateTime is on the same date.
+   * There is no Date-checking whether or not the given DateTime is on the same date.
    * The result is always positive, so no negative minutes etc. will be returned
    *
    * @param {DateTime} other
